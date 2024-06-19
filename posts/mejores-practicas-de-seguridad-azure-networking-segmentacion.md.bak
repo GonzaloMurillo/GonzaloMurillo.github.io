@@ -1,0 +1,158 @@
+---
+title: "Mejores Practicas De Seguridad Azure Networking - Parte 1: Segmentación de Subredes"
+date: 2022-12-13T15:20:51+01:00
+featuredimagePreview: '/Images/FeynmanTechnique.jpg'
+authorLink: 'https://www.linkedin.com/in/gonzalomurillotello/'	
+description: "Desglosamos las mejores prácticas de Seguridad"
+featuredimage: '/Images/SecurityBestPractices/AzureNetworkingSecurityBestPractices.jpg'
+featuredimagePreview: '/Images/SecurityBestPractices/AzureNetworkingSecurityBestPractices.jpg'
+tags: ['Security Best Practices']
+draft: false
+---
+Vamos a hablar de un tema extremadamente importante, que es el de las mejores prácticas de seguridad en Azure Networking.
+
+Y para ello, vamos a desglosar paso a paso las recomendaciones que encontramos en el siguiente documento:
+
+https://learn.microsoft.com/en-us/azure/security/fundamentals/network-best-practices
+
+Vamos a ir paso a paso porque el asunto tiene mucha miga, y nos vamos a centrar en esta entrada del blog en la segmentación lógica de subredes.
+
+## Segmentación lógica de subredes (subnets)
+
+En Azure, las Virtual Networks son  una extrapolación del concepto de LAN (Local Area Networks) del mundo "on-prem"
+La idea que subyace cuando se crea una Azure Virtual Network es crear una red virtual, basada en un espacio de direcciones IP, donde
+poder colocar recursos como máquinas virtuales, VPN gateways, etc.  
+   
+
+Los espacios de direcciones que están disponibles son los rangos de la Clase A (10.0.0.0/8) Clase B (172.16.0.0/12) y Clase C (192.168.0.0/16).
+
+Estos rangos se corresponden a los rangos no enrutables públicamente definidos en el RFC 1918
+
+{{< figure src="/Images/rfc1918range.jpg" title="Rango RFC 1918" >}}
+
+Las prácticas recomendadas para la segmentación de las VNETS en Azure son las siguientes:
+
+### 1) Crea mecanismos de control entre subredes (subnets)
+
+En el mundo on-prem, dos subredes no pueden comunicarse entre si a menos que haya enrutamiento (routing), pero en Azure, el enrutamiento por defecto 
+permite comunicación entre subredes.
+
+NICs conectadas a la subredes (la misma subred o diferente) dentro de la misma virtual network, se pueden comunicar entre ellas sin ninguna configuración adicional.
+
+>There aren't security boundaries by default between subnets. Virtual machines in each of these subnets can communicate. If your deployment requires security boundaries, use Network Security Groups (NSGs), which control the traffic flow to and from subnets and to and from VMs.
+
+Pongamos un ejemplo:
+
+Si tenemos una VNET a la que llamaremos VNET1, con un espacio de direcciones 192.168.0.0/24 que a su vez contiene dos subredes: 
+
+SUBRED1: 192.168.1.0/24
+SUBRED2: 192.168.2.0/24
+
+Una máquina virtual que esté conectada a SUBRED1, podrá comunicarse directamente con una máquina en SUBRED2
+
+Montémoslo en el lab:
+
+
+```Powershell
+Login-AzureRmAccount
+Get-AzureRmSubscription
+Select-AzureRmSubscription -Subscription "Microsoft Azure Internal GMT"
+```
+
+Ahora creamos un Resource Group:
+
+```Powershell
+New-AzureRmResourceGroup -Name SUBNETS-LAB `
+                         -Location westeurope 
+```
+
+Ahora creamos la VNET dentro del ResourceGroup:
+
+```Powershell
+New-AzureRmVirtualNetwork -Name  `VNET1 `
+                          -ResourceGroupName SUBNETS-LAB `
+                          -Location westeurope `
+                          -AddressPrefix 192.168.0.0/16
+```
+
+Ahora creamos las subredes dentro del espacio de direcciones de la VNET VNET1:
+
+```Powershell
+$vnet = Get-AzureRmVirtualNetwork -Name VNET1 -ResourceGroupName SUBNETS-LAB 
+```
+
+Y añadimos a esa VNET una subred SUBRED1:
+```Powershell
+Add-AzureRmVirtualNetworkSubnetConfig -Name SUBRED1 `
+                                      -VirtualNetwork $vnet `
+                                      -AddressPrefix 192.168.1.0/24
+
+```
+
+Y una subred SUBRED2:
+
+```Powershell
+Add-AzureRmVirtualNetworkSubnetConfig -Name SUBRED2 `
+                                      -VirtualNetwork $vnet `
+                                      -AddressPrefix 192.168.2.0/24
+
+```
+
+Finalmente aplicamos la configuración de subredes a VNET1 con el siguiente comando:
+
+```Powershell
+$vnet | Set-AzureRmVirtualNetwork
+```
+
+La vista que deberíamos tener ahora en el portal sería:
+
+
+{{< figure src="/Images/SecurityBestPractices/portalazure.jpg" title="Portal Azure después de creadas la VNET y SUBNETS" >}}
+
+
+Si conectamos ahora una VM a SUBRED1 y otra VM a SUBRED2  
+
+Y vamos a una de las NICS para mostrar las "Effective Routes", podremos observar que este es el enrutamiento por defecto:
+
+
+{{< figure src="/Images/SecurityBestPractices/defaultrouting.jpg" title="Enrutamiento por defecto" >}}
+
+
+**Las máquinas en diferentes subredes dentro de la misma VNET se pueden comunicar** 
+
+Como vemos, hay una regla de enrutado que afirma 192.168.0.0/16 next hop Virtual Network.
+Esta es la regla de enrutado que permite que dos máquinas en diferentes subredes dentro de la misma VNET se puedan comunicar.
+Esto es un comportamiento distinto al del mundo on-prem, donde dos máquinas en diferentes subredes, no se pueden comunicar si no es a través de routing.
+
+Además vemos que el tráfico saliente al rango de direcciones IP del RFC1918, tiene un next hop type none, es decir, para los rangos RFC 1918, 
+simplemente se hace un drop.
+
+Además para otros rangos reservados por Azure, también se hace un drop (no se permite el tráfico saliente)
+
+
+**Tampoco hay un NSG por defecto que bloquee la comunicación entre subredes**
+
+Si vamos a las Effective Security Rules, veremos que o bien no hay NSG, o bien si hemos seleccionado un NSG básico veremos
+
+{{< figure src="/Images/SecurityBestPractices/defaultNSG.jpg" title="NSGs por defecto" >}}
+
+AllowVnetInBound
+AllowVnetOutBound
+
+Es decir que permite tanto el tráfico saliente como entrante desde la misma VNET.
+
+
+La recomendación de las mejores prácticas de seguridad es crear un NSG que bloquee el tráfico no solicitado entre subredes.
+
+
+
+>Best practice: Create network access controls between subnets. Routing between subnets happens automatically, and you don't need to manually configure routing tables. By default, there are no network access controls between the subnets that you create on an Azure virtual network.  
+
+Recordemos que los NSG son inspecciones de paquetes sin estado que usan 5 tuplas (ip origen, puerto origen, ip destino, puerto destino, y protocolo de capa 4 - TCP o UDP) para crear reglas de permitir o denegar.
+
+>**NOTA:**
+Otra forma de cerrar todo el tráfico entre subredes sería crear una UDR (User Defined Route) y asociarla a la SUBRED1, de tal forma que el tráfico dirigido a 192.168.2.0/24 (SUBRED2) tuviera un next hop = None
+Y hacer lo equivalente en SUBRED2, crear un UDR que todo el tráfico dirigido a la 192.168.1.0/24 tuviera un next hop = None
+
+Esperamos haber aclarado en este post que la comunicación entre subredes de una VNET sucede por defecto, y que es una práctica recomendada cortar el acceso con NSG (o con UDRs)
+

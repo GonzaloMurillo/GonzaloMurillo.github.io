@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Firewall - Categoría - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title>
+        <link>https://www.gonzalo.cloud/categories/firewall/</link>
+        <description>Firewall - Categoría - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</description>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Wed, 18 Jan 2023 10:27:04 &#43;0100</lastBuildDate><atom:link href="https://www.gonzalo.cloud/categories/firewall/" rel="self" type="application/rss+xml" /><item>
+    <title>Azure Firewall</title>
+    <link>https://www.gonzalo.cloud/posts/azure-firewall/</link>
+    <pubDate>Wed, 18 Jan 2023 10:27:04 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/azure-firewall/</guid>
+    <description><![CDATA[Propósito de diseño de Azure Firewall Siempre que me detengo en explicar algún servicio de Microsoft Azure, empiezo por intentar comprender y explicar el propósito de diseño del propio servicio. Considero que entendiendo el propósito de diseño, siempre es mucho más fácil comprender la parte técnica que sirve a dicho propósito de diseño.
+ El propósito de diseño que Microsoft tenía en mente cuando diseñó el Azure Firewall es crear un firewall stateful &ldquo;as a service&rdquo;, que protega las VNETs que enrutan su tráfico hacia el Firewall, es decir, que atraviesan ese firewall.]]></description>
+</item></channel>
+</rss>

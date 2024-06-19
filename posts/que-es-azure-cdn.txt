@@ -1,0 +1,157 @@
+https://learn.microsoft.com/en-us/azure/cdn/cdn-overview
+
+CDN PROFILE
+
+Un profile CDN es una colección de endpoints.
+
+
+
+Un endpoint es la relación
+
+## Qué es un CDN
+
+Un CDN (Content Delivery Network)
+Reduce la latencia al poner el contenido en edge servers en POP (Point of Presence), cercanos al cliente
+
+## Control Plane de un CDN
+
+{{< figure src="/Images/CDN/CDNControlPlane.jpg" title="CDN CONTROL PLANE" >}}
+
+## Troubleshooting
+
+El Origen (Origin)
+
+Va a ser central para el CDN. 
+
+Tenemos que comparar entre el CDN y el ORIGIN, haciendo query a los dos endpoints
+
+Si tenemos el mismo resultado
+
+Por ejemplo un 400 en el CDN, vamos al origen y accedemos a la misma URL, el problema es el Origin
+
+Si el Origin presenta un healthy response, entonces el CDN es unhealthy
+
+
+Si el origin en unhealthy, tenemos capacidad limitada
+
+Tienen que abrir una colaboración con el equipo interno de desarrollo WEB de web development.
+
+
+Si el origin es Healthy, necesitamos hacer troubleshooting del CDN
+
+
+Troubleshooting de CDN
+
+https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki/447037/Start-Here-AFD-S-P-AFD-and-CDN
+
+
+Comparar las headers
+
+En primer lugar, tenemos que determinar si el contenido está cacheado
+
+x-cache header is TCP_HIT o HIT --> Servido del CDN
+
+x-cache header is missing, states TCP_MISS --> No servido por el CDN
+
+
+¿Qué podemos hacer si no está servido por el CDN?
+
+Podemos mirar
+
+cache-control header with max-age > 0 
+
+Si max-age=0 en el origen, tenemos que ajustar el origen o establecer una override rule.
+
+
+Outages and Known issues
+
+
+
+
+curl -I URL | fgrep "X-Cache"
+
+
+https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki/24307/TSG-Identify-CDN-Provider-and-Endpoint
+
+
+
+
+TROUBLESHOOTING
+
+
+https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki/24307/TSG-Identify-CDN-Provider-and-Endpoint
+
+Un profile CDN es una colección de endpoints.
+
+1) Abrir en ASC el profile e identificar el SKU
+
+Sku	Standard_Microsoft
+
+2) Abrir el endpoint 
+
+DIG WEB INTERFACE
+
+https://www.digwebinterface.com/
+
+IP GEOLOCATION DATABASE
+https://db-ip.com/
+
+
+curl http://api.db-ip.com/v2/free/212.106.225.44
+
+
+Review Headers Tools
+
+
+User headers for diagnostics
+
+Browser Developer Tools
+
+Headers
+
+Response Headers
+cache-control
+last-modified
+x-cache
+
+
+https://stackoverflow.com/questions/4423061/how-can-i-view-http-headers-in-google-chrome
+
+
+curl se usa para revisar layer7, header, returns
+
+curl -I "https://cloudfront.cdn.fptindustrial.com/global/en"
+
+
+
+DIG
+
+Se usa para identificar CNAME, para ver si ha configurado bien el custom domain.
+
+dig URLOFTHECUSTOMURL
+
+dig "www.fptindustrial.com"
+
+; <<>> DiG 9.16.1-Ubuntu <<>> www.fptindustrial.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 38564
+;; flags: qr rd ad; QUERY: 1, ANSWER: 7, AUTHORITY: 0, ADDITIONAL: 0
+;; WARNING: recursion requested but not available
+
+;; QUESTION SECTION:
+;www.fptindustrial.com.         IN      A
+
+;; ANSWER SECTION:
+www.fptindustrial.com.  0       IN      CNAME   az-eu-sitec-cdne-p-012.azureedge.net.
+az-eu-sitec-cdne-p-012.azureedge.net. 0 IN CNAME az-eu-sitec-cdne-p-012.afd.azureedge.net.
+az-eu-sitec-cdne-p-012.afd.azureedge.net. 0 IN CNAME star-azureedge-prod.trafficmanager.net.
+star-azureedge-prod.trafficmanager.net. 0 IN CNAME dual.part-0015.t-0009.t-msedge.net.
+dual.part-0015.t-0009.t-msedge.net. 0 IN CNAME  part-0015.t-0009.t-msedge.net.
+part-0015.t-0009.t-msedge.net. 0 IN     A       13.107.213.43
+part-0015.t-0009.t-msedge.net. 0 IN     A       13.107.246.43
+
+;; Query time: 0 msec
+;; SERVER: 172.26.32.1#53(172.26.32.1)
+;; WHEN: Wed Dec 14 12:46:40 CET 2022
+;; MSG SIZE  rcvd: 516

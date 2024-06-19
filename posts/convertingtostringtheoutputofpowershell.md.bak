@@ -1,0 +1,31 @@
+---
+title: "Cómo convertir la salida de un comando PowerShell a texto"
+date: 2023-12-07T15:11:02+01:00
+featuredimagePreview: '/Images/FeynmanTechnique.jpg'
+authorLink: 'https://www.linkedin.com/in/gonzalomurillotello/'
+description: "Cómo convertir la salida de un comando PowerShell a texto"
+featuredimage: '/Images/SearchingForText/searchingfortext.webp'
+featuredimagePreview: '/Images/SearchingForText/searchingfortext.webp'
+tags: ['PowerShell']
+draft: false
+---
+
+En algunas ocasiones queremos hacer búsquedas sobre lo que devuelve un comando PowerShell.
+
+
+El inconveniente es que en Powershell, todo lo que se devuelve, es un objeto.
+
+
+No es por tanto trivial hacer búsquedas con herramientas tipo grep. 
+
+A menos que la salida se convierta a texto, claro...
+
+La solución sencilla y sin complicaciones es utilizar **out-string** para convertir la salida del comando powershell a  texto,
+y concatenarlo con el comando findstr para realizar la búsqueda de la cadena específica en la que estemos interesados.
+
+A continuación un ejemplo 
+
+>Get-AzVirtualNetworkPeering -Name "TONORTH" -VirtualNetworkName "SOUTHEUROPEVNET" -ResourceGroupName "SouthEurope" | out-string | findstr
+
+"PeeringState"
+PeeringState                     : Connected

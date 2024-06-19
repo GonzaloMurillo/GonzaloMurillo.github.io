@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Azure Firewall - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title><meta name="Description" content="Azure Firewall"><meta property="og:title" content="Azure Firewall" />
+<meta property="og:description" content="Azure Firewall" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.gonzalo.cloud/posts/azure-firewall/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-01-18T10:27:04+01:00" />
+<meta property="article:modified_time" content="2023-01-18T10:27:04+01:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Azure Firewall"/>
+<meta name="twitter:description" content="Azure Firewall"/>
+<meta name="application-name" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">
+<meta name="apple-mobile-web-app-title" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.gonzalo.cloud/posts/azure-firewall/" /><link rel="prev" href="https://www.gonzalo.cloud/posts/private-endpoint-private-link/" /><link rel="next" href="https://www.gonzalo.cloud/posts/troubleshooting-appliction-gateway/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Azure Firewall",
+        "inLanguage": "es",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.gonzalo.cloud\/posts\/azure-firewall\/"
+        },"genre": "posts","keywords": "Private End \/ Private Link, Private Endpoint, Private Link","wordcount":  1921 ,
+        "url": "https:\/\/www.gonzalo.cloud\/posts\/azure-firewall\/","datePublished": "2023-01-18T10:27:04+01:00","dateModified": "2023-01-18T10:27:04+01:00","publisher": {
+            "@type": "Organization",
+            "name": "Gonzalo.cloud"},"author": {
+                "@type": "Person",
+                "name": "Gonzalo.cloud"
+            },"description": "Azure Firewall"
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancelar
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contenido</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Azure Firewall</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://www.linkedin.com/in/gonzalomurillotello/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Gonzalo.cloud</a></span>&nbsp;<span class="post-category">incluido en <a href="/categories/azure-firewall/"><i class="far fa-folder fa-fw"></i>Azure Firewall</a>&nbsp;<a href="/categories/firewall/"><i class="far fa-folder fa-fw"></i>Firewall</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-01-18">2023-01-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1921 palabras&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;10 minutos&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contenido</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#propósito-de-diseño-de-azure-firewall">Propósito de diseño de Azure Firewall</a></li>
+    <li><a href="#características-de-azure-firewall">Características de Azure Firewall</a></li>
+    <li><a href="#skus">SKUs</a></li>
+    <li><a href="#consideraciones-deployment-de-azure-firewall">Consideraciones Deployment de Azure Firewall</a></li>
+    <li><a href="#configuración-de-reglas-en-el-firewall">Configuración de reglas en el firewall</a></li>
+    <li><a href="#qué-son-las-firewall-policies">¿Qué son las Firewall Policies?</a></li>
+    <li><a href="#azure-firewall-manager">Azure Firewall Manager</a></li>
+    <li><a href="#azure-firewall-sku-premium-qué-hace">Azure Firewall SKU PREMIUM qué hace</a></li>
+    <li><a href="#precios">Precios</a></li>
+    <li><a href="#labs">LABS</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="propósito-de-diseño-de-azure-firewall">Propósito de diseño de Azure Firewall</h2>
+<p>Siempre que me detengo en explicar algún servicio de Microsoft Azure, empiezo por intentar comprender y explicar el propósito de diseño del propio servicio.
+Considero que entendiendo el propósito de diseño, siempre es mucho más fácil comprender la parte técnica que sirve a dicho propósito de diseño.</p>
+<blockquote>
+<p><strong>El propósito de diseño que Microsoft tenía en mente cuando diseñó el Azure Firewall es crear un firewall stateful &ldquo;as a service&rdquo;, que protega las VNETs que enrutan su tráfico hacia el Firewall, es decir, que atraviesan ese firewall.</strong></p>
+</blockquote>
+<p><strong>¿Qué es un firewall stateful?</strong></p>
+<p>Las peticiones pueden ser de dos tipos: <strong>&ldquo;requests&rdquo; y &ldquo;responses&rdquo;</strong></p>
+<p>Un firewall stateful es aquel que guarda información de las requests, y es capaz de identificar automáticamente las responses que corresponden a un determinado request.</p>
+<p>Esto es una gran ventaja, pues en un firewall stateful, <strong>la perspectiva que tenemos que considerar a la hora de crear las reglas es siempre desde el lado del request</strong>, pues el lado del response se maneja automáticamente.</p>
+<p>Dicho de otra forma: <strong>si en un firewall stateful creamos una regla que permita peticiones salientes a una IP de destino contra un puerto determinado, la conexión de vuelta estará permitida automáticamente</strong>.</p>
+<p>En un firewall stateless, por contra, las dos conexiones hay que verlas como independientes.<br>
+Por tanto, en un firewall stateless, habría que permitir tanto las peticiones salientes como las entrantes en ambos lados de la comunicación, lo cual es realmente una sobrecarga
+administrativa muy considerable que puede inducir a errores.</p>
+<p>Os recomiendo para entender bien las diferencias entre firewalls stateful y stateless ver el siguiente vídeo, que si bien es un poco largo, merece totalmente
+la pena:</p>
+<p><a href="https://www.youtube.com/watch?v=rL4-vbsN35w&amp;t=7s" target="_blank" rel="noopener noreffer">https://www.youtube.com/watch?v=rL4-vbsN35w&t=7s</a></p>
+<p>Nota: En el contexto de un firewall stateful, se dice que tenemos tráfico asimétrico, cuando se recibe una petición inbound, que no corresponde con ninguna previa
+outbound.</p>
+<blockquote>
+<p><strong>Recapitulando:</strong> el objetivo de diseño que tiene Microsoft cuando crea el Azure Firewall es crear un firewall stateful &ldquo;as a service&rdquo;.
+Antes de crear el Azure Firewall, la única forma que había de proteger una VNET era recurriendo a NVAs (Network Virtual Appliances) proporcionadas por
+fabricantes ajenos a Microsoft. Aunque la opción de utilizar una NVA de terceros fabricantes sigue estando disponible, Microsoft no podía dejar de ofrecer un servicio
+tan demandado de forma nativa, y por ello creó Azure Firewall, que pasó a ser GA en Septiembre del 2018: <a href="https://azure.microsoft.com/en-us/updates/azure-firewall-generally-available/" target="_blank" rel="noopener noreffer">https://azure.microsoft.com/en-us/updates/azure-firewall-generally-available/</a></p>
+</blockquote>
+<h2 id="características-de-azure-firewall">Características de Azure Firewall</h2>
+<ul>
+<li>Alta disponibilidad</li>
+<li>Soporte nativo de zonas de disponibilidad</li>
+<li>Escalabilidad (basado en scaleset)</li>
+<li>Filtrado basado en reglas FQDN de tipo aplicación</li>
+<li>Filtrado basado en reglas tipo Network</li>
+<li>Tags FQDN</li>
+<li>Soporte de Service Tags</li>
+<li>Protección inteligente frente a amenazas (Thread Intelligence)</li>
+<li>Soporte Outbound SNAT</li>
+<li>Soporte Inboud SNAT</li>
+<li>Múltiples IPs públicas</li>
+<li>Azure Monitor logging</li>
+<li>Forced Tunneling (0.0.0.0/0)</li>
+<li>Filtrado por Categorías WEB</li>
+<li>Certificados</li>
+</ul>
+<h2 id="skus">SKUs</h2>
+<p>Hay dos SKUs disponibles:</p>
+<p>Standard y Premium</p>
+<p>Funciones</p>
+<p>El Premium ofrece los mismos servicios que el Standard, más servicios adicionales</p>
+<h2 id="consideraciones-deployment-de-azure-firewall">Consideraciones Deployment de Azure Firewall</h2>
+<figure><img src="/Images/AZFW/AZFW.png"/><figcaption>
+            <h4>Azure Firewall</h4>
+        </figcaption>
+</figure>
+
+<blockquote>
+<ul>
+<li>El Azure Firewall se despliega en su propia Subnet (AzureFirewallSubnet/26), lo cual proporciona 59 IPs = 2^(32-26)-5 IPs y es espacio suficiente para escalar.</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>Solo se puede tener un Azure Firewall por Virtual Network, pero obviamente múltiples VNETs pueden compartir el Azure Firewall.</p>
+</blockquote>
+<blockquote>
+<p><strong>Nota:</strong> Como el peering no es transitivo, en una configuración con x spokes, todos ellos conectados al FW, si quieremos que desde un Spoke se pueda llegar
+a otros a través del FW, lo que hay que hacer es ir a la configuración del peering del spoke al HUB y permitir &ldquo;Traffic Forwarded from remote virtual network&rdquo;
+Lo cual permite tráfico entrante no originado en la propia VNET (hay que permitir tráfico entrante de la VNET del HUB)</p>
+</blockquote>
+<blockquote>
+<p>Hay que tener en cuenta que las reglas se acumulan (efecto aclumulativo). Es decir, si tenemos NSGs que bloquean, aunque se haya permitido en el AZFW, las va a bloquear el NSG
+Y por supuesto si hay reglas a nivel firewall OS, también aplican</p>
+</blockquote>
+<blockquote>
+<p>Cuando se hace el deployment de Azure Firewall, se crea un load balancer que tiene una internal IP + scaleset.
+El autoscale soporta desde 2 Gbps hasta 30 Gbps</p>
+</blockquote>
+<blockquote>
+<p>Adicionalmente tendrá una IP pública (hasta 250 IPs), que se usará para configuracion NAT.</p>
+</blockquote>
+<blockquote>
+<p>Las instancias del FW (las VMs) tienen un solo NIC, a menos que se usa force tunneling, que entonces hace deployment de una segunda NIC, y una segunda subnet</p>
+</blockquote>
+<blockquote>
+<p>Tiene que hacerse deployment del Azure Firewall en el mismo Resource Group que contiene a la VNET.</p>
+</blockquote>
+<blockquote>
+<p>Azure Firewall no soporta BGP por el momento, así que hay que decirle a las subredes, que envíen activamente el tráfico hacia otros spokes a través de la IP interna del AZ FW,
+y para ello hay que crear Route Tables que se aplican a las subredes y que tienen como next hop NVA y como IP, la IP interna del Azure Firewall.</p>
+</blockquote>
+<h2 id="configuración-de-reglas-en-el-firewall">Configuración de reglas en el firewall</h2>
+<ul>
+<li>
+<p>Se pueden definir IP groups, que son agregaciones de IPs que luego pueden usarse en la configuración de reglas de firewall</p>
+</li>
+<li>
+<p>Hay dos formas de configurar el firewall: firewall rules (classic) firewall policy. Las firewall policy tienen la ventaja de que pueden aplicarse a
+diferentes Azure Firewalls, lo cual simplifica el proceso de configuración.</p>
+</li>
+<li>
+<p>El AZ FW con SKU standard, permite al ser creado, usar firewall rules y firewall policy</p>
+</li>
+<li>
+<p>El AZ FW con SKU premium, solo permite policies</p>
+</li>
+<li>
+<p>Las policies tienen un coste adicional, si y solo si, están aplicadas a multiple Azure Firewalls</p>
+</li>
+</ul>
+<h2 id="qué-son-las-firewall-policies">¿Qué son las Firewall Policies?</h2>
+<p>Las policies están integradas por una serie de componentes lógicos.</p>
+<ul>
+<li>
+<p>Hay tres tipos de reglas:</p>
+<ul>
+<li>Regla DNAT</li>
+<li>Regla Network</li>
+<li>Regla Application</li>
+</ul>
+</li>
+<li>
+<p>En el nivel superior de la regla, podemos tener &ldquo;Rule Collection Groups&rdquo;, que son un contenedor de &ldquo;Rule Collections&rdquo;.
+Las Rule Collections son de un tipo determinado (DNAT, NETWORK, APPLICATION), por lo que no pueden reglas de distintos tipos.
+Los Rule Collections Groups no son de un tipo determinado, ya que pueden contener &ldquo;Rule Collections&rdquo; de diversos tipos, tal y como hemos visto.</p>
+</li>
+</ul>
+<p>Las Firewalls Policies, no están en el portal bajo el Firewall, sino que tienen una sección separada &ldquo;Firewall Policies&rdquo;.
+Las firewall policies, pueden tener &ldquo;parent policies&rdquo; que son reglas de las que heredan del padre y que se procesarán en primer lugar.
+Los Rule Collections Groups tienen prioridades que van de 100 a 65000 (menor número, mayor prioridad) y que deciden que Rule Collection Group se va a aplicar
+en primer lugar.</p>
+<p>Dentro de los Rule Collection Groups, lo primero que se procesan son las reglas de tipo DNAT.</p>
+<p>Es decir, se van cogiendo los Rule Collection Groups por prioridad, y se ejecuta en primer lugar las reglas de tipo DNAT.
+Luego las reglas de tipo network, y finalmente las reglas de tipo application.</p>
+<p>Esto pasa para cada Rule Collection Group.</p>
+<p>Es decir, si hay varios &ldquo;Rule Collection Groups&rdquo;, primero se va al &ldquo;Rule Collection Group&rdquo; de mayor prioridad, se procesan las reglas de tipo DNAT, y se pasa
+al siguiente &ldquo;Rule Collection Group&rdquo;, donde se procesan las reglas de tipo DNAT. Una vez que todos los &ldquo;Rule Collection Groups&rdquo; se hayan procesado, se vuelve al primero,
+al de prioridad más baja y se procesan las reglas de tipo red, y se hace el mismo ciclo. Finalmente se acaba con las reglas de tipo application.</p>
+<p>Es importante entender este orden de procesamiento de las reglas, porque imaginemos que creamos unas reglas de tipo &ldquo;application&rdquo; muy granulares, pero tenemos
+antes unas reglas de tipo &ldquo;network&rdquo; que dejan pasar todo el tráfico. En ese escenario, las reglas de tipo &ldquo;application&rdquo; nunca entrarían en uso.</p>
+<p>Hay una prioridad suprema, que está por encima de todas, y es la de &ldquo;Thread Intelligence&rdquo;
+&ldquo;Thread Intelligence&rdquo; es un apartado dentro de la Firewall Policy.</p>
+<p>Thread Intelligence bloquea IPs maliciosas conocidas y dominios.
+Tiene tres modos &ldquo;Disabled&rdquo;, &ldquo;Alert only&rdquo;, &ldquo;Alert and Deny&rdquo;, pero sus reglas son procesadas en primer lugar.</p>
+<p>Thread Intelligence permite definir exclusiones.</p>
+<p><strong>REGLAS DE TIPO DNAT</strong></p>
+<p>Se basan en la dirección IP pública.</p>
+<p>La IP pública puede servir a dos propósitos: cuando entra tráfico por la IP pública, o cuando sale tráfico por la IP pública.</p>
+<p>Cuando entra tráfico, eso es DNAT, cuando quiero mapear la IP pública a algo en el backend.</p>
+<p>Las reglas DNAT se basan en el origen de la petición que llega a la IP pública.</p>
+<p>Source IP | IP GROUP: PUBLIC IP OF THE FIREWALL: MAP TO WHAT PRIVATE IP: WHAT PORT</p>
+<p>Cuando sale tráfico desde la IP pública, eso es SNAT</p>
+<p>Va a realizar SNAT para todos los rangos, excepto para el rango RFC 1918. Esto se puede cambiar en la firewall policy en la sección
+Private IP ranges (SNAT)</p>
+<p>SNAT usa un puerto para cada conexión saliente, por eso en las Azure Metrics, hay una métrica que es SNAT port utilization.</p>
+<p>También por eso hay múltiples IPs, cada IP añade de un número de puertos nuevo (65000?)</p>
+<p>** REGLAS DE TIPO NET **</p>
+<p>Por defecto son de tipo denegar</p>
+<p>Las reglas de tipo NET, se basan en la 5 tuplas estándar</p>
+<p>IP ORIGEN: PUERTO ORIGEN: IP DESTINO | IP GROUP | FQDN | SERVICE TAG: PUERTO DESTINO: PROTOCOLO</p>
+<p>Si en el destino ponemos un FQDN, se resolverá a la IP.
+Si ponemos un IP Service Tag recordemos que los service tags se utilizan para identificar una serie de servicios PaaS.
+Si ponemos un FQDN, habrá una resolución de nombre a la IP.</p>
+<p>Son reglas de capa 4 dentro del modelo OSI</p>
+<p>** REGLAS DE TIPO APLICATION**</p>
+<p>High level, FQDN va a usar el SNI</p>
+<p>SOURCE IP | IP GROUP | FQDN or URL (only for premium) or FQDNTAG or WEB CATEGORY</p>
+<p>Con premium, puedo mirar dentro de la URL incluso si hay encriptación TLS, con TLS inspection</p>
+<p>** CONFIGURACIÓN DNS EN LA AZURE FIREWALL POLICY **</p>
+<p>En la política se puede habilitar configuración DNS y se puede hacer que el DNS actúe como proxy DNS, es decir que toda petición DNS que le llegue, la reenvíe
+a otro lado.</p>
+<p>Si se habilita el proxy DNS, el firewall comenzará a escuchar en el puerto 53 y todo lo que le llegue lo reenviará, bien al default Azure Provided, bien a
+un Custom DNS que especifiquemos.</p>
+<p>Esto es principalmente para evitar inconsistencias en las reglas FQDN, si un cliente tiene su propia resolución DNS y un FQDN responde con una IP distinta a la que
+responde el FW, se crea routing asimétrico.</p>
+<h2 id="azure-firewall-manager">Azure Firewall Manager</h2>
+<p>Firewall Manager permite la administración central de un firewall.</p>
+<h2 id="azure-firewall-sku-premium-qué-hace">Azure Firewall SKU PREMIUM qué hace</h2>
+<ul>
+<li>VMs más potentes en la subnet del AzureFirewallSubnet</li>
+<li>Reglas de aplicación basadas en URL (incluso si es HTTPS)</li>
+<li>TLS inspection</li>
+<li>IDPS basado en firmas que son descargadas diariamente</li>
+</ul>
+<p>Para qué TLS inspection funcione, el Azure Firewall tiene que actuar como &ldquo;man in the middle&rdquo;, y para ello tiene que ser capaz de generar certificados.
+Para lo cual el PKI de la entidad tiene que proporcionarle al firewall un &ldquo;Subordinate CA&rdquo;</p>
+<p><a href="https://www.globalsign.com/en/blog/what-is-an-intermediate-or-subordinate-certificate-authority#:~:text=Subordinate%20CAs%20%E2%80%93%20these%20live%20between%20the%20root,you%20must%20separate%20SSL%20and%20S%2FMIME%20Subordinate%20CAs" target="_blank" rel="noopener noreffer">https://www.globalsign.com/en/blog/what-is-an-intermediate-or-subordinate-certificate-authority#:~:text=Subordinate%20CAs%20%E2%80%93%20these%20live%20between%20the%20root,you%20must%20separate%20SSL%20and%20S%2FMIME%20Subordinate%20CAs</a>.</p>
+<p>Que será guardado en Azure Key Vault, el Azure Firewall con una managed identity, vamos a permitirle operar en el certificado.
+Así podrá generar certificados para cualquier nombre. Es como una cadena de trust.</p>
+<p>Cuando el cliente trate de acceder google.com, se establecerán dos sesiones TLS.</p>
+<p>Entre el cliente y el AZ FW, entre el AZ FW y el final host, y si inspeccionamos el certificado, lo que veremos es que está generado por el Azure Firewall Manager.</p>
+<h2 id="precios">Precios</h2>
+<p>Por hora de deployment + tráfico en GB (más tráfico, más instancias)</p>
+<h2 id="labs">LABS</h2>
+<p>Templates para hacer deployment de distintos labs de Azure Firewall</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/templates/microsoft.network/azurefirewalls?pivots=deployment-language-bicep" target="_blank" rel="noopener noreffer">https://learn.microsoft.com/en-us/azure/templates/microsoft.network/azurefirewalls?pivots=deployment-language-bicep</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Actualizado el 2023-01-18</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/private-end-/-private-link/">Private End / Private Link</a>,&nbsp;<a href="/tags/private-endpoint/">Private Endpoint</a>,&nbsp;<a href="/tags/private-link/">Private Link</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Regresar</a></span>&nbsp;|&nbsp;<span><a href="/">Inicio</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/private-endpoint-private-link/" class="prev" rel="prev" title="Private Endpoint- Private Link"><i class="fas fa-angle-left fa-fw"></i>Private Endpoint- Private Link</a>
+            <a href="/posts/troubleshooting-appliction-gateway/" class="next" rel="next" title="Troubleshooting Application Gateway">Troubleshooting Application Gateway<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Contenido creado por Gonzalo.cloud.Prohibida la reproducción parcial o total del contenido sin permiso explícito del autor</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Gonzalo.cloud</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Volver arriba">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="Ver comentarios">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.es.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copiar al portapapeles","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"es","maxResultLength":10,"noResultsFound":"No se encontraron resultados","snippetLength":30}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

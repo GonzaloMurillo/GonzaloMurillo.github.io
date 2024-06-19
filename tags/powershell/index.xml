@@ -1,0 +1,20 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>PowerShell - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title>
+        <link>https://www.gonzalo.cloud/tags/powershell/</link>
+        <description>PowerShell - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</description>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Thu, 07 Dec 2023 15:11:02 &#43;0100</lastBuildDate><atom:link href="https://www.gonzalo.cloud/tags/powershell/" rel="self" type="application/rss+xml" /><item>
+    <title>Cómo convertir la salida de un comando PowerShell a texto</title>
+    <link>https://www.gonzalo.cloud/posts/convertingtostringtheoutputofpowershell/</link>
+    <pubDate>Thu, 07 Dec 2023 15:11:02 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/convertingtostringtheoutputofpowershell/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/Images/SearchingForText/searchingfortext.webp" referrerpolicy="no-referrer">
+            </div>En algunas ocasiones queremos hacer búsquedas sobre lo que devuelve un comando PowerShell.
+El inconveniente es que en Powershell, todo lo que se devuelve, es un objeto.
+No es por tanto trivial hacer búsquedas con herramientas tipo grep.
+A menos que la salida se convierta a texto, claro&hellip;
+La solución sencilla y sin complicaciones es utilizar out-string para convertir la salida del comando powershell a texto, y concatenarlo con el comando findstr para realizar la búsqueda de la cadena específica en la que estemos interesados.]]></description>
+</item></channel>
+</rss>

@@ -1,0 +1,20 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Security Best Practices - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title>
+        <link>https://www.gonzalo.cloud/tags/security-best-practices/</link>
+        <description>Security Best Practices - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</description>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Tue, 13 Dec 2022 15:20:51 &#43;0100</lastBuildDate><atom:link href="https://www.gonzalo.cloud/tags/security-best-practices/" rel="self" type="application/rss+xml" /><item>
+    <title>Mejores Practicas De Seguridad Azure Networking - Parte 1: Segmentación de Subredes</title>
+    <link>https://www.gonzalo.cloud/posts/mejores-practicas-de-seguridad-azure-networking-segmentacion/</link>
+    <pubDate>Tue, 13 Dec 2022 15:20:51 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/mejores-practicas-de-seguridad-azure-networking-segmentacion/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/Images/SecurityBestPractices/AzureNetworkingSecurityBestPractices.jpg" referrerpolicy="no-referrer">
+            </div>Vamos a hablar de un tema extremadamente importante, que es el de las mejores prácticas de seguridad en Azure Networking.
+Y para ello, vamos a desglosar paso a paso las recomendaciones que encontramos en el siguiente documento:
+https://learn.microsoft.com/en-us/azure/security/fundamentals/network-best-practices
+Vamos a ir paso a paso porque el asunto tiene mucha miga, y nos vamos a centrar en esta entrada del blog en la segmentación lógica de subredes.
+Segmentación lógica de subredes (subnets) En Azure, las Virtual Networks son una extrapolación del concepto de LAN (Local Area Networks) del mundo &ldquo;on-prem&rdquo; La idea que subyace cuando se crea una Azure Virtual Network es crear una red virtual, basada en un espacio de direcciones IP, donde poder colocar recursos como máquinas virtuales, VPN gateways, etc.]]></description>
+</item></channel>
+</rss>

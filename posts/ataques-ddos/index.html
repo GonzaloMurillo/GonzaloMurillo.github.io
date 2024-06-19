@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Ataques DDOS - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title><meta name="Description" content="Azure DDOS"><meta property="og:title" content="Ataques DDOS" />
+<meta property="og:description" content="Azure DDOS" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.gonzalo.cloud/posts/ataques-ddos/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-29T11:19:26+02:00" />
+<meta property="article:modified_time" content="2023-03-29T11:19:26+02:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ataques DDOS"/>
+<meta name="twitter:description" content="Azure DDOS"/>
+<meta name="application-name" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">
+<meta name="apple-mobile-web-app-title" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.gonzalo.cloud/posts/ataques-ddos/" /><link rel="prev" href="https://www.gonzalo.cloud/posts/application_security_groups/" /><link rel="next" href="https://www.gonzalo.cloud/posts/convertingtostringtheoutputofpowershell/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Ataques DDOS",
+        "inLanguage": "es",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.gonzalo.cloud\/posts\/ataques-ddos\/"
+        },"genre": "posts","keywords": "DDOS \/ Denegación de Servicio, Under Attack","wordcount":  884 ,
+        "url": "https:\/\/www.gonzalo.cloud\/posts\/ataques-ddos\/","datePublished": "2023-03-29T11:19:26+02:00","dateModified": "2023-03-29T11:19:26+02:00","publisher": {
+            "@type": "Organization",
+            "name": "Gonzalo.cloud"},"author": {
+                "@type": "Person",
+                "name": "Gonzalo.cloud"
+            },"description": "Azure DDOS"
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancelar
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contenido</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Ataques DDOS</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://www.linkedin.com/in/gonzalomurillotello/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Gonzalo.cloud</a></span>&nbsp;<span class="post-category">incluido en <a href="/categories/ddos/"><i class="far fa-folder fa-fw"></i>DDOS</a>&nbsp;<a href="/categories/seguridad/"><i class="far fa-folder fa-fw"></i>Seguridad</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-03-29">2023-03-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;884 palabras&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;5 minutos&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contenido</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#cómo-responder-a-ataques-de-denegacion-distribuídos-en-clientes">Cómo responder a ataques de Denegacion Distribuídos en clientes</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="cómo-responder-a-ataques-de-denegacion-distribuídos-en-clientes">Cómo responder a ataques de Denegacion Distribuídos en clientes</h2>
+<p>Está documentado aquí:</p>
+<p><a href="https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki/277561/TSG-I%27m-Under-a-DDoS-Attack-" target="_blank" rel="noopener noreffer">https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki/277561/TSG-I'm-Under-a-DDoS-Attack-</a></p>
+<p>Respecto a DDOS, Microsoft ofrece las siguientes soluciones:</p>
+<pre><code>* DDOS Infrastructure Protection (no es un SKU que pueda ser comprado)
+
+Es la propia solución de Microsoft para proteger su infra, es gratis. Protege VIPs
+  
+* DDOS Protection Network Plan 	(DDOS Protection Standard) Aplica a VNETs
+
+* DDOS Protection Individual IP Plan (aplica a IPs específicas)
+
+Más información de los distintos SKU.
+
+https://learn.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview#skus
+</code></pre>
+<p><em><strong>PASOS QUE DEBE SEGUIR UN TSE PARA REACCIONAR A UN DDOS ATTACK POR PARTE DE UN CLIENTE</strong></em></p>
+<ol>
+<li>
+<p>Determinar si tiene algún DDOS con un SKU de pago</p>
+<p>1.1) Desde ASC debe haber un resource ddosProtectionPlans</p>
+<p>Ordenando por Resource Provider: 	Microsoft Network &ndash;&gt; ddosProtectionPlans</p>
+<p>Imagen1</p>
+<p>Como vemos el DDOS Protection Plan se aplica a las VNETs</p>
+<p>Podría ser que el DDOS Protection Plan estuviera en otra subscripción B, pero aplicado a una VNET en la subscripción A
+En ese caso habría que mirar la VNET &ndash;&gt; Properties &ndash;&gt; DDoS Protection Plan</p>
+<p>1.2) Get NRP Subscription Details</p>
+<p>Otra forma de verlo es mediante Get NRP Subscription Details
+<a href="https://portal.microsoftgeneva.com/22D0C825?genevatraceguid=9076f370-c8cd-459b-bf39-07d6077c5925" target="_blank" rel="noopener noreffer">https://portal.microsoftgeneva.com/22D0C825?genevatraceguid=9076f370-c8cd-459b-bf39-07d6077c5925</a></p>
+<p>Y buscando ddosProtectionsPlans</p>
+</li>
+</ol>
+<p>Una vez confirmado que tiene un DDOS de pago</p>
+<p><em><strong>DDOS PROTECTION PLAN</strong></em></p>
+<ol>
+<li>Determinar si la IP está siendo ahora mismo mitigada (si tiene ahora mismo un ataque DDOS es otra historia)</li>
+</ol>
+<p>Este Jarvis tiene distintos dashboards útiles:</p>
+<p><a href="https://portal.microsoftgeneva.com/dashboard/CNS/CRI?overrides=%5B%7B%22query%22%3A%22//" target="_blank" rel="noopener noreffer">https://portal.microsoftgeneva.com/dashboard/CNS/CRI?overrides=%5B%7B%22query%22%3A%22//</a>*%5Bid%3D%27DestinationVIP%27%5D%22%2C%22key%22%3A%22value%22%2C%22replacement%22%3A%2213.81.9.2%22%7D%5D%20</p>
+<p>Fijarese en:</p>
+<p>Is under DDoS mitigation? (1 means yes, 0 or no data means no)</p>
+<p>También en:
+Thresholds to start DDoS mitigation</p>
+<p>Using the dashboard Thresholds to start DDoS mitigation, you can see when DDoS Autotune policies are applied to this VIP
+at any given moment.</p>
+<p>Puede ser que el cliente diga que el DDOS no se está activando y lo que sucede es que los valores reales están por debajo de los valores
+de activación</p>
+<p>Para ello hay que fijarse en:</p>
+<p>How many packets/sec are traversing my VIP (during an attack)?</p>
+<p>This dashboard helps you understand why a DDoS Mitigation did or did not trigger.
+You can compare this data with the autotune policies noted above to determine if a DDoS should or should not have been mitigated.</p>
+<p>DDoS protection enabled - Inbound flows are not reaching threshold at all.
+Because the thresholds are not reached, DDoS will not be mitigating.</p>
+<p>Una vez que tengamos claro que hay un ataque real:</p>
+<figure><img src="/Images/DDOSProtectionPlans/diagrama.png"/><figcaption>
+            <h4>DDOS esquema</h4>
+        </figcaption>
+</figure>
+
+<p>PASOS UNA VEZ CONFIRMADO</p>
+<p>Post en el canal: Microsoft Teams DDoS Channel
+<a href="https://teams.microsoft.com/l/channel/19%3a9e0120d9ea8b479e8c603012f1b15e8f%40thread.skype/Azure%2520DDoS?groupId=c3e00ac7-3f76-4350-ba3b-e335a6bbbe21&amp;tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47" target="_blank" rel="noopener noreffer">https://teams.microsoft.com/l/channel/19%3a9e0120d9ea8b479e8c603012f1b15e8f%40thread.skype/Azure%2520DDoS?groupId=c3e00ac7-3f76-4350-ba3b-e335a6bbbe21&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47</a></p>
+<p>Abrir un ICM</p>
+<p>DDOS Protection / I´m under attack - Network Protection Plan</p>
+<p>Si y solo si ASC no funciona, podemos usar un template</p>
+<p><a href="https://aka.ms/CRI-DDOSATTACK" target="_blank" rel="noopener noreffer">https://aka.ms/CRI-DDOSATTACK</a></p>
+<p><em><strong>DDOS INFRASTRUCTURE PROTECTION</strong></em></p>
+<p>Services running on Azure are inherently protected by the default infrastructure-level DDoS protection. However, the protection that safeguards the infrastructure has a much higher threshold than most applications have the capacity to handle, and does not provide telemetry or alerting, so while a traffic volume may be perceived as harmless by the platform, it can be devastating to the application that receives it.</p>
+<p>By onboarding to the Azure DDoS Protection Service, the application gets dedicated monitoring to detect attacks and application specific thresholds. A service will be protected with a profile that is tuned to its expected traffic volume, providing a much tighter defense against DDoS attacks.</p>
+<p>Lo que se puede hacer cuando es un infrastructure protection es</p>
+<p>Usar este DashBoard (DDOS Sflow Dashboards)</p>
+<p>Este Dashboard muestra todas las IPs públicas que están bajo un &ldquo;Infrastructure Protection&rdquo;, que están siendo mitigadas.</p>
+<p>Si no aparece aquí la IP, entonces es que no está siendo mitigada de un ataque DDOS por la protección de infraestructura.</p>
+<p><a href="https://portal.microsoftgeneva.com/s/9BFCEE0D?overrides=[%7b%22query%22:%22//" target="_blank" rel="noopener noreffer">https://portal.microsoftgeneva.com/s/9BFCEE0D?overrides=[{%22query%22:%22//</a>*[id%3D%27DestinationVIP%27]%22,%22key%22:%22value%22,%22replacement%22:%2251.141.184.179%22}]&amp;globalStartTime=1621175400000&amp;globalEndTime=1621179000000&amp;pinGlobalTimeRange=true</p>
+<p>Referencia:</p>
+<p><a href="https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki/300601/TSG-Determine-Customer%27s-DDoS-SKU" target="_blank" rel="noopener noreffer">https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki/300601/TSG-Determine-Customer's-DDoS-SKU</a></p>
+<p>Otro Jarvis que se puede usar, es uno muy genérico &ldquo;Bandwidth Usage per FrontEnd IP&rdquo; (este también se puede usar cuando es DDOS Protection Plan)</p>
+<p><a href="https://portal.microsoftgeneva.com/dashboard/slbv2prod/AzureMonitor/BandwidthUsage?overrides=%5B%7B%22query%22%3A%22//dataSources%22%2C%22key%22%3A%22account%22%2C%22replacement%22%3A%22slbhpcentralindia%22%7D%2C%7B%22query%22%3A%22//" target="_blank" rel="noopener noreffer">https://portal.microsoftgeneva.com/dashboard/slbv2prod/AzureMonitor/BandwidthUsage?overrides=%5B%7B%22query%22%3A%22//dataSources%22%2C%22key%22%3A%22account%22%2C%22replacement%22%3A%22slbhpcentralindia%22%7D%2C%7B%22query%22%3A%22//</a>*%5Bid%3D%27VipAddress%27%5D%22%2C%22key%22%3A%22value%22%2C%22replacement%22%3A%2213.71.52.254%22%7D%5D%20</p>
+<p>Mandaron un e-mail</p>
+<p>Hello Team,</p>
+<p>Lately we have see a raise on DDOS attack related cases and escalations, this email is with the intention to provide visibility on the current guides we have to face this situations.</p>
+<p>We can start the handling on similar situations confirming if the customer is under a DDOS L3 or L4 attack, once this has been determined, we can take respective actions, the documents below contain more details:</p>
+<p>Detection:
+This document can help you determine of the customer is under a L3 attack or not: TSG: &ldquo;I&rsquo;m Under a DDoS Attack&rdquo; - Overview (visualstudio.com) along to direct you for troubleshooting steps and potential outcomes.</p>
+<p>For confirming L7 attacks we have the following guide: TSG: This wiki outlines what a Layer 7 or Application layer DDoS attack is and how to identify it - Overview (visualstudio.com)</p>
+<p>Mitigation:
+For L3/4 attacks please reach the TA community DDOS did trigger or act as expected.
+For L7 we have the following guide that can be used to help the customer create  custom rule to block attack patterns based on WAF logs: TSG - DDOS Post morterm AzFrontDoor CDN - Overview (visualstudio.com) and How to identify the section that triggered the WAF rule from the request - Overview (visualstudio.com)</p>
+<p>More info on multiple conditions custom rules: Web application firewall custom rule for Azure Front Door | Microsoft Learn</p>
+<p>Post mortem investigations:
+TSG: DDoS Attack Post-Mortem - Overview (visualstudio.com)
+TSG - DDOS Post morterm AzFrontDoor CDN - Overview (visualstudio.com) this is the same as per mitigation, since the same logs can be used for post-mortem analysis.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Actualizado el 2023-03-29</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/ddos-/-denegaci%C3%B3n-de-servicio/">DDOS / Denegación de Servicio</a>,&nbsp;<a href="/tags/under-attack/">Under Attack</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Regresar</a></span>&nbsp;|&nbsp;<span><a href="/">Inicio</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/application_security_groups/" class="prev" rel="prev" title="Application Security Groups"><i class="fas fa-angle-left fa-fw"></i>Application Security Groups</a>
+            <a href="/posts/convertingtostringtheoutputofpowershell/" class="next" rel="next" title="Cómo convertir la salida de un comando PowerShell a texto">Cómo convertir la salida de un comando PowerShell a texto<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Contenido creado por Gonzalo.cloud.Prohibida la reproducción parcial o total del contenido sin permiso explícito del autor</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Gonzalo.cloud</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Volver arriba">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="Ver comentarios">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.es.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copiar al portapapeles","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"es","maxResultLength":10,"noResultsFound":"No se encontraron resultados","snippetLength":30}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

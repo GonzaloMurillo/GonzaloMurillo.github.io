@@ -1,0 +1,19 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>CDN - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title>
+        <link>https://www.gonzalo.cloud/tags/cdn/</link>
+        <description>CDN - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</description>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Wed, 14 Dec 2022 17:49:32 &#43;0100</lastBuildDate><atom:link href="https://www.gonzalo.cloud/tags/cdn/" rel="self" type="application/rss+xml" /><item>
+    <title>El gran Firewall Chino</title>
+    <link>https://www.gonzalo.cloud/posts/el-gran-firewall-chino-y-los-cdn/</link>
+    <pubDate>Wed, 14 Dec 2022 17:49:32 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/el-gran-firewall-chino-y-los-cdn/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/Images/Great_Firewall_China/Great_Firewall_China.jpg" referrerpolicy="no-referrer">
+            </div>No es ningún secreto que China no permite la libertad de expresión.
+La represión de sus ciudadanos se extiende al ámbito de Internet, donde tiene colocado un gran Firewall para vigilar todo lo que hacen sus camaradas en la red.
+Este Firewall es bastante sofisticado y entre otros mecanismos utiliza: (fuente: https://www.makeuseof.com/what-is-great-firewall-china/)
+BLOQUEO DE URLs El bloqueo de URLs o filtrado es uno de los métodos más efectivos utilizado por el Gran Firewall.]]></description>
+</item></channel>
+</rss>

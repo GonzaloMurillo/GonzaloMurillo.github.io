@@ -1,0 +1,59 @@
+---
+title: "El Gran Firewall Chino Y Los Cdn"
+date: 2022-12-14T17:49:32+01:00
+featuredimagePreview: '/Images/FeynmanTechnique.jpg'
+authorLink: 'https://www.linkedin.com/in/gonzalomurillotello/'
+title: "El gran Firewall Chino"	
+description: "Cómo el gran firewall chino afecta a las conexiones via CDN"
+featuredimage: '/Images/Great_Firewall_China/Great_Firewall_China.jpg'
+featuredimagePreview: '/Images/Great_Firewall_China/Great_Firewall_China.jpg'
+tags: ['CDN']
+draft: false
+---
+
+No es ningún secreto que China no permite la libertad de expresión.
+
+La represión de sus ciudadanos se extiende al ámbito de Internet, donde tiene colocado un gran Firewall para vigilar todo lo que hacen sus camaradas en la red.  
+Este Firewall es bastante sofisticado y entre otros mecanismos utiliza: (fuente: https://www.makeuseof.com/what-is-great-firewall-china/)
+
+### BLOQUEO DE URLs
+
+El bloqueo de URLs o filtrado es uno de los métodos más efectivos utilizado por el Gran Firewall.  
+Consiste en una serie de proxies que monitoriza y filtra el tráfico de la Web.
+
+Dichos proxies también escanean el contenido de la página Web buscando palabras clave.
+Tan pronto como una palabra coincide, bloquea la página entera.
+
+
+### ENVENENAMIENTO DE DNS
+
+Cuando tecleamos una URL, esta se convierte en una dirección IP a través de resolución de nombres DNS.
+
+El Gran Firewall Chino usa servidores DNS falsos que tienen registros que no apuntan realmente a la IP verdadera, sino a una IP falsa de tal forma
+que cuando intentas acceder a ciertas URLs no funciona.
+
+La forma en que se implementa es tener palabras clave, de forma que si el hostname contiene alguna palabra clave prohibida, automáticamente añade una respuesta DNS
+falsa.
+
+
+### BLOQUEO DE VPNS
+
+A través de técnicas como la inspección de paquetes el gobierno chino puede identificar de dónde vienen las peticiones VPN.
+Las VPN no están realmente prohibidas en China, pero ¡NO SON ANÓNIMAS! Lo cual va contra el propio principio de diseño de lo que es una URL.
+
+### SONDEO ACTIVO 
+
+De esta forma se evitan redes como TOR, y proveedores de VPN
+
+### CÓMO SABER SI TU URL ESTÁ BLOQUEADA EN CHINA
+
+Debido a este gran firewall chino, hay veces en las que el acceso a URLs desde China estará bloqueado.  
+
+Una manera de comprobarlo sería pasar la URL como parámetro en esta URL: http://www.chinafirewalltest.com/
+
+También podemos identificar cuál es el origen de una IP con la siguiente API
+https://ip-api.com/
+
+
+Microsoft ofrece un CDN específico para China: https://learn.microsoft.com/en-us/azure/cdn/cdn-china-delivery?toc=%2Fazure%2Ffrontdoor%2FTOC.json
+

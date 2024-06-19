@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Troubleshooting Application Gateway - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title><meta name="Description" content=""><meta property="og:title" content="Troubleshooting Application Gateway" />
+<meta property="og:description" content="Documentos relevantes  ¿Qué son los listeners? https://learn.microsoft.com/en-us/azure/application-gateway/configuration-listeners Comando PowerShell para ver un listener en particular: https://learn.microsoft.com/en-us/powershell/module/az.network/get-azapplicationgatewayhttplistener?view=azps-9.2.0 Terminación TLS y de extremo a extremo con Application Gateway https://learn.microsoft.com/en-us/azure/application-gateway/ssl-overview Página desde donde descargar openssl para windows https://slproweb.com/products/Win32OpenSSL.html Certificate Checker: https://tools.keycdn.com/ssl SSLABS SSLTEST https://www.ssllabs.com/ssltest/ Wiki acerca de certificados SSL https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki/333203/How-to-work-with-Certs-for-application-gateway OpenSSL commands https://www.redhat.com/sysadmin/6-openssl-commands OpenSSL examples https://www.misterpki.com/openssl-s-client/  Pasos resolución de problemas en APP GW Paso 1: Comprobar que el dominio está apuntando a la IP del Application Gateway Para ello podemos usar el comando dig (https://learn." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.gonzalo.cloud/posts/troubleshooting-appliction-gateway/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-02-01T10:47:42+01:00" />
+<meta property="article:modified_time" content="2023-02-01T10:47:42+01:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Troubleshooting Application Gateway"/>
+<meta name="twitter:description" content="Documentos relevantes  ¿Qué son los listeners? https://learn.microsoft.com/en-us/azure/application-gateway/configuration-listeners Comando PowerShell para ver un listener en particular: https://learn.microsoft.com/en-us/powershell/module/az.network/get-azapplicationgatewayhttplistener?view=azps-9.2.0 Terminación TLS y de extremo a extremo con Application Gateway https://learn.microsoft.com/en-us/azure/application-gateway/ssl-overview Página desde donde descargar openssl para windows https://slproweb.com/products/Win32OpenSSL.html Certificate Checker: https://tools.keycdn.com/ssl SSLABS SSLTEST https://www.ssllabs.com/ssltest/ Wiki acerca de certificados SSL https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki/333203/How-to-work-with-Certs-for-application-gateway OpenSSL commands https://www.redhat.com/sysadmin/6-openssl-commands OpenSSL examples https://www.misterpki.com/openssl-s-client/  Pasos resolución de problemas en APP GW Paso 1: Comprobar que el dominio está apuntando a la IP del Application Gateway Para ello podemos usar el comando dig (https://learn."/>
+<meta name="application-name" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">
+<meta name="apple-mobile-web-app-title" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.gonzalo.cloud/posts/troubleshooting-appliction-gateway/" /><link rel="prev" href="https://www.gonzalo.cloud/posts/azure-firewall/" /><link rel="next" href="https://www.gonzalo.cloud/posts/application_security_groups/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Troubleshooting Application Gateway",
+        "inLanguage": "es",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.gonzalo.cloud\/posts\/troubleshooting-appliction-gateway\/"
+        },"genre": "posts","wordcount":  815 ,
+        "url": "https:\/\/www.gonzalo.cloud\/posts\/troubleshooting-appliction-gateway\/","datePublished": "2023-02-01T10:47:42+01:00","dateModified": "2023-02-01T10:47:42+01:00","publisher": {
+            "@type": "Organization",
+            "name": "Gonzalo.cloud"},"author": {
+                "@type": "Person",
+                "name": "Gonzalo.cloud"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancelar
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contenido</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Troubleshooting Application Gateway</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Gonzalo.cloud</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-02-01">2023-02-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;815 palabras&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;4 minutos&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contenido</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#documentos-relevantes">Documentos relevantes</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#paso-1-comprobar-que-el-dominio-está-apuntando-a-la-ip-del-application-gateway">Paso 1: Comprobar que el dominio está apuntando a la IP del Application Gateway</a></li>
+    <li><a href="#paso-2-comprobar-que-existe-un-listener-y-una-regla-asociada">Paso 2: Comprobar que existe un listener y una regla asociada</a></li>
+    <li><a href="#paso-3-si-el-listener-es-https-comprobar-la-validez-del-certificado">Paso 3: Si el listener es HTTPs, comprobar la validez del certificado</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="documentos-relevantes">Documentos relevantes</h2>
+<ul>
+<li>¿Qué son los listeners? <a href="https://learn.microsoft.com/en-us/azure/application-gateway/configuration-listeners" target="_blank" rel="noopener noreffer">https://learn.microsoft.com/en-us/azure/application-gateway/configuration-listeners</a></li>
+<li>Comando PowerShell para ver un listener en particular: <a href="https://learn.microsoft.com/en-us/powershell/module/az.network/get-azapplicationgatewayhttplistener?view=azps-9.2.0" target="_blank" rel="noopener noreffer">https://learn.microsoft.com/en-us/powershell/module/az.network/get-azapplicationgatewayhttplistener?view=azps-9.2.0</a></li>
+<li>Terminación TLS y de extremo a extremo con Application Gateway <a href="https://learn.microsoft.com/en-us/azure/application-gateway/ssl-overview" target="_blank" rel="noopener noreffer">https://learn.microsoft.com/en-us/azure/application-gateway/ssl-overview</a></li>
+<li>Página desde donde descargar openssl para windows <a href="https://slproweb.com/products/Win32OpenSSL.html" target="_blank" rel="noopener noreffer">https://slproweb.com/products/Win32OpenSSL.html</a></li>
+<li>Certificate Checker: <a href="https://tools.keycdn.com/ssl" target="_blank" rel="noopener noreffer">https://tools.keycdn.com/ssl</a></li>
+<li>SSLABS SSLTEST <a href="https://www.ssllabs.com/ssltest/" target="_blank" rel="noopener noreffer">https://www.ssllabs.com/ssltest/</a></li>
+<li>Wiki acerca de certificados SSL <a href="https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki/333203/How-to-work-with-Certs-for-application-gateway" target="_blank" rel="noopener noreffer">https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki/333203/How-to-work-with-Certs-for-application-gateway</a></li>
+<li>OpenSSL commands <a href="https://www.redhat.com/sysadmin/6-openssl-commands" target="_blank" rel="noopener noreffer">https://www.redhat.com/sysadmin/6-openssl-commands</a></li>
+<li>OpenSSL examples <a href="https://www.misterpki.com/openssl-s-client/" target="_blank" rel="noopener noreffer">https://www.misterpki.com/openssl-s-client/</a></li>
+</ul>
+<h1 id="pasos-resolución-de-problemas-en-app-gw">Pasos resolución de problemas en APP GW</h1>
+<h2 id="paso-1-comprobar-que-el-dominio-está-apuntando-a-la-ip-del-application-gateway">Paso 1: Comprobar que el dominio está apuntando a la IP del Application Gateway</h2>
+<p>Para ello podemos usar el comando dig (<a href="https://learn.microsoft.com/en-us/azure/application-gateway/ssl-overview" target="_blank" rel="noopener noreffer">https://learn.microsoft.com/en-us/azure/application-gateway/ssl-overview</a>)</p>
+<pre tabindex="0"><code class="language-jsdig" data-lang="jsdig">
+; &lt;&lt;&gt;&gt; DiG 9.16.1-Ubuntu &lt;&lt;&gt;&gt; ritmosereno.com
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 29683
+;; flags: qr rd ad; QUERY: 1, ANSWER: 7, AUTHORITY: 0, ADDITIONAL: 0
+;; WARNING: recursion requested but not available
+
+;; QUESTION SECTION:
+;ritmosereno.com.               IN      A
+
+;; ANSWER SECTION:
+ritmosereno.com.        0       IN      A       20.73.187.232
+ns2-34.azure-dns.net.   0       IN      A       150.171.16.34
+ns2-34.azure-dns.net.   0       IN      AAAA    2620:1ec:8ec:10::22
+ns3-34.azure-dns.org.   0       IN      A       13.107.222.34
+ns3-34.azure-dns.org.   0       IN      AAAA    2a01:111:4000:10::22
+ns4-34.azure-dns.info.  0       IN      A       13.107.206.34
+ns4-34.azure-dns.info.  0       IN      AAAA    2620:1ec:bda:10::22
+
+;; Query time: 70 msec
+;; SERVER: 172.24.128.1#53(172.24.128.1)
+;; WHEN: Wed Feb 01 10:49:48 CET 2023
+;; MSG SIZE  rcvd: 257
+</code></pre><p>También podemos usar el comando nslookup</p>
+<p>C:\Users\gonzalomu&gt;nslookup <a href="https://www.ritmosereno.com" target="_blank" rel="noopener noreffer">www.ritmosereno.com</a>
+Server:  UnKnown
+Address:  192.168.18.1</p>
+<p>Non-authoritative answer:
+Name:    <a href="https://www.ritmosereno.com" target="_blank" rel="noopener noreffer">www.ritmosereno.com</a>
+Address:  20.73.187.232</p>
+<p>Tanto con el comando <strong>dig</strong>, como con el comando <strong>nslookup</strong> hemos identificado que la IP es la 20.73.187.232</p>
+<p>Ahora comprobamos en el Portal de Azure, o en el ASC en las propiedades</p>
+<figure><img src="/Images/APPGWTROUBLESHOOTING/IPFROMPORTAL.jpg"/><figcaption>
+            <h4>IP del servicio APP GW</h4>
+        </figcaption>
+</figure>
+
+<p>Como podemos comprobar el Application Gateway tiene una IP asignada 20.73.187.232, con lo cual una request dirigida a
+<a href="http://www.ritmosereno.com" target="_blank" rel="noopener noreffer">http://www.ritmosereno.com</a>, llegará a la IP frontal del APP GW.</p>
+<h2 id="paso-2-comprobar-que-existe-un-listener-y-una-regla-asociada">Paso 2: Comprobar que existe un listener y una regla asociada</h2>
+<p>Para ver los listeners con PowerShell</p>
+<pre tabindex="0"><code>Connect-AzAccount
+$appgw = Get-AzApplicationGateway -Name &#34;APP&#34; -ResourceGroupName &#34;ritmosereno&#34;
+echo $appgw.HTTPListenersText
+echo $appgw.HTTPSListenersText
+</code></pre><p>¿Cómo ver un listener en particular?</p>
+<p><a href="https://learn.microsoft.com/en-us/powershell/module/az.network/get-azapplicationgatewayhttplistener?view=azps-9.2.0" target="_blank" rel="noopener noreffer">https://learn.microsoft.com/en-us/powershell/module/az.network/get-azapplicationgatewayhttplistener?view=azps-9.2.0</a></p>
+<pre tabindex="0"><code>$Appgw = Get-AzApplicationGateway -Name &#34;ApplicationGateway01&#34; -ResourceGroupName &#34;ResourceGroup01&#34;
+$Listener = Get-AzApplicationGatewayHttpListener -Name &#34;Listener01&#34; -ApplicationGateway $Appgw
+</code></pre><h2 id="paso-3-si-el-listener-es-https-comprobar-la-validez-del-certificado">Paso 3: Si el listener es HTTPs, comprobar la validez del certificado</h2>
+<p>3.1 ¿Es la fecha del certificado válida?</p>
+<p>Por ejemplo, si el dominio es aramcotrading.com</p>
+<p>echo | openssl s_client -servername aramcotrading.com -connect aramcotrading.com:443 2&gt;/dev/null | openssl x509 -noout -dates</p>
+<p>Nos devolverá</p>
+<p>notBefore=Mar  8 00:00:00 2022 GMT
+notAfter=Apr  8 23:59:59 2023 GMT</p>
+<p>3.2 ¿Es un certificado completo que contiene leaf, intermediate and root CA?</p>
+<p>Para ello utilizamos el comando:</p>
+<p>openssl s_client -connect hostname:port -servername hostname</p>
+<p>Ejemplo:
+openssl s_client -connect google.com:443 -servername google.com</p>
+<p>Si el certificado es válido, veremos algo similar a lo siguiente:</p>
+<pre tabindex="0"><code class="language-CONNECTED(00000003)" data-lang="CONNECTED(00000003)">depth=2 C = US, O = GeoTrust Inc., CN = GeoTrust Global CA
+verify return:1
+depth=1 C = US, O = Google Trust Services, CN = GTS CA 1O1
+verify return:1
+depth=0 C = US, ST = California, L = Mountain View, O = Google LLC, CN = *.google.com
+verify return:1
+---
+Certificate chain
+ 0 s:C = US, ST = California, L = Mountain View, O = Google LLC, CN = *.google.com
+   i:C = US, O = Google Trust Services, CN = GTS CA 1O1
+   1 s:C = US, O = Google Trust Services, CN = GTS CA 1O1
+     i:C = US, O = GeoTrust Inc., CN = GeoTrust Global CA
+---
+Server certificate
+-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----
+subject=C = US, ST = California, L = Mountain View, O = Google LLC, CN = *.google.com
+issuer=C = US, O = Google Trust Services, CN = GTS CA 1O1
+...
+</code></pre><p>Éste es un certificado con la cadena de verificación completa:</p>
+<p>deep 2 = Root Certificate</p>
+<p>deep 1 = Intermediate Certificate</p>
+<p>deep 0 = Leaf certificate</p>
+<figure><img src="/Images/APPGWTROUBLESHOOTING/FULLCHAIN.jpg"/>
+</figure>
+
+<p>Si al comprobar los certificados nos da errores, tales como</p>
+<p>verify error:num=20: unable to get local issuer certificate in the above means the intermediate cert is missing from the chain
+verify error:num=21: unable to verify the first certificate in the above means the root cert is missing from the chain</p>
+<p>Esto significa que el certificado no tiene la cadena completa (falta root, indermediate or leaf)
+El certificado en el listener del Application Gateway, tiene que contener la cadena completa (el certificado root de la CA, el intermediario y el leaf)</p>
+<p>También tiene el requisito de que el &ldquo;Common Name (CN) del certificado coincida con el host header de la request)</p>
+<p>Por ejemplo, si el cliente está haciendo una request a <a href="https://www.contoso.com" target="_blank" rel="noopener noreffer">https://www.contoso.com</a>, el CN debe ser <a href="https://www.contoso.com" target="_blank" rel="noopener noreffer">www.contoso.com</a></p>
+<p>Si queremos comprobar si un fichero .pfx está bien creado, podemos usar el comando</p>
+<p>openssl pkcs12 -info -nokeys -in c:\certificado.pfx</p>
+<p>El orden debe ser</p>
+<p>leaf &ndash;&gt; intermediate &ndash;&gt; root</p>
+<p>En Application Gateway V2, el orden de los certificados es importante.</p>
+<p>Otra forma en la que podemos usar openssl es</p>
+<p>openssl s_client &ndash;connect IP:PORT -servername FQDN -showcerts</p>
+<p>Ejemplo:</p>
+<p>openssl s_client &ndash;connect 52.154.171.168:443 -servername trainv3.ericashton.com -showcerts</p>
+<p>Una herramienta para ver el orden de los certificados</p>
+<figure><img src="/Images/APPGWTROUBLESHOOTING/herramienta.jpg"/>
+</figure>
+
+<p>Para obtener la configuración del Application Gateway</p>
+<p>Desde ASC &ndash;&gt; Properties &ndash;&gt; Raw Gateway Manager Config</p>
+<p>O bien directamente desde una máquina SAW, lanzar la query</p>
+<p><a href="https://portal.microsoftgeneva.com/FE496009?genevatraceguid=16d75552-54d7-4f09-98c6-9ee2415fc643" target="_blank" rel="noopener noreffer">https://portal.microsoftgeneva.com/FE496009?genevatraceguid=16d75552-54d7-4f09-98c6-9ee2415fc643</a></p>
+<p><a href="https://portal.microsoftgeneva.com/?page=actions&amp;acisEndpoint=Public&amp;managementOpen=false&amp;selectedNodeType=3&amp;extension=Brooklyn&amp;group=Application%20Gateways&amp;operationId=getapplicationgateway&amp;operationName=Get%20Application%20Gateway&amp;inputMode=single&amp;params=%7b%22subscriptionid%22:%226c385e2d-4e18-42a6-8573-9ebfc8173bb8%22,%22resourcegroupname%22:%22RG-VWAN-PLT-001%22,%22applicationgatewayname%22:%22AGW-PLT-WEU-001%22,%22smegatewaymanagerregion%22:%22West%20Europe%22%7d&amp;actionEndpoint=Brooklyn%20-%20Prod&amp;genevatraceguid=16d75552-54d7-4f09-98c6-9ee2415fc643" target="_blank" rel="noopener noreffer">https://portal.microsoftgeneva.com/?page=actions&acisEndpoint=Public&managementOpen=false&selectedNodeType=3&extension=Brooklyn&group=Application%20Gateways&operationId=getapplicationgateway&operationName=Get%20Application%20Gateway&inputMode=single&params={"subscriptionid":"6c385e2d-4e18-42a6-8573-9ebfc8173bb8","resourcegroupname":"RG-VWAN-PLT-001","applicationgatewayname":"AGW-PLT-WEU-001","smegatewaymanagerregion":"West%20Europe"}&actionEndpoint=Brooklyn%20-%20Prod&genevatraceguid=16d75552-54d7-4f09-98c6-9ee2415fc643</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Actualizado el 2023-02-01</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Regresar</a></span>&nbsp;|&nbsp;<span><a href="/">Inicio</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/azure-firewall/" class="prev" rel="prev" title="Azure Firewall"><i class="fas fa-angle-left fa-fw"></i>Azure Firewall</a>
+            <a href="/posts/application_security_groups/" class="next" rel="next" title="Application Security Groups">Application Security Groups<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Contenido creado por Gonzalo.cloud.Prohibida la reproducción parcial o total del contenido sin permiso explícito del autor</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Gonzalo.cloud</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Volver arriba">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="Ver comentarios">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.es.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copiar al portapapeles","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"es","maxResultLength":10,"noResultsFound":"No se encontraron resultados","snippetLength":30}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

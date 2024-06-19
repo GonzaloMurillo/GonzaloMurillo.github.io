@@ -1,0 +1,18 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Private Link - Categoría - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title>
+        <link>https://www.gonzalo.cloud/categories/private-link/</link>
+        <description>Private Link - Categoría - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</description>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Tue, 10 Jan 2023 08:53:38 &#43;0100</lastBuildDate><atom:link href="https://www.gonzalo.cloud/categories/private-link/" rel="self" type="application/rss+xml" /><item>
+    <title>Private Endpoint- Private Link</title>
+    <link>https://www.gonzalo.cloud/posts/private-endpoint-private-link/</link>
+    <pubDate>Tue, 10 Jan 2023 08:53:38 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/private-endpoint-private-link/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/Images/PrivateEndPoint/AzurePrivateEndpoint.jpg" referrerpolicy="no-referrer">
+            </div>Documentos relevantes https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration
+¿Qué problema intenta resolver private endpoint / private link? Resulta fundamental para comprender mejor un servicio, conocer en primer lugar cuál es el problema que intenta resolver dicho servicio, cuál es su razón de ser.
+El problema que intenta resolver private endpoint / private link es el acceso privado a servicios PaaS que son multitenant (servicios que son accedidos por múltiples clientes simultáneamente a traves de una IP pública).]]></description>
+</item></channel>
+</rss>

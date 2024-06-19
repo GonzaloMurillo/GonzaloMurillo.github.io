@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Troubleshooting Application Gateway (Internal) - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title><meta name="Description" content=""><meta property="og:title" content="Troubleshooting Application Gateway (Internal)" />
+<meta property="og:description" content="Troubleshooting de Application Gateway  Comprobar NSG en la subred del Application Gateway  1.1) En ASC en el &ldquo;blade&rdquo; de properties, identificar el SKU y la VNET
+SKU Name	Standard_v2 Virtual Network Id	baa405b9-6060-4c17-9dcd-c93b93706666 Virtual Network Name	MR-LI-Net-02-WE-S-BDAP
+Habrá que identificar la VNET del Application Gateway. Recordemos que la subnet del Application Gateway no tiene por qué tener un nombre específico así que la mejor forma es desde la pestaña de propiedades, irse a la sección Instances, y ver las IPs que están cogiendo:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.gonzalo.cloud/posts/troubleshooting-application-gateway/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-16T11:01:37+01:00" />
+<meta property="article:modified_time" content="2022-12-16T11:01:37+01:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Troubleshooting Application Gateway (Internal)"/>
+<meta name="twitter:description" content="Troubleshooting de Application Gateway  Comprobar NSG en la subred del Application Gateway  1.1) En ASC en el &ldquo;blade&rdquo; de properties, identificar el SKU y la VNET
+SKU Name	Standard_v2 Virtual Network Id	baa405b9-6060-4c17-9dcd-c93b93706666 Virtual Network Name	MR-LI-Net-02-WE-S-BDAP
+Habrá que identificar la VNET del Application Gateway. Recordemos que la subnet del Application Gateway no tiene por qué tener un nombre específico así que la mejor forma es desde la pestaña de propiedades, irse a la sección Instances, y ver las IPs que están cogiendo:"/>
+<meta name="application-name" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">
+<meta name="apple-mobile-web-app-title" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.gonzalo.cloud/posts/troubleshooting-application-gateway/" /><link rel="prev" href="https://www.gonzalo.cloud/posts/el-gran-firewall-chino-y-los-cdn/" /><link rel="next" href="https://www.gonzalo.cloud/posts/application-gateway-diagnostics/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Troubleshooting Application Gateway (Internal)",
+        "inLanguage": "es",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.gonzalo.cloud\/posts\/troubleshooting-application-gateway\/"
+        },"genre": "posts","keywords": "Application Gateway","wordcount":  1814 ,
+        "url": "https:\/\/www.gonzalo.cloud\/posts\/troubleshooting-application-gateway\/","datePublished": "2022-12-16T11:01:37+01:00","dateModified": "2022-12-16T11:01:37+01:00","publisher": {
+            "@type": "Organization",
+            "name": "Gonzalo.cloud"},"author": {
+                "@type": "Person",
+                "name": "Gonzalo.cloud"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancelar
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contenido</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Troubleshooting Application Gateway (Internal)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Gonzalo.cloud</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-12-16">2022-12-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1814 palabras&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;9 minutos&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contenido</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#troubleshooting-de-application-gateway">Troubleshooting de Application Gateway</a></li>
+    <li><a href="#códigos-de-error-de-application-gateway">Códigos de error de Application Gateway</a></li>
+    <li><a href="#http-status-code-404">HTTP STATUS CODE 404</a></li>
+    <li><a href="#http-status-code-502">HTTP STATUS CODE 502</a></li>
+    <li><a href="#upstream-ssl-certificate-does-not-match">Upstream SSL certificate does not match</a>
+      <ul>
+        <li><a href="#cause">Cause</a></li>
+      </ul>
+    </li>
+    <li><a href="#solution">Solution</a></li>
+    <li><a href="#recreación-de-certificados">Recreación de certificados</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="troubleshooting-de-application-gateway">Troubleshooting de Application Gateway</h2>
+<ol>
+<li>Comprobar NSG en la subred del Application Gateway</li>
+</ol>
+<p>1.1)  En ASC en el &ldquo;blade&rdquo; de properties, identificar el SKU y la VNET</p>
+<p>SKU Name	Standard_v2
+Virtual Network Id	baa405b9-6060-4c17-9dcd-c93b93706666
+Virtual Network Name	MR-LI-Net-02-WE-S-BDAP</p>
+<p>Habrá que identificar la VNET del Application Gateway.
+Recordemos que la subnet del Application Gateway no tiene por qué tener un nombre específico
+así que la mejor forma es desde la pestaña de propiedades, irse a la sección Instances,
+y ver las IPs que están cogiendo:</p>
+<p>appgw_0	10.247.11.132	65200	65350	7b14d32e-9b1b-4025-b3f6-c7acfe5e1598
+appgw_1	10.247.11.133	65201	65351	3ec00ac0-6df4-4bcd-9b9e-c0973f104742</p>
+<p>En este caso sabemos que tienen un rango 10.247.11.</p>
+<p>Nos vamos a las subredes de la VNET MR-LI-Net-02-WE-S-BDAP, y vemos que la que encaja es</p>
+<p>MR-LI-Net-02-Sub-12-WE-S-BDAP	10.247.11.128/29</p>
+<p>Que tiene un NSG</p>
+<p>MR-LI-Net-02-WE-S-BDAP-GEO-NSG</p>
+<p>Abrimos el recurso de NSG desde ASC , y puesto que es V2, tiene que permitir incoming traffic en los puertos 65200-65535
+destination subnet ANY and source GatewayManager service tag</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/application-gateway/configuration-infrastructure" target="_blank" rel="noopener noreffer">https://learn.microsoft.com/en-us/azure/application-gateway/configuration-infrastructure</a></p>
+<p>Se puede hacer automáticamente con un Jarvis Action</p>
+<p>Regional Network Manager &gt; Network Security Group &gt; Get Access Control Group for a given vnet and subnet</p>
+<p><a href="https://portal.microsoftgeneva.com/?page=actions&amp;acisEndpoint=Public&amp;managementOpen=false&amp;selectedNodeType=3&amp;extension=Regional%20Network%20Manager&amp;group=Network%20Security%20Group&amp;operationId=GetAclGroupForAssociatedObject&amp;operationName=Get%20Access%20Control%20Group%20for%20a%20given%20vnet%20and%20subnet&amp;inputMode=single&amp;params=%7b%22smeregionparameter%22:%22europewest%22,%22smevnetparameter%22:%22baa405b9-6060-4c17-9dcd-c93b93706666%22,%22smesubnetparameter%22:%22MR-LI-Net-02-Sub-12-WE-S-BDAP%22%7d&amp;actionEndpoint=Regional%20Network%20Manager%20Endpoint&amp;genevatraceguid=7ac5f91d-258f-4aec-9686-898fa5491771" target="_blank" rel="noopener noreffer">https://portal.microsoftgeneva.com/?page=actions&acisEndpoint=Public&managementOpen=false&selectedNodeType=3&extension=Regional%20Network%20Manager&group=Network%20Security%20Group&operationId=GetAclGroupForAssociatedObject&operationName=Get%20Access%20Control%20Group%20for%20a%20given%20vnet%20and%20subnet&inputMode=single&params={"smeregionparameter":"europewest","smevnetparameter":"baa405b9-6060-4c17-9dcd-c93b93706666","smesubnetparameter":"MR-LI-Net-02-Sub-12-WE-S-BDAP"}&actionEndpoint=Regional%20Network%20Manager%20Endpoint&genevatraceguid=7ac5f91d-258f-4aec-9686-898fa5491771</a></p>
+<p>Otra forma de hacerlo automáticamente es desde ASC, abrir el recurso de APP GW, desplegar las instancias y hacer un test traffic desde una de las instancias del APP GW hasta el backend, hacer un test traffic, contra el puerto de servicio del backend.</p>
+<ol start="2">
+<li>Comprobar si la VNET donde está el APPLICATION GATEWAY tiene CUSTOM DNS</li>
+</ol>
+<p>DNS Servers	10.28.110.4, 10.28.110.5</p>
+<p>Si el backend es un FQDN, hay que asegurarse de que la resolución DNS desde la instancia del APP GW es correcta</p>
+<p>SAW &ndash;
+Brooklyn &gt; Application Gateways &gt; Get List of NonResolvable Domains</p>
+<p><a href="https://portal.microsoftgeneva.com/?page=actions&amp;acisEndpoint=Public&amp;managementOpen=false&amp;selectedNodeType=3&amp;extension=Brooklyn&amp;group=Application%20Gateways&amp;operationId=getlistofnonresolvabledomains&amp;operationName=Get%20List%20of%20NonResolvable%20Domains&amp;inputMode=single&amp;params=%7b%22subscriptionid%22:%22c64d0b19-4679-45f5-b17a-e27b02146589%22,%22resourcegroupname%22:%22MR-BDAP-SBX-WE-APPGWGEOPOC%22,%22applicationgatewayname%22:%22mrbdapsbxweappgwgeopoc01%22,%22domainnametocheck%22:%22mrbdapgeoservicewe-sbx.munichre.com%22,%22includedefaultcontrolpathendpoints%22:false,%22includedefaultdatapathendpoints%22:false,%22smegatewaymanagerregion%22:%22West%20Europe%22%7d&amp;actionEndpoint=Brooklyn%20-%20Prod&amp;genevatraceguid=b9c097da-66da-4de4-bda7-4628d9b0a1b7" target="_blank" rel="noopener noreffer">https://portal.microsoftgeneva.com/?page=actions&acisEndpoint=Public&managementOpen=false&selectedNodeType=3&extension=Brooklyn&group=Application%20Gateways&operationId=getlistofnonresolvabledomains&operationName=Get%20List%20of%20NonResolvable%20Domains&inputMode=single&params={"subscriptionid":"c64d0b19-4679-45f5-b17a-e27b02146589","resourcegroupname":"MR-BDAP-SBX-WE-APPGWGEOPOC","applicationgatewayname":"mrbdapsbxweappgwgeopoc01","domainnametocheck":"mrbdapgeoservicewe-sbx.munichre.com","includedefaultcontrolpathendpoints":false,"includedefaultdatapathendpoints":false,"smegatewaymanagerregion":"West%20Europe"}&actionEndpoint=Brooklyn%20-%20Prod&genevatraceguid=b9c097da-66da-4de4-bda7-4628d9b0a1b7</a></p>
+<p>Está resolviendo a : 20.50.10.108</p>
+<p>{
+&ldquo;ID&rdquo;: &ldquo;18e91fa8-0b58-4b2f-b2f1-65b4a5a76cfe&rdquo;,
+&ldquo;OperationName&rdquo;: null,
+&ldquo;OperationStartedTime&rdquo;: &ldquo;2023-04-18T08:58:31.3602977&rdquo;,
+&ldquo;OperationCompletedTime&rdquo;: &ldquo;2023-04-18T08:58:32.6311249&rdquo;,
+&ldquo;Status&rdquo;: &ldquo;Successful&rdquo;,
+&ldquo;HttpStatusCode&rdquo;: &ldquo;OK&rdquo;,
+&ldquo;Error&rdquo;: &ldquo;&rdquo;,
+&ldquo;Data&rdquo;: {
+&ldquo;allResults&rdquo;: [
+{
+&ldquo;instanceNumber&rdquo;: 0,
+&ldquo;instanceDetails&rdquo;: &ldquo;https://20.50.234.217:65200&rdquo;,
+&ldquo;segmentedOutputPerInstance&rdquo;: {
+&ldquo;datapathEndpointsResults&rdquo;: [],
+&ldquo;controlpathEndpointsResults&rdquo;: [],
+&ldquo;extraEndpointResults&rdquo;: [
+{
+&ldquo;domainName&rdquo;: &ldquo;mrbdapgeoservicewe-sbx.munichre.com&rdquo;,
+&ldquo;listDomainResolutionResult&rdquo;: [
+{
+&ldquo;dnsServer&rdquo;: &ldquo;10.28.110.4&rdquo;,
+&ldquo;ipList&rdquo;: [
+&ldquo;20.50.10.108&rdquo;
+],
+&ldquo;status&rdquo;: &ldquo;Succeeded&rdquo;,
+&ldquo;resolutionError&rdquo;: null
+},
+{
+&ldquo;dnsServer&rdquo;: &ldquo;10.28.110.5&rdquo;,
+&ldquo;ipList&rdquo;: [
+&ldquo;20.50.10.108&rdquo;
+],
+&ldquo;status&rdquo;: &ldquo;Succeeded&rdquo;,
+&ldquo;resolutionError&rdquo;: null
+}
+]
+}
+]
+}
+},
+{
+&ldquo;instanceNumber&rdquo;: 1,
+&ldquo;instanceDetails&rdquo;: &ldquo;https://20.50.234.217:65201&rdquo;,
+&ldquo;segmentedOutputPerInstance&rdquo;: {
+&ldquo;datapathEndpointsResults&rdquo;: [],
+&ldquo;controlpathEndpointsResults&rdquo;: [],
+&ldquo;extraEndpointResults&rdquo;: [
+{
+&ldquo;domainName&rdquo;: &ldquo;mrbdapgeoservicewe-sbx.munichre.com&rdquo;,
+&ldquo;listDomainResolutionResult&rdquo;: [
+{
+&ldquo;dnsServer&rdquo;: &ldquo;10.28.110.4&rdquo;,
+&ldquo;ipList&rdquo;: [
+&ldquo;20.50.10.108&rdquo;
+],
+&ldquo;status&rdquo;: &ldquo;Succeeded&rdquo;,
+&ldquo;resolutionError&rdquo;: null
+},
+{
+&ldquo;dnsServer&rdquo;: &ldquo;10.28.110.5&rdquo;,
+&ldquo;ipList&rdquo;: [
+&ldquo;20.50.10.108&rdquo;
+],
+&ldquo;status&rdquo;: &ldquo;Succeeded&rdquo;,
+&ldquo;resolutionError&rdquo;: null
+}
+]
+}
+]
+}
+}
+],
+&ldquo;failedResults&rdquo;: [
+{
+&ldquo;instanceNumber&rdquo;: 0,
+&ldquo;instanceDetails&rdquo;: &ldquo;https://20.50.234.217:65200&rdquo;,
+&ldquo;segmentedOutputPerInstance&rdquo;: {
+&ldquo;datapathEndpointsResults&rdquo;: [],
+&ldquo;controlpathEndpointsResults&rdquo;: [],
+&ldquo;extraEndpointResults&rdquo;: []
+}
+},
+{
+&ldquo;instanceNumber&rdquo;: 1,
+&ldquo;instanceDetails&rdquo;: &ldquo;https://20.50.234.217:65201&rdquo;,
+&ldquo;segmentedOutputPerInstance&rdquo;: {
+&ldquo;datapathEndpointsResults&rdquo;: [],
+&ldquo;controlpathEndpointsResults&rdquo;: [],
+&ldquo;extraEndpointResults&rdquo;: []
+}
+}
+]
+},
+&ldquo;InternalStatus&rdquo;: &ldquo;Succeeded@,Succeeded@ApplicationGatewayReentrantWorkItem,4/18/2023 8:58:32 AM;&rdquo;,
+&ldquo;HealthStatus&rdquo;: &quot;&quot;
+}</p>
+<ol start="3">
+<li>Obtener la configuración RAW del Application Gateway</li>
+</ol>
+<p>Desde ASC &ndash;&gt; Diagnostics &ndash;&gt; Raw Brooklyn Config	SAS URL</p>
+<p>Ó desde Jarvis:
+Brooklyn &gt; Application Gateways &gt; Get Application Gateway</p>
+<p><a href="https://portal.microsoftgeneva.com/?page=actions&amp;acisEndpoint=Public&amp;managementOpen=false&amp;selectedNodeType=3&amp;extension=Brooklyn&amp;group=Application%20Gateways&amp;operationId=getapplicationgateway&amp;operationName=Get%20Application%20Gateway&amp;inputMode=single&amp;params=%7b%22subscriptionid%22:%22c64d0b19-4679-45f5-b17a-e27b02146589%22,%22resourcegroupname%22:%22MR-BDAP-SBX-WE-APPGWGEOPOC%22,%22applicationgatewayname%22:%22mrbdapsbxweappgwgeopoc01%22,%22smegatewaymanagerregion%22:%22West%20Europe%22%7d&amp;actionEndpoint=Brooklyn%20-%20Prod&amp;genevatraceguid=7ac5f91d-258f-4aec-9686-898fa5491771" target="_blank" rel="noopener noreffer">https://portal.microsoftgeneva.com/?page=actions&acisEndpoint=Public&managementOpen=false&selectedNodeType=3&extension=Brooklyn&group=Application%20Gateways&operationId=getapplicationgateway&operationName=Get%20Application%20Gateway&inputMode=single&params={"subscriptionid":"c64d0b19-4679-45f5-b17a-e27b02146589","resourcegroupname":"MR-BDAP-SBX-WE-APPGWGEOPOC","applicationgatewayname":"mrbdapsbxweappgwgeopoc01","smegatewaymanagerregion":"West%20Europe"}&actionEndpoint=Brooklyn%20-%20Prod&genevatraceguid=7ac5f91d-258f-4aec-9686-898fa5491771</a></p>
+<p>Rellenaremos la siguiente plantilla:</p>
+<p>URL / HOST / PROTOCOL</p>
+<p>LISTENER</p>
+<p>RULE</p>
+<p>BACKEND POOL</p>
+<p>BACKEND SETTINGS</p>
+<p>PROBE / CUSTOM PROBE</p>
+<hr>
+<p>URL / HOST / PROTOCOL</p>
+<p><a href="https://mrbdapgeoservicewe-sbx.munichre.com/geoserver/web" target="_blank" rel="noopener noreffer">https://mrbdapgeoservicewe-sbx.munichre.com/geoserver/web</a></p>
+<p>LISTENER</p>
+<p>{
+&ldquo;FrontendIP&rdquo;: &ldquo;appGatewayFrontendIP&rdquo;,
+&ldquo;FrontendPort&rdquo;: &ldquo;port_443&rdquo;,
+&ldquo;Name&rdquo;: &ldquo;geoHttpsListener&rdquo;,
+&ldquo;Protocol&rdquo;: &ldquo;Https&rdquo;,
+&ldquo;RequireServerNameIndication&rdquo;: &ldquo;False&rdquo;,
+&ldquo;SslCert&rdquo;: &ldquo;mrbdapgeoservicepocwe-sbx-chain&rdquo;
+}</p>
+<p>RULE</p>
+<p>{
+&ldquo;Listener&rdquo;: &ldquo;geoHttpsListener&rdquo;,
+&ldquo;Name&rdquo;: &ldquo;rejectAdminUIHttpsRule&rdquo;,
+&ldquo;Priority&rdquo;: 80,
+&ldquo;Type&rdquo;: &ldquo;PathBasedRouting&rdquo;,
+&ldquo;UrlPathMap&rdquo;: &ldquo;urlPathMapHttps&rdquo;
+}</p>
+<p>RULE TYPE: PATH BASED</p>
+<p>UrlPathMaps&quot;: [
+{
+&ldquo;DefaultBackendAddressPool&rdquo;: &ldquo;geoBackendPoolHttps&rdquo;,
+&ldquo;DefaultBackendHttpSettings&rdquo;: &ldquo;geoBackendHttpsSettings&rdquo;,
+&ldquo;Name&rdquo;: &ldquo;urlPathMapHttps&rdquo;,
+&ldquo;PathRules&rdquo;: [
+{
+&ldquo;BackendAddressPool&rdquo;: &ldquo;emptyBackendPool&rdquo;,
+&ldquo;BackendHttpSettings&rdquo;: &ldquo;geoBackendHttpsSettings&rdquo;,
+&ldquo;Paths&rdquo;: [
+&ldquo;/geoserver/abc/*&rdquo;
+],
+&ldquo;Priority&rdquo;: null,
+&ldquo;WebApplicationFirewallConfig&rdquo;: null
+}
+]
+}
+]</p>
+<p>BACKEND POOL</p>
+<p>geoBackendPoolHttps</p>
+<p>{
+&ldquo;BackendServersInfo&rdquo;: {},
+&ldquo;IPAddresses&rdquo;: [
+&ldquo;mrbdaplgeopoc01.munichre.com&rdquo;
+],
+&ldquo;Name&rdquo;: &ldquo;geoBackendPoolHttps&rdquo;
+}</p>
+<p>BACKEND SETTINGS</p>
+<p>geoBackendHttpsSettings</p>
+<p>{
+&ldquo;AffinityCookieName&rdquo;: &ldquo;ApplicationGatewayAffinity&rdquo;,
+&ldquo;AuthenticationCertificates&rdquo;: [],
+&ldquo;ConnectionDraining&rdquo;: {
+&ldquo;DrainTimeoutInSec&rdquo;: 1,
+&ldquo;Enabled&rdquo;: false
+},
+&ldquo;CookieBasedAffinity&rdquo;: &ldquo;Disabled&rdquo;,
+&ldquo;Name&rdquo;: &ldquo;geoBackendHttpsSettings&rdquo;,
+&ldquo;PickHostNameFromBackendAddress&rdquo;: true,
+&ldquo;Port&rdquo;: 8443,
+&ldquo;Probe&rdquo;: &ldquo;geoBackendHealthHttps&rdquo;,
+&ldquo;Protocol&rdquo;: &ldquo;Https&rdquo;,
+&ldquo;RequestTimeout&rdquo;: 30
+}
+PROBE / CUSTOM PROBE</p>
+<p>&ldquo;Name&rdquo;: &ldquo;geoBackendHealthHttps&rdquo;,
+&ldquo;Path&rdquo;: &ldquo;/geoserver&rdquo;,
+&ldquo;PickHostNameFromBackendHttpSettings&rdquo;: true,
+&ldquo;PickServerNameIndicationFromBackendSettings&rdquo;: false,
+&ldquo;Port&rdquo;: null,
+&ldquo;Protocol&rdquo;: &ldquo;Https&rdquo;,
+&ldquo;Timeout&rdquo;: 30,
+&ldquo;UnhealthyThreshold&rdquo;: 3
+}</p>
+<p>Cuando un usuario accede a</p>
+<p><a href="https://mrbdapgeoservicewe-sbx.munichre.com/geoserver/web" target="_blank" rel="noopener noreffer">https://mrbdapgeoservicewe-sbx.munichre.com/geoserver/web</a></p>
+<p>Llega al listener geoHttpsListener</p>
+<p>que manda a</p>
+<p>geoBackendPoolHttps</p>
+<p>{
+&ldquo;BackendServersInfo&rdquo;: {},
+&ldquo;IPAddresses&rdquo;: [
+&ldquo;mrbdaplgeopoc01.munichre.com&rdquo;
+],
+&ldquo;Name&rdquo;: &ldquo;geoBackendPoolHttps&rdquo;
+}</p>
+<p><a href="https://mrbdapgeoservicewe-sbx.munichre.com/geoserver/web" target="_blank" rel="noopener noreffer">https://mrbdapgeoservicewe-sbx.munichre.com/geoserver/web</a>  &ndash;&gt;  mrbdaplgeopoc01.munichre.com</p>
+<ol start="4">
+<li>Comprobar que el dominio al que quieren acceder, resuelve a la IP del APP GW</li>
+</ol>
+<p>dig mrbdapgeoservicewe-sbx.munichre.com</p>
+<p>; &laquo;&raquo; DiG 9.16.1-Ubuntu &laquo;&raquo; mrbdapgeoservicewe-sbx.munichre.com
+;; global options: +cmd
+;; Got answer:
+;; -&raquo;HEADER&laquo;- opcode: QUERY, status: NOERROR, id: 12451
+;; flags: qr rd ad; QUERY: 1, ANSWER: 5, AUTHORITY: 0, ADDITIONAL: 0
+;; WARNING: recursion requested but not available</p>
+<p>;; QUESTION SECTION:
+;mrbdapgeoservicewe-sbx.munichre.com. IN        A</p>
+<p>;; ANSWER SECTION:
+mrbdapgeoservicewe-sbx.munichre.com. 0 IN CNAME 582259a1-dcaa-4cca-b1cf-e60d3f045ecd.tenant.runtime.msappproxy.net.
+582259a1-dcaa-4cca-b1cf-e60d3f045ecd.tenant.runtime.msappproxy.net. 0 IN CNAME cwap-eur2-runtime.routing.msappproxy.net.
+cwap-eur2-runtime.routing.msappproxy.net. 0 IN CNAME eur.proxy-2.appproxy.msidentity.com.
+eur.proxy-2.appproxy.msidentity.com. 0 IN CNAME <a href="https://www.tm.eur.proxy-2.appproxy.trafficmanager.net" target="_blank" rel="noopener noreffer">www.tm.eur.proxy-2.appproxy.trafficmanager.net</a>.
+<a href="https://www.tm.eur.proxy-2.appproxy.trafficmanager.net" target="_blank" rel="noopener noreffer">www.tm.eur.proxy-2.appproxy.trafficmanager.net</a>. 0 IN A 20.199.104.59</p>
+<p>;; Query time: 0 msec
+;; SERVER: 172.25.240.1#53(172.25.240.1)
+;; WHEN: Tue Apr 18 10:42:15 CEST 2023
+;; MSG SIZE  rcvd: 534</p>
+<p>En este caso:
+20.199.104.59</p>
+<h2 id="códigos-de-error-de-application-gateway">Códigos de error de Application Gateway</h2>
+<p><a href="https://learn.microsoft.com/es-es/azure/application-gateway/http-response-codes" target="_blank" rel="noopener noreffer">https://learn.microsoft.com/es-es/azure/application-gateway/http-response-codes</a></p>
+<h2 id="http-status-code-404">HTTP STATUS CODE 404</h2>
+<p>Si nos da un 404, es porque la resolución DNS llega a la IP del Application Gateway, pero no hay nada que escuche la URL específica que
+estamos indicando.</p>
+<p>Imaginemos que tenemos configurado un dominio ritmosereno.com, con la siguiente configuración en la zona DNS:
+Es decir, si tenemos configurado una zona DNS con la siguiente información</p>
+<figure><img src="/Images/APPGWTROUBLESHOOTING/ZONADNS1.jpg"/><figcaption>
+            <h4>Configuración Zona DNS</h4>
+        </figcaption>
+</figure>
+
+<p>/subscriptions/c64d0b19-4679-45f5-b17a-e27b02146589/resourceGroups/MR-BDAP-SBX-WE-APPGWGEOPOC/providers/Microsoft.Network/applicationGateways/mrbdapsbxweappgwgeopoc01</p>
+<h2 id="http-status-code-502">HTTP STATUS CODE 502</h2>
+<p>El error 502 es un error genérico que indica que un proxy (intermediario), recibe una respuesta
+inválida del servidor que tiene detrás (el backend)</p>
+<p>502	The server was acting as a gateway or proxy and received an invalid response
+from the upstream server.</p>
+<p>Esta es la nota general para tratar errores 502:</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/application-gateway/application-gateway-troubleshooting-502" target="_blank" rel="noopener noreffer">https://learn.microsoft.com/en-us/azure/application-gateway/application-gateway-troubleshooting-502</a></p>
+<p>En un caso particular en el que estuve trabajando, saqué los ReqRespErrorLog</p>
+<p><a href="https://portal.microsoftgeneva.com/s/F17C74C8" target="_blank" rel="noopener noreffer">https://portal.microsoftgeneva.com/s/F17C74C8</a></p>
+<p>errorMessage</p>
+<p>upstream SSL certificate does not match &quot;mrbdapgeoservicewe-sbx.munichre.com&quot;</p>
+<p>phase:
+SSL handshaking to upstream</p>
+<p>Esto significa que en el proceso de comunicación entre las instancias del APP GW
+y el servidor en el backend, el APP GW mandó una request al backend server, con el fqdn:
+mrbdapgeoservicewe-sbx.munichre.com</p>
+<p>Pero el backend no tiene instalado ningún certificado que haga match con ese CNAME.</p>
+<h2 id="upstream-ssl-certificate-does-not-match">Upstream SSL certificate does not match</h2>
+<h3 id="cause">Cause</h3>
+<p>The TLS certificate installed in the backend server(s), does not match the hostname received in the Host request header.</p>
+<p>In scenarios where End-to-end TLS is enabled, a configuration that is achieved by editing the appropiate &ldquo;Backend HTTP Settings&rdquo;, and changing there the configuration of the &ldquo;Backend protocol&rdquo; setting to HTTPS, it is mandatory to ensure that the CNAME of the TLS certificate installed in the backend servers matches the hostname coming to the backend in the HTTP host header request.</p>
+<p>As a reminder, the effect of enabling on the &ldquo;Backend HTTP Settings&rdquo; the option of protocol HTTPS rather than HTTP, will be that the second part of the communication that happens between the instances of the Application Gateway and the backend servers will be encrypted with TLS.</p>
+<p>Due to the fact that by default Application Gateway sends the same HTTP host header to the backend as it receives from the client, you will need to ensure that the TLS certificate installed on the backend server, is issued with a CNAME that matches the host name received by that backend server in the HTTP host header.
+Remember that, unless specified otherwise, this hostname would be the same as the one received from the client.</p>
+<p>For example:</p>
+<p>Imagine that you have an Application Gateway to serve the https requests for domain <a href="https://www.contoso.com" target="_blank" rel="noopener noreffer">www.contoso.com</a>
+You could have the domain contoso.com delegated to an Azure DNS Public Zone, and a A DNS record in that zone pointing <a href="https://www.contoso.com" target="_blank" rel="noopener noreffer">www.contoso.com</a> to the public IP of the specific Application Gateway that is going to serve the requests.</p>
+<p>On that Application Gateway you should have a listener for the host <a href="https://www.contoso.com" target="_blank" rel="noopener noreffer">www.contoso.com</a> with a rule that has the &ldquo;Backed HTTP Setting&rdquo; forced to use protocol HTTPS (ensuring End-to-end TLS). That same rule could have configured a backend pool with two VMs running IIS as Web servers.</p>
+<p>As we know enabling HTTPS in the &ldquo;Backed HTTP Setting&rdquo; of the rule will make the second part of the communication that happens between the Application Gateway instances and the servers in the backend to use TLS.</p>
+<p>If the backend servers do not have a TLS certificate issued for the CNAME <a href="https://www.contoso.com" target="_blank" rel="noopener noreffer">www.contoso.com</a> or *.contoso.com, the request will fail with <strong>Server Error: 502 - Web server received an invalid response while acting as a gateway or proxy server</strong> because the upstream SSL certificate (the certificate installed in the backend servers) will not match the hostname in the host header, and hence the TLS negotiation will fail.</p>
+<p><a href="https://www.contoso.com" target="_blank" rel="noopener noreffer">www.contoso.com</a> &ndash;&gt; APP GW front end IP &ndash;&gt; Listener with a rule that configures &ldquo;Backend HTTP Settings&rdquo; to use protocol HTTP  &ndash;&gt; Backend Pool &ndash;&gt; Web server (needs to have a TLS certificate installed for <a href="https://www.contoso.com" target="_blank" rel="noopener noreffer">www.contoso.com</a>)</p>
+<h2 id="solution">Solution</h2>
+<p>it is required that the CNAME of the TLS certificate installed in the backend server, matches the host name configured in the HTTP backend settings, otherwise the second part of the End-to-end communication that happens between the instances of the Application Gateway and the backend, will fail with &ldquo;Upstream SSL certificate does not match&rdquo;, and will throw back a <strong>Server Error: 502 - Web server received an invalid response while acting as a gateway or proxy server</strong></p>
+<p>En otro caso en el que estuve trabajando:</p>
+<p>[HTTPS Probe Info : upstream: &lsquo;mdm_prod_backend_pool~app-gateway-https-backend-setting&rsquo;, server: &lsquo;10.14.147.102&rsquo;, endpoint: &lsquo;10.14.147.102:443&rsquo;] : IncompleteBackendCertificateChainOnlyLeafCertificateIsPresent -&gt; Incomplete backend server certificate chain. Backend chain consists of only leaf certificate.</p>
+<figure><img src="/Images/APPGWTROUBLESHOOTING/esquema.jpg"/><figcaption>
+            <h4>Esquema de dónde hay que instalar los certificados</h4>
+        </figcaption>
+</figure>
+
+<p>ReqRespLog son logs donde puede verse el httpStatus y el ServerStatus, y de esa manera ver si el 502 viene del backend ServerStatus, o del APP GW</p>
+<p><a href="https://portal.microsoftgeneva.com/s/8E42A5DB" target="_blank" rel="noopener noreffer">https://portal.microsoftgeneva.com/s/8E42A5DB</a></p>
+<p>Y luego tenemos los BackendServerDiagnosticsHistory, donde podemos ver los Health Probes</p>
+<p><a href="https://portal.microsoftgeneva.com/s/82A255A8" target="_blank" rel="noopener noreffer">https://portal.microsoftgeneva.com/s/82A255A8</a></p>
+<p>502	The server was acting as a gateway or proxy and received an invalid response from the upstream server.</p>
+<p>Para configurar los logs del APP GW en el lado del cliente:</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/application-gateway/application-gateway-diagnostics" target="_blank" rel="noopener noreffer">https://learn.microsoft.com/en-us/azure/application-gateway/application-gateway-diagnostics</a></p>
+<p>HTTP Settings de configuracion en el APP GW</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/application-gateway/configuration-http-settings" target="_blank" rel="noopener noreffer">https://learn.microsoft.com/en-us/azure/application-gateway/configuration-http-settings</a></p>
+<p><a href="https://learn.microsoft.com/en-us/azure/application-gateway/ssl-overview" target="_blank" rel="noopener noreffer">https://learn.microsoft.com/en-us/azure/application-gateway/ssl-overview</a></p>
+<h2 id="recreación-de-certificados">Recreación de certificados</h2>
+<p>Adding to my last email, if the certificate was provided by Digicert, normally they include the full chain on all the certificates but if that was not the case and if they provided you with a .pfx file you can recreate it with the following steps:</p>
+<p>From the original PFX certificate export the private key with command: openssl pkcs12 -in Certificate.pfx -nocerts -out private.key
+Obtain the leaf, intermediate and root certificates and save them as base-64 cer files.
+Create a bundle of the entire chain (IMPORTANT, always from leaf to Root, is important to keep it in order) with the following format and save it as a .cer file:</p>
+<p>&mdash;&ndash;BEGIN CERTIFICATE&mdash;&ndash;</p>
+<p>(Your Primary SSL certificate: your_domain_name.cer)</p>
+<p>&mdash;&ndash;END CERTIFICATE&mdash;&ndash;</p>
+<p>&mdash;&ndash;BEGIN CERTIFICATE&mdash;&ndash;</p>
+<p>(Your Intermediate certificate: intermediate.cer)</p>
+<p>&mdash;&ndash;END CERTIFICATE&mdash;&ndash;</p>
+<p>&mdash;&ndash;BEGIN CERTIFICATE&mdash;&ndash;</p>
+<p>(Your Root certificate: TrustedRoot.cer)</p>
+<p>&mdash;&ndash;END CERTIFICATE—</p>
+<p>Recreate the pfx certificate with the command:</p>
+<p>openssl pkcs12 -export -out certificate.pfx -inkey private.key -in bundled.cer</p>
+<p>But if remember correctly on aks you will use all several files so you will need to use one for private key and another for the bundle, in any case the bundle can be created in the same way described on step 3.</p>
+<p>Best regards,</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Actualizado el 2022-12-16</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/application-gateway/">Application Gateway</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Regresar</a></span>&nbsp;|&nbsp;<span><a href="/">Inicio</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/el-gran-firewall-chino-y-los-cdn/" class="prev" rel="prev" title="El gran Firewall Chino"><i class="fas fa-angle-left fa-fw"></i>El gran Firewall Chino</a>
+            <a href="/posts/application-gateway-diagnostics/" class="next" rel="next" title="Enabling Diagnostics in Application Gateway">Enabling Diagnostics in Application Gateway<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Contenido creado por Gonzalo.cloud.Prohibida la reproducción parcial o total del contenido sin permiso explícito del autor</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Gonzalo.cloud</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Volver arriba">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="Ver comentarios">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.es.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copiar al portapapeles","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"es","maxResultLength":10,"noResultsFound":"No se encontraron resultados","snippetLength":30}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Mejores Practicas De Seguridad Azure Networking - Parte 1: Segmentación de Subredes - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title><meta name="Description" content="Desglosamos las mejores prácticas de Seguridad"><meta property="og:title" content="Mejores Practicas De Seguridad Azure Networking - Parte 1: Segmentación de Subredes" />
+<meta property="og:description" content="Desglosamos las mejores prácticas de Seguridad" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.gonzalo.cloud/posts/mejores-practicas-de-seguridad-azure-networking-segmentacion/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-13T15:20:51+01:00" />
+<meta property="article:modified_time" content="2022-12-13T15:20:51+01:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Mejores Practicas De Seguridad Azure Networking - Parte 1: Segmentación de Subredes"/>
+<meta name="twitter:description" content="Desglosamos las mejores prácticas de Seguridad"/>
+<meta name="application-name" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">
+<meta name="apple-mobile-web-app-title" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.gonzalo.cloud/posts/mejores-practicas-de-seguridad-azure-networking-segmentacion/" /><link rel="prev" href="https://www.gonzalo.cloud/posts/que-es-gonzalo-cloud/" /><link rel="next" href="https://www.gonzalo.cloud/posts/el-gran-firewall-chino-y-los-cdn/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Mejores Practicas De Seguridad Azure Networking - Parte 1: Segmentación de Subredes",
+        "inLanguage": "es",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.gonzalo.cloud\/posts\/mejores-practicas-de-seguridad-azure-networking-segmentacion\/"
+        },"genre": "posts","keywords": "Security Best Practices","wordcount":  859 ,
+        "url": "https:\/\/www.gonzalo.cloud\/posts\/mejores-practicas-de-seguridad-azure-networking-segmentacion\/","datePublished": "2022-12-13T15:20:51+01:00","dateModified": "2022-12-13T15:20:51+01:00","publisher": {
+            "@type": "Organization",
+            "name": "Gonzalo.cloud"},"author": {
+                "@type": "Person",
+                "name": "Gonzalo.cloud"
+            },"description": "Desglosamos las mejores prácticas de Seguridad"
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancelar
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contenido</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Mejores Practicas De Seguridad Azure Networking - Parte 1: Segmentación de Subredes</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://www.linkedin.com/in/gonzalomurillotello/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Gonzalo.cloud</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-12-13">2022-12-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;859 palabras&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;5 minutos&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/Images/SecurityBestPractices/AzureNetworkingSecurityBestPractices.jpg"
+        data-srcset="/Images/SecurityBestPractices/AzureNetworkingSecurityBestPractices.jpg, /Images/SecurityBestPractices/AzureNetworkingSecurityBestPractices.jpg 1.5x, /Images/SecurityBestPractices/AzureNetworkingSecurityBestPractices.jpg 2x"
+        data-sizes="auto"
+        alt="/Images/SecurityBestPractices/AzureNetworkingSecurityBestPractices.jpg"
+        title="Desglosamos las mejores prácticas de Seguridad" /></div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contenido</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#segmentación-lógica-de-subredes-subnets">Segmentación lógica de subredes (subnets)</a>
+      <ul>
+        <li><a href="#1-crea-mecanismos-de-control-entre-subredes-subnets">1) Crea mecanismos de control entre subredes (subnets)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Vamos a hablar de un tema extremadamente importante, que es el de las mejores prácticas de seguridad en Azure Networking.</p>
+<p>Y para ello, vamos a desglosar paso a paso las recomendaciones que encontramos en el siguiente documento:</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/security/fundamentals/network-best-practices" target="_blank" rel="noopener noreffer">https://learn.microsoft.com/en-us/azure/security/fundamentals/network-best-practices</a></p>
+<p>Vamos a ir paso a paso porque el asunto tiene mucha miga, y nos vamos a centrar en esta entrada del blog en la segmentación lógica de subredes.</p>
+<h2 id="segmentación-lógica-de-subredes-subnets">Segmentación lógica de subredes (subnets)</h2>
+<p>En Azure, las Virtual Networks son  una extrapolación del concepto de LAN (Local Area Networks) del mundo &ldquo;on-prem&rdquo;
+La idea que subyace cuando se crea una Azure Virtual Network es crear una red virtual, basada en un espacio de direcciones IP, donde
+poder colocar recursos como máquinas virtuales, VPN gateways, etc.</p>
+<p>Los espacios de direcciones que están disponibles son los rangos de la Clase A (10.0.0.0/8) Clase B (172.16.0.0/12) y Clase C (192.168.0.0/16).</p>
+<p>Estos rangos se corresponden a los rangos no enrutables públicamente definidos en el RFC 1918</p>
+<figure><img src="/Images/rfc1918range.jpg"/><figcaption>
+            <h4>Rango RFC 1918</h4>
+        </figcaption>
+</figure>
+
+<p>Las prácticas recomendadas para la segmentación de las VNETS en Azure son las siguientes:</p>
+<h3 id="1-crea-mecanismos-de-control-entre-subredes-subnets">1) Crea mecanismos de control entre subredes (subnets)</h3>
+<p>En el mundo on-prem, dos subredes no pueden comunicarse entre si a menos que haya enrutamiento (routing), pero en Azure, el enrutamiento por defecto
+permite comunicación entre subredes.</p>
+<p>NICs conectadas a la subredes (la misma subred o diferente) dentro de la misma virtual network, se pueden comunicar entre ellas sin ninguna configuración adicional.</p>
+<blockquote>
+<p>There aren&rsquo;t security boundaries by default between subnets. Virtual machines in each of these subnets can communicate. If your deployment requires security boundaries, use Network Security Groups (NSGs), which control the traffic flow to and from subnets and to and from VMs.</p>
+</blockquote>
+<p>Pongamos un ejemplo:</p>
+<p>Si tenemos una VNET a la que llamaremos VNET1, con un espacio de direcciones 192.168.0.0/24 que a su vez contiene dos subredes:</p>
+<p>SUBRED1: 192.168.1.0/24
+SUBRED2: 192.168.2.0/24</p>
+<p>Una máquina virtual que esté conectada a SUBRED1, podrá comunicarse directamente con una máquina en SUBRED2</p>
+<p>Montémoslo en el lab:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Powershell" data-lang="Powershell"><span class="line"><span class="cl"><span class="nb">Login-AzureRmAccount</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Get-AzureRmSubscription</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Select-AzureRmSubscription</span> <span class="n">-Subscription</span> <span class="s2">&#34;Microsoft Azure Internal GMT&#34;</span>
+</span></span></code></pre></div><p>Ahora creamos un Resource Group:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Powershell" data-lang="Powershell"><span class="line"><span class="cl"><span class="nb">New-AzureRmResourceGroup</span> <span class="n">-Name</span> <span class="nb">SUBNETS-LAB</span> <span class="p">`</span>
+</span></span><span class="line"><span class="cl">                         <span class="n">-Location</span> <span class="n">westeurope</span> 
+</span></span></code></pre></div><p>Ahora creamos la VNET dentro del ResourceGroup:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Powershell" data-lang="Powershell"><span class="line"><span class="cl"><span class="nb">New-AzureRmVirtualNetwork</span> <span class="n">-Name</span>  <span class="p">`</span><span class="n">VNET1</span> <span class="p">`</span>
+</span></span><span class="line"><span class="cl">                          <span class="n">-ResourceGroupName</span> <span class="nb">SUBNETS-LAB</span> <span class="p">`</span>
+</span></span><span class="line"><span class="cl">                          <span class="n">-Location</span> <span class="n">westeurope</span> <span class="p">`</span>
+</span></span><span class="line"><span class="cl">                          <span class="n">-AddressPrefix</span> <span class="n">192</span><span class="p">.</span><span class="n">168</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">0</span><span class="p">/</span><span class="n">16</span>
+</span></span></code></pre></div><p>Ahora creamos las subredes dentro del espacio de direcciones de la VNET VNET1:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Powershell" data-lang="Powershell"><span class="line"><span class="cl"><span class="nv">$vnet</span> <span class="p">=</span> <span class="nb">Get-AzureRmVirtualNetwork</span> <span class="n">-Name</span> <span class="n">VNET1</span> <span class="n">-ResourceGroupName</span> <span class="nb">SUBNETS-LAB</span> 
+</span></span></code></pre></div><p>Y añadimos a esa VNET una subred SUBRED1:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Powershell" data-lang="Powershell"><span class="line"><span class="cl"><span class="nb">Add-AzureRmVirtualNetworkSubnetConfig</span> <span class="n">-Name</span> <span class="n">SUBRED1</span> <span class="p">`</span>
+</span></span><span class="line"><span class="cl">                                      <span class="n">-VirtualNetwork</span> <span class="nv">$vnet</span> <span class="p">`</span>
+</span></span><span class="line"><span class="cl">                                      <span class="n">-AddressPrefix</span> <span class="n">192</span><span class="p">.</span><span class="n">168</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">0</span><span class="p">/</span><span class="n">24</span>
+</span></span></code></pre></div><p>Y una subred SUBRED2:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Powershell" data-lang="Powershell"><span class="line"><span class="cl"><span class="nb">Add-AzureRmVirtualNetworkSubnetConfig</span> <span class="n">-Name</span> <span class="n">SUBRED2</span> <span class="p">`</span>
+</span></span><span class="line"><span class="cl">                                      <span class="n">-VirtualNetwork</span> <span class="nv">$vnet</span> <span class="p">`</span>
+</span></span><span class="line"><span class="cl">                                      <span class="n">-AddressPrefix</span> <span class="n">192</span><span class="p">.</span><span class="n">168</span><span class="p">.</span><span class="n">2</span><span class="p">.</span><span class="n">0</span><span class="p">/</span><span class="n">24</span>
+</span></span></code></pre></div><p>Finalmente aplicamos la configuración de subredes a VNET1 con el siguiente comando:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Powershell" data-lang="Powershell"><span class="line"><span class="cl"><span class="nv">$vnet</span> <span class="p">|</span> <span class="nb">Set-AzureRmVirtualNetwork</span>
+</span></span></code></pre></div><p>La vista que deberíamos tener ahora en el portal sería:</p>
+<figure><img src="/Images/SecurityBestPractices/portalazure.jpg"/><figcaption>
+            <h4>Portal Azure después de creadas la VNET y SUBNETS</h4>
+        </figcaption>
+</figure>
+
+<p>Si conectamos ahora una VM a SUBRED1 y otra VM a SUBRED2</p>
+<p>Y vamos a una de las NICS para mostrar las &ldquo;Effective Routes&rdquo;, podremos observar que este es el enrutamiento por defecto:</p>
+<figure><img src="/Images/SecurityBestPractices/defaultrouting.jpg"/><figcaption>
+            <h4>Enrutamiento por defecto</h4>
+        </figcaption>
+</figure>
+
+<p><strong>Las máquinas en diferentes subredes dentro de la misma VNET se pueden comunicar</strong></p>
+<p>Como vemos, hay una regla de enrutado que afirma 192.168.0.0/16 next hop Virtual Network.
+Esta es la regla de enrutado que permite que dos máquinas en diferentes subredes dentro de la misma VNET se puedan comunicar.
+Esto es un comportamiento distinto al del mundo on-prem, donde dos máquinas en diferentes subredes, no se pueden comunicar si no es a través de routing.</p>
+<p>Además vemos que el tráfico saliente al rango de direcciones IP del RFC1918, tiene un next hop type none, es decir, para los rangos RFC 1918,
+simplemente se hace un drop.</p>
+<p>Además para otros rangos reservados por Azure, también se hace un drop (no se permite el tráfico saliente)</p>
+<p><strong>Tampoco hay un NSG por defecto que bloquee la comunicación entre subredes</strong></p>
+<p>Si vamos a las Effective Security Rules, veremos que o bien no hay NSG, o bien si hemos seleccionado un NSG básico veremos</p>
+<figure><img src="/Images/SecurityBestPractices/defaultNSG.jpg"/><figcaption>
+            <h4>NSGs por defecto</h4>
+        </figcaption>
+</figure>
+
+<p>AllowVnetInBound
+AllowVnetOutBound</p>
+<p>Es decir que permite tanto el tráfico saliente como entrante desde la misma VNET.</p>
+<p>La recomendación de las mejores prácticas de seguridad es crear un NSG que bloquee el tráfico no solicitado entre subredes.</p>
+<blockquote>
+<p>Best practice: Create network access controls between subnets. Routing between subnets happens automatically, and you don&rsquo;t need to manually configure routing tables. By default, there are no network access controls between the subnets that you create on an Azure virtual network.</p>
+</blockquote>
+<p>Recordemos que los NSG son inspecciones de paquetes sin estado que usan 5 tuplas (ip origen, puerto origen, ip destino, puerto destino, y protocolo de capa 4 - TCP o UDP) para crear reglas de permitir o denegar.</p>
+<blockquote>
+<p><strong>NOTA:</strong>
+Otra forma de cerrar todo el tráfico entre subredes sería crear una UDR (User Defined Route) y asociarla a la SUBRED1, de tal forma que el tráfico dirigido a 192.168.2.0/24 (SUBRED2) tuviera un next hop = None
+Y hacer lo equivalente en SUBRED2, crear un UDR que todo el tráfico dirigido a la 192.168.1.0/24 tuviera un next hop = None</p>
+</blockquote>
+<p>Esperamos haber aclarado en este post que la comunicación entre subredes de una VNET sucede por defecto, y que es una práctica recomendada cortar el acceso con NSG (o con UDRs) aplicadas a las subredes.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Actualizado el 2022-12-13</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/security-best-practices/">Security Best Practices</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Regresar</a></span>&nbsp;|&nbsp;<span><a href="/">Inicio</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/que-es-gonzalo-cloud/" class="prev" rel="prev" title="¿Qué es Gonzalo.cloud?"><i class="fas fa-angle-left fa-fw"></i>¿Qué es Gonzalo.cloud?</a>
+            <a href="/posts/el-gran-firewall-chino-y-los-cdn/" class="next" rel="next" title="El gran Firewall Chino">El gran Firewall Chino<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Contenido creado por Gonzalo.cloud.Prohibida la reproducción parcial o total del contenido sin permiso explícito del autor</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Gonzalo.cloud</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Volver arriba">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="Ver comentarios">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.es.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copiar al portapapeles","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"es","maxResultLength":10,"noResultsFound":"No se encontraron resultados","snippetLength":30}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

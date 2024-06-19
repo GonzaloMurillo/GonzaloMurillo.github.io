@@ -1,0 +1,102 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title>
+        <link>https://www.gonzalo.cloud/</link>
+        <description>Gonzalo.cloud: Aprende Microsoft Azure paso a paso</description>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Fri, 09 Feb 2024 09:42:54 &#43;0100</lastBuildDate>
+            <atom:link href="https://www.gonzalo.cloud/index.xml" rel="self" type="application/rss+xml" />
+        <item>
+    <title>No_puedo_conectar_desde_on_prem_a_azure_via_exr</title>
+    <link>https://www.gonzalo.cloud/posts/no_puedo_conectar_desde_on_prem_a_azure_via_exr/</link>
+    <pubDate>Fri, 09 Feb 2024 09:42:54 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/no_puedo_conectar_desde_on_prem_a_azure_via_exr/</guid>
+    <description><![CDATA[El otro día me enfrenté a un caso curioso en el que el cliente afirmaba que no podía conectar desde on-prem hasta Azure utilizando la conectividad proporcionada por un ExR circuit.
+Tras descartar a los sospechosos habituales: falta de conectividad a nivel ARP, BGP flapping, y falta de ruta en los MSEE, vi que no se trataba de algo obvio.
+Tampoco había ningún firewall en la máquina destino que pudiese explicar la falta de conectividad.]]></description>
+</item><item>
+    <title>Enabling Diagnostics</title>
+    <link>https://www.gonzalo.cloud/posts/enabling-diagnostics/</link>
+    <pubDate>Mon, 18 Dec 2023 10:09:57 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/enabling-diagnostics/</guid>
+    <description><![CDATA[Enabling diagnostics in Application Gateway https://learn.microsoft.com/en-us/azure/application-gateway/application-gateway-diagnostics]]></description>
+</item><item>
+    <title>Cómo convertir la salida de un comando PowerShell a texto</title>
+    <link>https://www.gonzalo.cloud/posts/convertingtostringtheoutputofpowershell/</link>
+    <pubDate>Thu, 07 Dec 2023 15:11:02 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/convertingtostringtheoutputofpowershell/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/Images/SearchingForText/searchingfortext.webp" referrerpolicy="no-referrer">
+            </div>En algunas ocasiones queremos hacer búsquedas sobre lo que devuelve un comando PowerShell.
+El inconveniente es que en Powershell, todo lo que se devuelve, es un objeto.
+No es por tanto trivial hacer búsquedas con herramientas tipo grep.
+A menos que la salida se convierta a texto, claro&hellip;
+La solución sencilla y sin complicaciones es utilizar out-string para convertir la salida del comando powershell a texto, y concatenarlo con el comando findstr para realizar la búsqueda de la cadena específica en la que estemos interesados.]]></description>
+</item><item>
+    <title>Ataques DDOS</title>
+    <link>https://www.gonzalo.cloud/posts/ataques-ddos/</link>
+    <pubDate>Wed, 29 Mar 2023 11:19:26 &#43;0200</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/ataques-ddos/</guid>
+    <description><![CDATA[Cómo responder a ataques de Denegacion Distribuídos en clientes Está documentado aquí:
+https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki/277561/TSG-I'm-Under-a-DDoS-Attack-
+Respecto a DDOS, Microsoft ofrece las siguientes soluciones:
+* DDOS Infrastructure Protection (no es un SKU que pueda ser comprado) Es la propia solución de Microsoft para proteger su infra, es gratis. Protege VIPs * DDOS Protection Network Plan (DDOS Protection Standard) Aplica a VNETs * DDOS Protection Individual IP Plan (aplica a IPs específicas) Más información de los distintos SKU.]]></description>
+</item><item>
+    <title>Application Security Groups</title>
+    <link>https://www.gonzalo.cloud/posts/application_security_groups/</link>
+    <pubDate>Wed, 22 Mar 2023 17:45:33 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/application_security_groups/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/Images/Application-Security-Groups.jpg" referrerpolicy="no-referrer">
+            </div>Documentos relevantes https://azurebrains.azurewebsites.net/2019/05/08/azure-application-security-groups/
+Un Application Security Group (ASG) no es más ni menos que un contenedor de NICs que se puede usar como origen o destino de reglas dentro de NSGs.
+Objetivo de diseño:
+Los ASGs se crean con el objetivo de agrupar direcciones IPs a los que se les va a aplicar Network Security Groups. En lugar de tener que añadir en las reglas del NSG un montón de direcciones IP, el ASG actúa como un service tag a medida.]]></description>
+</item><item>
+    <title>Troubleshooting Application Gateway</title>
+    <link>https://www.gonzalo.cloud/posts/troubleshooting-appliction-gateway/</link>
+    <pubDate>Wed, 01 Feb 2023 10:47:42 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/troubleshooting-appliction-gateway/</guid>
+    <description><![CDATA[Documentos relevantes  ¿Qué son los listeners? https://learn.microsoft.com/en-us/azure/application-gateway/configuration-listeners Comando PowerShell para ver un listener en particular: https://learn.microsoft.com/en-us/powershell/module/az.network/get-azapplicationgatewayhttplistener?view=azps-9.2.0 Terminación TLS y de extremo a extremo con Application Gateway https://learn.microsoft.com/en-us/azure/application-gateway/ssl-overview Página desde donde descargar openssl para windows https://slproweb.com/products/Win32OpenSSL.html Certificate Checker: https://tools.keycdn.com/ssl SSLABS SSLTEST https://www.ssllabs.com/ssltest/ Wiki acerca de certificados SSL https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki/333203/How-to-work-with-Certs-for-application-gateway OpenSSL commands https://www.redhat.com/sysadmin/6-openssl-commands OpenSSL examples https://www.misterpki.com/openssl-s-client/  Pasos resolución de problemas en APP GW Paso 1: Comprobar que el dominio está apuntando a la IP del Application Gateway Para ello podemos usar el comando dig (https://learn.]]></description>
+</item><item>
+    <title>Azure Firewall</title>
+    <link>https://www.gonzalo.cloud/posts/azure-firewall/</link>
+    <pubDate>Wed, 18 Jan 2023 10:27:04 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/azure-firewall/</guid>
+    <description><![CDATA[Propósito de diseño de Azure Firewall Siempre que me detengo en explicar algún servicio de Microsoft Azure, empiezo por intentar comprender y explicar el propósito de diseño del propio servicio. Considero que entendiendo el propósito de diseño, siempre es mucho más fácil comprender la parte técnica que sirve a dicho propósito de diseño.
+ El propósito de diseño que Microsoft tenía en mente cuando diseñó el Azure Firewall es crear un firewall stateful &ldquo;as a service&rdquo;, que protega las VNETs que enrutan su tráfico hacia el Firewall, es decir, que atraviesan ese firewall.]]></description>
+</item><item>
+    <title>Private Endpoint- Private Link</title>
+    <link>https://www.gonzalo.cloud/posts/private-endpoint-private-link/</link>
+    <pubDate>Tue, 10 Jan 2023 08:53:38 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/private-endpoint-private-link/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/Images/PrivateEndPoint/AzurePrivateEndpoint.jpg" referrerpolicy="no-referrer">
+            </div>Documentos relevantes https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration
+¿Qué problema intenta resolver private endpoint / private link? Resulta fundamental para comprender mejor un servicio, conocer en primer lugar cuál es el problema que intenta resolver dicho servicio, cuál es su razón de ser.
+El problema que intenta resolver private endpoint / private link es el acceso privado a servicios PaaS que son multitenant (servicios que son accedidos por múltiples clientes simultáneamente a traves de una IP pública).]]></description>
+</item><item>
+    <title>Enabling Diagnostics in Application Gateway</title>
+    <link>https://www.gonzalo.cloud/posts/application-gateway-diagnostics/</link>
+    <pubDate>Sun, 18 Dec 2022 11:01:37 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/application-gateway-diagnostics/</guid>
+    <description><![CDATA[Application Gateway Diagnostics ]]></description>
+</item><item>
+    <title>Troubleshooting Application Gateway (Internal)</title>
+    <link>https://www.gonzalo.cloud/posts/troubleshooting-application-gateway/</link>
+    <pubDate>Fri, 16 Dec 2022 11:01:37 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/troubleshooting-application-gateway/</guid>
+    <description><![CDATA[Troubleshooting de Application Gateway  Comprobar NSG en la subred del Application Gateway  1.1) En ASC en el &ldquo;blade&rdquo; de properties, identificar el SKU y la VNET
+SKU Name	Standard_v2 Virtual Network Id	baa405b9-6060-4c17-9dcd-c93b93706666 Virtual Network Name	MR-LI-Net-02-WE-S-BDAP
+Habrá que identificar la VNET del Application Gateway. Recordemos que la subnet del Application Gateway no tiene por qué tener un nombre específico así que la mejor forma es desde la pestaña de propiedades, irse a la sección Instances, y ver las IPs que están cogiendo:]]></description>
+</item></channel>
+</rss>

@@ -1,0 +1,17 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Seguridad - Categoría - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title>
+        <link>https://www.gonzalo.cloud/categories/seguridad/</link>
+        <description>Seguridad - Categoría - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</description>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Wed, 29 Mar 2023 11:19:26 &#43;0200</lastBuildDate><atom:link href="https://www.gonzalo.cloud/categories/seguridad/" rel="self" type="application/rss+xml" /><item>
+    <title>Ataques DDOS</title>
+    <link>https://www.gonzalo.cloud/posts/ataques-ddos/</link>
+    <pubDate>Wed, 29 Mar 2023 11:19:26 &#43;0200</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/ataques-ddos/</guid>
+    <description><![CDATA[Cómo responder a ataques de Denegacion Distribuídos en clientes Está documentado aquí:
+https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki/277561/TSG-I'm-Under-a-DDoS-Attack-
+Respecto a DDOS, Microsoft ofrece las siguientes soluciones:
+* DDOS Infrastructure Protection (no es un SKU que pueda ser comprado) Es la propia solución de Microsoft para proteger su infra, es gratis. Protege VIPs * DDOS Protection Network Plan (DDOS Protection Standard) Aplica a VNETs * DDOS Protection Individual IP Plan (aplica a IPs específicas) Más información de los distintos SKU.]]></description>
+</item></channel>
+</rss>

@@ -1,0 +1,23 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Application Gateway - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title>
+        <link>https://www.gonzalo.cloud/tags/application-gateway/</link>
+        <description>Application Gateway - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</description>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Sun, 18 Dec 2022 11:01:37 &#43;0100</lastBuildDate><atom:link href="https://www.gonzalo.cloud/tags/application-gateway/" rel="self" type="application/rss+xml" /><item>
+    <title>Enabling Diagnostics in Application Gateway</title>
+    <link>https://www.gonzalo.cloud/posts/application-gateway-diagnostics/</link>
+    <pubDate>Sun, 18 Dec 2022 11:01:37 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/application-gateway-diagnostics/</guid>
+    <description><![CDATA[Application Gateway Diagnostics ]]></description>
+</item><item>
+    <title>Troubleshooting Application Gateway (Internal)</title>
+    <link>https://www.gonzalo.cloud/posts/troubleshooting-application-gateway/</link>
+    <pubDate>Fri, 16 Dec 2022 11:01:37 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/troubleshooting-application-gateway/</guid>
+    <description><![CDATA[Troubleshooting de Application Gateway  Comprobar NSG en la subred del Application Gateway  1.1) En ASC en el &ldquo;blade&rdquo; de properties, identificar el SKU y la VNET
+SKU Name	Standard_v2 Virtual Network Id	baa405b9-6060-4c17-9dcd-c93b93706666 Virtual Network Name	MR-LI-Net-02-WE-S-BDAP
+Habrá que identificar la VNET del Application Gateway. Recordemos que la subnet del Application Gateway no tiene por qué tener un nombre específico así que la mejor forma es desde la pestaña de propiedades, irse a la sección Instances, y ver las IPs que están cogiendo:]]></description>
+</item></channel>
+</rss>

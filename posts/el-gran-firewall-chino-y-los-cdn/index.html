@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>El gran Firewall Chino - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title><meta name="Description" content="Cómo el gran firewall chino afecta a las conexiones via CDN"><meta property="og:title" content="El gran Firewall Chino" />
+<meta property="og:description" content="Cómo el gran firewall chino afecta a las conexiones via CDN" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.gonzalo.cloud/posts/el-gran-firewall-chino-y-los-cdn/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-14T17:49:32+01:00" />
+<meta property="article:modified_time" content="2022-12-14T17:49:32+01:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="El gran Firewall Chino"/>
+<meta name="twitter:description" content="Cómo el gran firewall chino afecta a las conexiones via CDN"/>
+<meta name="application-name" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">
+<meta name="apple-mobile-web-app-title" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.gonzalo.cloud/posts/el-gran-firewall-chino-y-los-cdn/" /><link rel="prev" href="https://www.gonzalo.cloud/posts/mejores-practicas-de-seguridad-azure-networking-segmentacion/" /><link rel="next" href="https://www.gonzalo.cloud/posts/troubleshooting-application-gateway/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "El gran Firewall Chino",
+        "inLanguage": "es",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.gonzalo.cloud\/posts\/el-gran-firewall-chino-y-los-cdn\/"
+        },"genre": "posts","keywords": "CDN","wordcount":  333 ,
+        "url": "https:\/\/www.gonzalo.cloud\/posts\/el-gran-firewall-chino-y-los-cdn\/","datePublished": "2022-12-14T17:49:32+01:00","dateModified": "2022-12-14T17:49:32+01:00","publisher": {
+            "@type": "Organization",
+            "name": "Gonzalo.cloud"},"author": {
+                "@type": "Person",
+                "name": "Gonzalo.cloud"
+            },"description": "Cómo el gran firewall chino afecta a las conexiones via CDN"
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancelar
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contenido</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">El gran Firewall Chino</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://www.linkedin.com/in/gonzalomurillotello/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Gonzalo.cloud</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-12-14">2022-12-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;333 palabras&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;2 minutos&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/Images/Great_Firewall_China/Great_Firewall_China.jpg"
+        data-srcset="/Images/Great_Firewall_China/Great_Firewall_China.jpg, /Images/Great_Firewall_China/Great_Firewall_China.jpg 1.5x, /Images/Great_Firewall_China/Great_Firewall_China.jpg 2x"
+        data-sizes="auto"
+        alt="/Images/Great_Firewall_China/Great_Firewall_China.jpg"
+        title="Cómo el gran firewall chino afecta a las conexiones via CDN" /></div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contenido</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#bloqueo-de-urls">BLOQUEO DE URLs</a></li>
+        <li><a href="#envenenamiento-de-dns">ENVENENAMIENTO DE DNS</a></li>
+        <li><a href="#bloqueo-de-vpns">BLOQUEO DE VPNS</a></li>
+        <li><a href="#sondeo-activo">SONDEO ACTIVO</a></li>
+        <li><a href="#cómo-saber-si-tu-url-está-bloqueada-en-china">CÓMO SABER SI TU URL ESTÁ BLOQUEADA EN CHINA</a></li>
+        <li><a href="#ofrece-microsoft-alguna-solución-de-cdn-específica-para-china">¿OFRECE MICROSOFT ALGUNA SOLUCIÓN DE CDN ESPECÍFICA PARA CHINA?</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>No es ningún secreto que China no permite la libertad de expresión.</p>
+<p>La represión de sus ciudadanos se extiende al ámbito de Internet, donde tiene colocado un gran Firewall para vigilar todo lo que hacen sus camaradas en la red.<br>
+Este Firewall es bastante sofisticado y entre otros mecanismos utiliza: (fuente: <a href="https://www.makeuseof.com/what-is-great-firewall-china/" target="_blank" rel="noopener noreffer">https://www.makeuseof.com/what-is-great-firewall-china/</a>)</p>
+<h3 id="bloqueo-de-urls">BLOQUEO DE URLs</h3>
+<p>El bloqueo de URLs o filtrado es uno de los métodos más efectivos utilizado por el Gran Firewall.<br>
+Consiste en una serie de proxies que monitoriza y filtra el tráfico de la Web.</p>
+<p>Dichos proxies también escanean el contenido de la página Web buscando palabras clave.
+Tan pronto como una palabra coincide, bloquea la página entera.</p>
+<h3 id="envenenamiento-de-dns">ENVENENAMIENTO DE DNS</h3>
+<p>Cuando tecleamos una URL, esta se convierte en una dirección IP a través de resolución de nombres DNS.</p>
+<p>El Gran Firewall Chino usa servidores DNS falsos que tienen registros que no apuntan realmente a la IP verdadera, sino a una IP falsa de tal forma
+que cuando intentas acceder a ciertas URLs no funciona.</p>
+<p>La forma en que se implementa es tener palabras clave, de forma que si el hostname contiene alguna palabra clave prohibida, automáticamente añade una respuesta DNS
+falsa.</p>
+<h3 id="bloqueo-de-vpns">BLOQUEO DE VPNS</h3>
+<p>A través de técnicas como la inspección de paquetes el gobierno chino puede identificar de dónde vienen las peticiones VPN.
+Las VPN no están realmente prohibidas en China, pero ¡NO SON ANÓNIMAS! Lo cual va contra el propio principio de diseño de lo que es una URL.</p>
+<h3 id="sondeo-activo">SONDEO ACTIVO</h3>
+<p>De esta forma se evitan redes como TOR, y proveedores de VPN</p>
+<h3 id="cómo-saber-si-tu-url-está-bloqueada-en-china">CÓMO SABER SI TU URL ESTÁ BLOQUEADA EN CHINA</h3>
+<p>Debido a este gran firewall chino, hay veces en las que el acceso a URLs desde China estará bloqueado.</p>
+<p>Una manera de comprobarlo sería pasar la URL como parámetro en esta URL: <a href="http://www.chinafirewalltest.com/" target="_blank" rel="noopener noreffer">http://www.chinafirewalltest.com/</a></p>
+<p>También podemos identificar cuál es el origen de una IP con la siguiente API
+<a href="https://ip-api.com/" target="_blank" rel="noopener noreffer">https://ip-api.com/</a></p>
+<h3 id="ofrece-microsoft-alguna-solución-de-cdn-específica-para-china">¿OFRECE MICROSOFT ALGUNA SOLUCIÓN DE CDN ESPECÍFICA PARA CHINA?</h3>
+<p>Microsoft ofrece un CDN específico para China: <a href="https://learn.microsoft.com/en-us/azure/cdn/cdn-china-delivery?toc=%2Fazure%2Ffrontdoor%2FTOC.json" target="_blank" rel="noopener noreffer">https://learn.microsoft.com/en-us/azure/cdn/cdn-china-delivery?toc=%2Fazure%2Ffrontdoor%2FTOC.json</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Actualizado el 2022-12-14</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/cdn/">CDN</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Regresar</a></span>&nbsp;|&nbsp;<span><a href="/">Inicio</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/mejores-practicas-de-seguridad-azure-networking-segmentacion/" class="prev" rel="prev" title="Mejores Practicas De Seguridad Azure Networking - Parte 1: Segmentación de Subredes"><i class="fas fa-angle-left fa-fw"></i>Mejores Practicas De Seguridad Azure Networking - Parte 1: Segmentación de Subredes</a>
+            <a href="/posts/troubleshooting-application-gateway/" class="next" rel="next" title="Troubleshooting Application Gateway (Internal)">Troubleshooting Application Gateway (Internal)<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Contenido creado por Gonzalo.cloud.Prohibida la reproducción parcial o total del contenido sin permiso explícito del autor</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Gonzalo.cloud</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Volver arriba">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="Ver comentarios">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.es.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copiar al portapapeles","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"es","maxResultLength":10,"noResultsFound":"No se encontraron resultados","snippetLength":30}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

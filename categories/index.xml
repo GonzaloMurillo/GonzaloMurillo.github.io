@@ -1,0 +1,49 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Categories - Categoría - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title>
+        <link>https://www.gonzalo.cloud/categories/</link>
+        <description>Categories - Categoría - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</description>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Wed, 29 Mar 2023 11:19:26 &#43;0200</lastBuildDate><atom:link href="https://www.gonzalo.cloud/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>DDOS</title>
+    <link>https://www.gonzalo.cloud/categories/ddos/</link>
+    <pubDate>Wed, 29 Mar 2023 11:19:26 &#43;0200</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/categories/ddos/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Seguridad</title>
+    <link>https://www.gonzalo.cloud/categories/seguridad/</link>
+    <pubDate>Wed, 29 Mar 2023 11:19:26 &#43;0200</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/categories/seguridad/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Azure Firewall</title>
+    <link>https://www.gonzalo.cloud/categories/azure-firewall/</link>
+    <pubDate>Wed, 18 Jan 2023 10:27:04 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/categories/azure-firewall/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Firewall</title>
+    <link>https://www.gonzalo.cloud/categories/firewall/</link>
+    <pubDate>Wed, 18 Jan 2023 10:27:04 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/categories/firewall/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Private Endpoint</title>
+    <link>https://www.gonzalo.cloud/categories/private-endpoint/</link>
+    <pubDate>Tue, 10 Jan 2023 08:53:38 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/categories/private-endpoint/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Private Link</title>
+    <link>https://www.gonzalo.cloud/categories/private-link/</link>
+    <pubDate>Tue, 10 Jan 2023 08:53:38 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/categories/private-link/</guid>
+    <description><![CDATA[]]></description>
+</item></channel>
+</rss>
