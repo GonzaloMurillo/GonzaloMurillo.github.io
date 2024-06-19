@@ -1,7 +1,11 @@
 ## Hi there 👋
 
 <!--
+<<<<<<< HEAD
 **GonzaloMurillo/gonzalomurillo** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+=======
+**GonzaloMurillo/GonzaloMurillo** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+>>>>>>> refs/remotes/origin/main
 
 Here are some ideas to get you started:
 
