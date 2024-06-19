@@ -33,16 +33,6 @@ No es por tanto trivial hacer búsquedas con herramientas tipo grep.
 A menos que la salida se convierta a texto, claro&hellip;
 La solución sencilla y sin complicaciones es utilizar out-string para convertir la salida del comando powershell a texto, y concatenarlo con el comando findstr para realizar la búsqueda de la cadena específica en la que estemos interesados.]]></description>
 </item><item>
-    <title>Ataques DDOS</title>
-    <link>https://www.gonzalo.cloud/posts/ataques-ddos/</link>
-    <pubDate>Wed, 29 Mar 2023 11:19:26 &#43;0200</pubDate>
-    <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/posts/ataques-ddos/</guid>
-    <description><![CDATA[Cómo responder a ataques de Denegacion Distribuídos en clientes Está documentado aquí:
-https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki/277561/TSG-I'm-Under-a-DDoS-Attack-
-Respecto a DDOS, Microsoft ofrece las siguientes soluciones:
-* DDOS Infrastructure Protection (no es un SKU que pueda ser comprado) Es la propia solución de Microsoft para proteger su infra, es gratis. Protege VIPs * DDOS Protection Network Plan (DDOS Protection Standard) Aplica a VNETs * DDOS Protection Individual IP Plan (aplica a IPs específicas) Más información de los distintos SKU.]]></description>
-</item><item>
     <title>Application Security Groups</title>
     <link>https://www.gonzalo.cloud/posts/application_security_groups/</link>
     <pubDate>Wed, 22 Mar 2023 17:45:33 &#43;0100</pubDate>
@@ -54,13 +44,6 @@ Respecto a DDOS, Microsoft ofrece las siguientes soluciones:
 Un Application Security Group (ASG) no es más ni menos que un contenedor de NICs que se puede usar como origen o destino de reglas dentro de NSGs.
 Objetivo de diseño:
 Los ASGs se crean con el objetivo de agrupar direcciones IPs a los que se les va a aplicar Network Security Groups. En lugar de tener que añadir en las reglas del NSG un montón de direcciones IP, el ASG actúa como un service tag a medida.]]></description>
-</item><item>
-    <title>Troubleshooting Application Gateway</title>
-    <link>https://www.gonzalo.cloud/posts/troubleshooting-appliction-gateway/</link>
-    <pubDate>Wed, 01 Feb 2023 10:47:42 &#43;0100</pubDate>
-    <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/posts/troubleshooting-appliction-gateway/</guid>
-    <description><![CDATA[Documentos relevantes  ¿Qué son los listeners? https://learn.microsoft.com/en-us/azure/application-gateway/configuration-listeners Comando PowerShell para ver un listener en particular: https://learn.microsoft.com/en-us/powershell/module/az.network/get-azapplicationgatewayhttplistener?view=azps-9.2.0 Terminación TLS y de extremo a extremo con Application Gateway https://learn.microsoft.com/en-us/azure/application-gateway/ssl-overview Página desde donde descargar openssl para windows https://slproweb.com/products/Win32OpenSSL.html Certificate Checker: https://tools.keycdn.com/ssl SSLABS SSLTEST https://www.ssllabs.com/ssltest/ Wiki acerca de certificados SSL https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki/333203/How-to-work-with-Certs-for-application-gateway OpenSSL commands https://www.redhat.com/sysadmin/6-openssl-commands OpenSSL examples https://www.misterpki.com/openssl-s-client/  Pasos resolución de problemas en APP GW Paso 1: Comprobar que el dominio está apuntando a la IP del Application Gateway Para ello podemos usar el comando dig (https://learn.]]></description>
 </item><item>
     <title>Azure Firewall</title>
     <link>https://www.gonzalo.cloud/posts/azure-firewall/</link>
@@ -88,13 +71,40 @@ El problema que intenta resolver private endpoint / private link es el acceso pr
     <guid>https://www.gonzalo.cloud/posts/application-gateway-diagnostics/</guid>
     <description><![CDATA[Application Gateway Diagnostics ]]></description>
 </item><item>
-    <title>Troubleshooting Application Gateway (Internal)</title>
-    <link>https://www.gonzalo.cloud/posts/troubleshooting-application-gateway/</link>
-    <pubDate>Fri, 16 Dec 2022 11:01:37 &#43;0100</pubDate>
+    <title>El gran Firewall Chino</title>
+    <link>https://www.gonzalo.cloud/posts/el-gran-firewall-chino-y-los-cdn/</link>
+    <pubDate>Wed, 14 Dec 2022 17:49:32 &#43;0100</pubDate>
     <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/posts/troubleshooting-application-gateway/</guid>
-    <description><![CDATA[Troubleshooting de Application Gateway  Comprobar NSG en la subred del Application Gateway  1.1) En ASC en el &ldquo;blade&rdquo; de properties, identificar el SKU y la VNET
-SKU Name	Standard_v2 Virtual Network Id	baa405b9-6060-4c17-9dcd-c93b93706666 Virtual Network Name	MR-LI-Net-02-WE-S-BDAP
-Habrá que identificar la VNET del Application Gateway. Recordemos que la subnet del Application Gateway no tiene por qué tener un nombre específico así que la mejor forma es desde la pestaña de propiedades, irse a la sección Instances, y ver las IPs que están cogiendo:]]></description>
+    <guid>https://www.gonzalo.cloud/posts/el-gran-firewall-chino-y-los-cdn/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/Images/Great_Firewall_China/Great_Firewall_China.jpg" referrerpolicy="no-referrer">
+            </div>No es ningún secreto que China no permite la libertad de expresión.
+La represión de sus ciudadanos se extiende al ámbito de Internet, donde tiene colocado un gran Firewall para vigilar todo lo que hacen sus camaradas en la red.
+Este Firewall es bastante sofisticado y entre otros mecanismos utiliza: (fuente: https://www.makeuseof.com/what-is-great-firewall-china/)
+BLOQUEO DE URLs El bloqueo de URLs o filtrado es uno de los métodos más efectivos utilizado por el Gran Firewall.]]></description>
+</item><item>
+    <title>Mejores Practicas De Seguridad Azure Networking - Parte 1: Segmentación de Subredes</title>
+    <link>https://www.gonzalo.cloud/posts/mejores-practicas-de-seguridad-azure-networking-segmentacion/</link>
+    <pubDate>Tue, 13 Dec 2022 15:20:51 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/mejores-practicas-de-seguridad-azure-networking-segmentacion/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/Images/SecurityBestPractices/AzureNetworkingSecurityBestPractices.jpg" referrerpolicy="no-referrer">
+            </div>Vamos a hablar de un tema extremadamente importante, que es el de las mejores prácticas de seguridad en Azure Networking.
+Y para ello, vamos a desglosar paso a paso las recomendaciones que encontramos en el siguiente documento:
+https://learn.microsoft.com/en-us/azure/security/fundamentals/network-best-practices
+Vamos a ir paso a paso porque el asunto tiene mucha miga, y nos vamos a centrar en esta entrada del blog en la segmentación lógica de subredes.
+Segmentación lógica de subredes (subnets) En Azure, las Virtual Networks son una extrapolación del concepto de LAN (Local Area Networks) del mundo &ldquo;on-prem&rdquo; La idea que subyace cuando se crea una Azure Virtual Network es crear una red virtual, basada en un espacio de direcciones IP, donde poder colocar recursos como máquinas virtuales, VPN gateways, etc.]]></description>
+</item><item>
+    <title>¿Qué es Gonzalo.cloud?</title>
+    <link>https://www.gonzalo.cloud/posts/que-es-gonzalo-cloud/</link>
+    <pubDate>Sun, 11 Dec 2022 09:21:17 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/que-es-gonzalo-cloud/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/Images/FeynmanTechnique.jpg" referrerpolicy="no-referrer">
+            </div>¿Qué es Gonzalo.cloud? Gonzalo.cloud es un blog de tecnología dedicado a Microsoft Azure.
+El blog es el complemento del canal de YouTube del mismo nombre: Gonzalo.cloud, donde hablo de Microsoft Azure y de cómo utilizar los distintos componentes que integran la oferta de cloud pública de Microsoft.
+¿Por qué hago esto? Si has oído hablar de la técnica Feynman, ya tienes la respuesta: enseñar es una de las mejores formas de aprender.]]></description>
 </item></channel>
 </rss>

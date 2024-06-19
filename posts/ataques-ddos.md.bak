@@ -1,0 +1,178 @@
+---
+title: "Ataques DDOS"
+date: 2023-03-29T11:19:26+02:00
+featuredimagePreview: "/Images/DDOSProtectionPlans/diagrama.png"
+author: 'Gonzalo.cloud'
+authorLink: 'https://www.linkedin.com/in/gonzalomurillotello/'	
+tags: ['DDOS / Denegación de Servicio','Under Attack']
+categories:
+- DDOS 
+- Seguridad
+
+description: "Azure DDOS"
+draft: false
+---
+
+
+## Cómo responder a ataques de Denegacion Distribuídos en clientes
+
+Está documentado aquí:
+
+https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki/277561/TSG-I'm-Under-a-DDoS-Attack-
+
+
+Respecto a DDOS, Microsoft ofrece las siguientes soluciones:
+
+	* DDOS Infrastructure Protection (no es un SKU que pueda ser comprado)
+	
+	Es la propia solución de Microsoft para proteger su infra, es gratis. Protege VIPs
+	  
+	* DDOS Protection Network Plan 	(DDOS Protection Standard) Aplica a VNETs
+	
+	* DDOS Protection Individual IP Plan (aplica a IPs específicas)
+	
+	Más información de los distintos SKU.
+	
+	https://learn.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview#skus
+
+		
+
+***PASOS QUE DEBE SEGUIR UN TSE PARA REACCIONAR A UN DDOS ATTACK POR PARTE DE UN CLIENTE***	
+
+
+1) Determinar si tiene algún DDOS con un SKU de pago
+
+
+	1.1) Desde ASC debe haber un resource ddosProtectionPlans
+	
+	Ordenando por Resource Provider: 	Microsoft Network --> ddosProtectionPlans	
+	
+	Imagen1
+	
+	Como vemos el DDOS Protection Plan se aplica a las VNETs
+	
+	Podría ser que el DDOS Protection Plan estuviera en otra subscripción B, pero aplicado a una VNET en la subscripción A
+	En ese caso habría que mirar la VNET --> Properties --> DDoS Protection Plan
+
+	1.2) Get NRP Subscription Details
+	
+	Otra forma de verlo es mediante Get NRP Subscription Details
+	https://portal.microsoftgeneva.com/22D0C825?genevatraceguid=9076f370-c8cd-459b-bf39-07d6077c5925
+	
+	Y buscando ddosProtectionsPlans
+	
+Una vez confirmado que tiene un DDOS de pago
+
+
+***DDOS PROTECTION PLAN***
+
+1) Determinar si la IP está siendo ahora mismo mitigada (si tiene ahora mismo un ataque DDOS es otra historia)
+
+Este Jarvis tiene distintos dashboards útiles:
+
+https://portal.microsoftgeneva.com/dashboard/CNS/CRI?overrides=%5B%7B%22query%22%3A%22//*%5Bid%3D%27DestinationVIP%27%5D%22%2C%22key%22%3A%22value%22%2C%22replacement%22%3A%2213.81.9.2%22%7D%5D%20
+
+Fijarese en:
+
+Is under DDoS mitigation? (1 means yes, 0 or no data means no)
+
+También en:
+Thresholds to start DDoS mitigation
+
+Using the dashboard Thresholds to start DDoS mitigation, you can see when DDoS Autotune policies are applied to this VIP
+ at any given moment. 
+ 
+Puede ser que el cliente diga que el DDOS no se está activando y lo que sucede es que los valores reales están por debajo de los valores
+de activación
+
+Para ello hay que fijarse en:
+
+How many packets/sec are traversing my VIP (during an attack)?
+
+This dashboard helps you understand why a DDoS Mitigation did or did not trigger. 
+You can compare this data with the autotune policies noted above to determine if a DDoS should or should not have been mitigated.
+
+DDoS protection enabled - Inbound flows are not reaching threshold at all.
+Because the thresholds are not reached, DDoS will not be mitigating.
+
+
+Una vez que tengamos claro que hay un ataque real:
+
+{{< figure src="/Images/DDOSProtectionPlans/diagrama.png" title="DDOS esquema" >}}
+
+
+PASOS UNA VEZ CONFIRMADO
+
+Post en el canal: Microsoft Teams DDoS Channel	
+https://teams.microsoft.com/l/channel/19%3a9e0120d9ea8b479e8c603012f1b15e8f%40thread.skype/Azure%2520DDoS?groupId=c3e00ac7-3f76-4350-ba3b-e335a6bbbe21&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47
+
+Abrir un ICM
+
+DDOS Protection / I´m under attack - Network Protection Plan
+
+Si y solo si ASC no funciona, podemos usar un template
+
+https://aka.ms/CRI-DDOSATTACK
+
+
+	
+***DDOS INFRASTRUCTURE PROTECTION***
+
+Services running on Azure are inherently protected by the default infrastructure-level DDoS protection. However, the protection that safeguards the infrastructure has a much higher threshold than most applications have the capacity to handle, and does not provide telemetry or alerting, so while a traffic volume may be perceived as harmless by the platform, it can be devastating to the application that receives it.
+
+By onboarding to the Azure DDoS Protection Service, the application gets dedicated monitoring to detect attacks and application specific thresholds. A service will be protected with a profile that is tuned to its expected traffic volume, providing a much tighter defense against DDoS attacks.
+
+
+Lo que se puede hacer cuando es un infrastructure protection es 
+
+Usar este DashBoard (DDOS Sflow Dashboards)
+
+Este Dashboard muestra todas las IPs públicas que están bajo un "Infrastructure Protection", que están siendo mitigadas.
+
+Si no aparece aquí la IP, entonces es que no está siendo mitigada de un ataque DDOS por la protección de infraestructura.
+
+https://portal.microsoftgeneva.com/s/9BFCEE0D?overrides=[{%22query%22:%22//*[id%3D%27DestinationVIP%27]%22,%22key%22:%22value%22,%22replacement%22:%2251.141.184.179%22}]&globalStartTime=1621175400000&globalEndTime=1621179000000&pinGlobalTimeRange=true
+
+Referencia:
+
+
+https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki/300601/TSG-Determine-Customer's-DDoS-SKU	
+
+Otro Jarvis que se puede usar, es uno muy genérico "Bandwidth Usage per FrontEnd IP" (este también se puede usar cuando es DDOS Protection Plan)
+
+https://portal.microsoftgeneva.com/dashboard/slbv2prod/AzureMonitor/BandwidthUsage?overrides=%5B%7B%22query%22%3A%22//dataSources%22%2C%22key%22%3A%22account%22%2C%22replacement%22%3A%22slbhpcentralindia%22%7D%2C%7B%22query%22%3A%22//*%5Bid%3D%27VipAddress%27%5D%22%2C%22key%22%3A%22value%22%2C%22replacement%22%3A%2213.71.52.254%22%7D%5D%20
+
+
+Mandaron un e-mail
+
+
+
+Hello Team,
+
+ 
+
+Lately we have see a raise on DDOS attack related cases and escalations, this email is with the intention to provide visibility on the current guides we have to face this situations.
+
+We can start the handling on similar situations confirming if the customer is under a DDOS L3 or L4 attack, once this has been determined, we can take respective actions, the documents below contain more details:
+
+
+Detection:
+This document can help you determine of the customer is under a L3 attack or not: TSG: "I'm Under a DDoS Attack" - Overview (visualstudio.com) along to direct you for troubleshooting steps and potential outcomes.
+
+For confirming L7 attacks we have the following guide: TSG: This wiki outlines what a Layer 7 or Application layer DDoS attack is and how to identify it - Overview (visualstudio.com)
+
+ 
+
+Mitigation:
+For L3/4 attacks please reach the TA community DDOS did trigger or act as expected.
+For L7 we have the following guide that can be used to help the customer create  custom rule to block attack patterns based on WAF logs: TSG - DDOS Post morterm AzFrontDoor CDN - Overview (visualstudio.com) and How to identify the section that triggered the WAF rule from the request - Overview (visualstudio.com)
+
+More info on multiple conditions custom rules: Web application firewall custom rule for Azure Front Door | Microsoft Learn
+
+
+Post mortem investigations:
+TSG: DDoS Attack Post-Mortem - Overview (visualstudio.com)
+TSG - DDOS Post morterm AzFrontDoor CDN - Overview (visualstudio.com) this is the same as per mitigation, since the same logs can be used for post-mortem analysis.
+
+
+

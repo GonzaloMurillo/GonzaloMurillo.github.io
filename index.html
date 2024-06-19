@@ -128,23 +128,6 @@ La solución sencilla y sin complicaciones es utilizar out-string para convertir
         <a href="/posts/convertingtostringtheoutputofpowershell/">Leer más</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/powershell/">PowerShell</a></div></div>
 </article><article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="featured-image-preview">
-            <a href="/posts/ataques-ddos/"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="/Images/DDOSProtectionPlans/diagrama.png"
-        data-srcset="/Images/DDOSProtectionPlans/diagrama.png, /Images/DDOSProtectionPlans/diagrama.png 1.5x, /Images/DDOSProtectionPlans/diagrama.png 2x"
-        data-sizes="auto"
-        alt="/Images/DDOSProtectionPlans/diagrama.png"
-        title="Azure DDOS" /></a>
-        </div><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/ataques-ddos/">Ataques DDOS</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://www.linkedin.com/in/gonzalomurillotello/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Gonzalo.cloud</a></span>&nbsp;<span class="post-publish">publicado el <time datetime="2023-03-29">2023-03-29</time></span>&nbsp;<span class="post-category">incluido en <a href="/categories/ddos/"><i class="far fa-folder fa-fw"></i>DDOS</a>&nbsp;<a href="/categories/seguridad/"><i class="far fa-folder fa-fw"></i>Seguridad</a></span></div><div class="content">Cómo responder a ataques de Denegacion Distribuídos en clientes Está documentado aquí:
-https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki/277561/TSG-I'm-Under-a-DDoS-Attack-
-Respecto a DDOS, Microsoft ofrece las siguientes soluciones:
-* DDOS Infrastructure Protection (no es un SKU que pueda ser comprado) Es la propia solución de Microsoft para proteger su infra, es gratis. Protege VIPs * DDOS Protection Network Plan (DDOS Protection Standard) Aplica a VNETs * DDOS Protection Individual IP Plan (aplica a IPs específicas) Más información de los distintos SKU.</div><div class="post-footer">
-        <a href="/posts/ataques-ddos/">Leer más</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/ddos-/-denegaci%C3%B3n-de-servicio/">DDOS / Denegación de Servicio</a>,&nbsp;<a href="/tags/under-attack/">Under Attack</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="featured-image-preview">
             <a href="/posts/application_security_groups/"><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -161,10 +144,37 @@ Objetivo de diseño:
 Los ASGs se crean con el objetivo de agrupar direcciones IPs a los que se les va a aplicar Network Security Groups. En lugar de tener que añadir en las reglas del NSG un montón de direcciones IP, el ASG actúa como un service tag a medida.</div><div class="post-footer">
         <a href="/posts/application_security_groups/">Leer más</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/gonzalo.cloud/">Gonzalo.cloud</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/troubleshooting-appliction-gateway/">Troubleshooting Application Gateway</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Gonzalo.cloud</a></span>&nbsp;<span class="post-publish">publicado el <time datetime="2023-02-01">2023-02-01</time></span></div><div class="content">Documentos relevantes  ¿Qué son los listeners? https://learn.microsoft.com/en-us/azure/application-gateway/configuration-listeners Comando PowerShell para ver un listener en particular: https://learn.microsoft.com/en-us/powershell/module/az.network/get-azapplicationgatewayhttplistener?view=azps-9.2.0 Terminación TLS y de extremo a extremo con Application Gateway https://learn.microsoft.com/en-us/azure/application-gateway/ssl-overview Página desde donde descargar openssl para windows https://slproweb.com/products/Win32OpenSSL.html Certificate Checker: https://tools.keycdn.com/ssl SSLABS SSLTEST https://www.ssllabs.com/ssltest/ Wiki acerca de certificados SSL https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki/333203/How-to-work-with-Certs-for-application-gateway OpenSSL commands https://www.redhat.com/sysadmin/6-openssl-commands OpenSSL examples https://www.misterpki.com/openssl-s-client/  Pasos resolución de problemas en APP GW Paso 1: Comprobar que el dominio está apuntando a la IP del Application Gateway Para ello podemos usar el comando dig (https://learn.</div><div class="post-footer">
-        <a href="/posts/troubleshooting-appliction-gateway/">Leer más</a></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="featured-image-preview">
+            <a href="/posts/azure-firewall/"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/Images/AZFW/AZFW.png"
+        data-srcset="/Images/AZFW/AZFW.png, /Images/AZFW/AZFW.png 1.5x, /Images/AZFW/AZFW.png 2x"
+        data-sizes="auto"
+        alt="/Images/AZFW/AZFW.png"
+        title="Azure Firewall" /></a>
+        </div><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/azure-firewall/">Azure Firewall</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://www.linkedin.com/in/gonzalomurillotello/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Gonzalo.cloud</a></span>&nbsp;<span class="post-publish">publicado el <time datetime="2023-01-18">2023-01-18</time></span>&nbsp;<span class="post-category">incluido en <a href="/categories/azure-firewall/"><i class="far fa-folder fa-fw"></i>Azure Firewall</a>&nbsp;<a href="/categories/firewall/"><i class="far fa-folder fa-fw"></i>Firewall</a></span></div><div class="content">Propósito de diseño de Azure Firewall Siempre que me detengo en explicar algún servicio de Microsoft Azure, empiezo por intentar comprender y explicar el propósito de diseño del propio servicio. Considero que entendiendo el propósito de diseño, siempre es mucho más fácil comprender la parte técnica que sirve a dicho propósito de diseño.
+ El propósito de diseño que Microsoft tenía en mente cuando diseñó el Azure Firewall es crear un firewall stateful &ldquo;as a service&rdquo;, que protega las VNETs que enrutan su tráfico hacia el Firewall, es decir, que atraviesan ese firewall.</div><div class="post-footer">
+        <a href="/posts/azure-firewall/">Leer más</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/private-end-/-private-link/">Private End / Private Link</a>,&nbsp;<a href="/tags/private-endpoint/">Private Endpoint</a>,&nbsp;<a href="/tags/private-link/">Private Link</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="featured-image-preview">
+            <a href="/posts/private-endpoint-private-link/"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/Images/PrivateEndPoint/AzurePrivateEndpoint.jpg"
+        data-srcset="/Images/PrivateEndPoint/AzurePrivateEndpoint.jpg, /Images/PrivateEndPoint/AzurePrivateEndpoint.jpg 1.5x, /Images/PrivateEndPoint/AzurePrivateEndpoint.jpg 2x"
+        data-sizes="auto"
+        alt="/Images/PrivateEndPoint/AzurePrivateEndpoint.jpg"
+        title="Private EndPoint / Private Link" /></a>
+        </div><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/private-endpoint-private-link/">Private Endpoint- Private Link</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://www.linkedin.com/in/gonzalomurillotello/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Gonzalo.cloud</a></span>&nbsp;<span class="post-publish">publicado el <time datetime="2023-01-10">2023-01-10</time></span>&nbsp;<span class="post-category">incluido en <a href="/categories/private-endpoint/"><i class="far fa-folder fa-fw"></i>Private Endpoint</a>&nbsp;<a href="/categories/private-link/"><i class="far fa-folder fa-fw"></i>Private Link</a></span></div><div class="content">Documentos relevantes https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration
+¿Qué problema intenta resolver private endpoint / private link? Resulta fundamental para comprender mejor un servicio, conocer en primer lugar cuál es el problema que intenta resolver dicho servicio, cuál es su razón de ser.
+El problema que intenta resolver private endpoint / private link es el acceso privado a servicios PaaS que son multitenant (servicios que son accedidos por múltiples clientes simultáneamente a traves de una IP pública).</div><div class="post-footer">
+        <a href="/posts/private-endpoint-private-link/">Leer más</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/private-end-/-private-link/">Private End / Private Link</a>,&nbsp;<a href="/tags/private-endpoint/">Private Endpoint</a>,&nbsp;<a href="/tags/private-link/">Private Link</a></div></div>
 </article><ul class="pagination"><li class="page-item active">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -172,10 +182,6 @@ Los ASGs se crean con el objetivo de agrupar direcciones IPs a los que se les va
                 </li><li class="page-item ">
                     <span class="page-link">
                         <a href="/page/2/">2</a>
-                    </span>
-                </li><li class="page-item ">
-                    <span class="page-link">
-                        <a href="/page/3/">3</a>
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">
