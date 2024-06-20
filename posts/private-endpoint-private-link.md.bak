@@ -1,0 +1,185 @@
+---
+title: "Private Endpoint- Private Link"
+date: 2023-01-10T08:53:38+01:00
+featuredimage: "/Images/PrivateEndPoint/AzurePrivateEndpoint.jpg"
+featuredimagePreview: "/Images/PrivateEndPoint/AzurePrivateEndpoint.jpg"
+author: 'Gonzalo.cloud'
+authorLink: 'https://www.linkedin.com/in/gonzalomurillotello/'	
+tags: ['Private End / Private Link','Private Endpoint','Private Link']
+categories:
+- Private Endpoint
+- Private Link
+
+description: "Private EndPoint / Private Link"	
+draft: false
+
+---
+
+## ¿Qué problema intenta resolver private endpoint / private link?
+
+Resulta fundamental para comprender mejor un servicio, conocer en primer lugar cuál es el problema que intenta resolver dicho servicio, cuál es su razón de ser.
+
+El problema que intenta resolver private endpoint / private link es el acceso privado a servicios PaaS que son multitenant
+(servicios que son accedidos por múltiples clientes simultáneamente a traves de una IP pública).
+
+>**Por defecto, los servicios PaaS se acceden a traves de IPs públicas**, pero para ciertas empresas / clientes esto no es una opción válida. 
+Muchos clientes no pueden permitirse acceder a los servicios PaaS por la IP Pública del servicio, pues esto supone que
+tráfico privado fluya a traves de Internet.
+El tráfico que fluye por Internet está sujeto a ser capturado y expuesto; algo que no es admisible para muchas empresas.
+Además, si el tráfico fluye por Internet, no puede garantizarse la latencia y estabilidad. ¡Los clientes necesitan poder acceder a esos servicios PaaS de forma privada!
+	
+
+## ¿Cómo soluciona Microsoft este problema?
+
+
+>El objetivo de diseño de private link / private endpoint es permitir el **acceso privado** a recursos PaaS públicos.
+
+
+## Private Endpoint
+
+En Azure, un **private endpoint es una interfaz de red que conecta de forma privada y segura a un servicio compatible con Azure Private Link**.
+
+El Private Endpoint usa una dirección IP del rango de direcciones de la VNET en la que se integra.
+
+A su vez esa NIC está conectada por Private Link al recurso / subrecurso al que se desea acceder, lo que hace que el servicio realmente esté integrado dentro de la propia VNET,
+pudiendo ser accedido por una dirección privada.
+
+{{< figure src="/Images/PrivateEndPoint/PrivateEndpoint.jpg" title="Private Endpoint es una NIC en la subred, lo que efectivamente trae el servicio a la subred" >}}
+
+## Private Link
+
+Private Link es el servicio de Azure que permite que el tráfico entre la VNET y el servicio fluya a través del private endpoint (la interfaz privada), lo que garantiza que el tráfico no abandona el backbone de Microsoft.
+
+___
+
+## Beneficios que proporcionan los private endpoints
+
+1. **Seguridad mejorada**: Todo el tráfico entre la VNET y el servicio permanece en la red de Microsoft Azure (sin salir a Internet), reduciendo el riesgo de exposición.
+
+2. **Rendimiento mejorado**: El tráfico entre la VNET y el servicio permanece en la red de Microsoft Azure, incrementando el rendimiento de las cargas de trabajo.
+
+3. **Cumplimiento normativo**: Algunas directrices de cumplimiento normativo obligan a que ciertos datos sean accedidos desde una red privada.
+Los private endpoints pueden ayudar a cumplir con esos requerimientos.
+___
+
+## ¿Es private link / private endpoint la única solución de la que dispone Microsoft para acceder privadamente a servicios PaaS?
+
+
+No, no es la única. Microsoft tiene dos soluciones disponibles para ello: **Service Endpoint** y **Azure Private Link / Private Endpoint**
+
+Ambas soluciones tienen un objetivo de diseño similar: garantizar el acceso privado a servicios PaaS, pero su implementación es distinta, y esto
+genera diferencias sustanciales.
+
+## Diferencias entre Private Link / Private Endpoint y Service Endpoint
+
+Hay varias diferencias entre Private Link / Private Endpoint.
+
+Las más reseñables son las siguientes:
+
+### IP PÚBLICA vs IP PRIVADA para acceder al servicio
+
+Service Endpoint sigue usando la IP pública del servicio PaaS (aunque el tráfico hacia estos servicios fluirá por el backbone de Microsoft)
+mientras que Private Link / Private endpoints realmente "trae" el servicio a la propia VNET creando una NIC (tarjeta de red) con un direccionamiento
+IP dentro de la propia VNET a través de la cuál se accede al servicio PaaS via Private Link.
+
+### GRANULARIDAD REDUCIDA con Service Endpoints
+
+Por otro lado, también la granularidad de Service Endpoint y Private Endpoint es distinta. 
+Si utilizamos Service Endpoint, la granularidad es limitada, y permite el acceso a todo el servicio completo.
+
+Por ejemplo, si tienes una subred con un service endpoint para habilitar el acceso a una storage account todos los recursos en esa subred pueden
+acceder a otras storage accounts adicionales (pues la granularidad es el servicio completo).
+
+Es cierto que se pueden usar "políticas de service endpoint" para limitar el acceso a una única storage account:
+o a todas las storage accounts en una región / subscripción.  
+No obstante estas políticas solo se soportan para el Azure Storage Service.
+
+Por contra, los private endpoints pueden ser definidos contra un recurso / subrecurso específico, y no está limitado a Azure Storage.
+
+Existen además otras diferencias reseñables: 
+
+### Simplicidad y precio	
+
+Los service endpoints son más fáciles de implementar y son gratuítos.
+Los private endpoints requiren configuración de DNS y no son gratis.
+
+Así mismo la lista de servicios que soportan private endpoints / private link son distintas:
+
+Lista de servicios PaaS soportada por Service Endpoints: 
+
+https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-service-endpoints-overview
+
+Lista de servicios PaaS soportada por Private link / Private Endpoint:
+
+https://learn.microsoft.com/en-us/azure/private-link/availability
+
+___
+
+### Configuración de un Private Endpoint / Private Link en entorno de laboratorio
+
+
+
+**Private Link / Private Endpoint se basa en tres componentes:**
+
+>1) Private Endpoint: No es más que una interfaz de red privada en la misma subred que la máquina que queremos que tengamos acceso, y enlazada a un recurso
+ determinado via private link. No todos los servicios de Microsoft son Private Link Ready. El Private Endpoint se crea para un determinado servicio que tiene que ser private link ready (referirse a la lista anterior)
+Y se despliega en una subnet donde la VM o lo que quiera que vaya a hacer uso del servicio esté localizada.
+
+>2) Private Link: Une el private endpoint con el servicio PaaS. Es lo que permite que el servicio PaaS sea accedido por la interfaz de red privada que se asocia al private endpoint.
+
+>3) Cambios en la configuración DNS: Al habilitar un private link, se crea un registro tipo CNAME que hace que el recurso original, por ejemplo
+storagedeprueba1.blob.core.windows.net sea un CNAME (alias) a storagedeprueba1.privatelink.blob.core.windows.net.
+Este último FQDN deberemos apuntarlo a la IP privada del private endpoint a traves de una zona privada en azure(private DNS zone) o a través de un Custom DNS
+que tenga configurado el conditional forwarder para la zona privatelink.blob.core.windows.net al DNS de Azure (o que sea capa de 
+resolver los registros DNS de la zona privatelink.blob.core.windows.net) 
+
+
+En el momento que se habilita un private link, se crea en los servidores públicos de Azure, un registro DNS de tipo CNAME (alias) que apunta al mismo FQDN que el original 
+pero con privatelink en el nombre, de tal forma que si hay una private DNS zone linkada a la VNET (intento de acceso al recurso desde dentro de la VNET de Azure),
+podremos apuntar este FQDN que contiene privatelink a la IP interna.
+
+Si por el contrario accedemos desde fuera, la IP a la que accederemos será la IP pública.
+
+
+### Troubleshooting:
+
+Si hacemos desde una máquina que se supone que debería acceder a la IP interna del Private Endpoint un nslookup, pero
+nos devuelve la IP pública, es porque hay un problema DNS.
+
+>Ejemplo:
+
+>>nslookup storagedeprueba1.privatelink.blob.core.windows.net
+>>Server:         127.0.0.53
+>>Address:        127.0.0.53#53
+
+>>Non-authoritative answer:
+>>storagedeprueba1.privatelink.blob.core.windows.net      canonical name = blob.ams08prdstr13a.store.core.windows.net.
+>>Name:   blob.ams08prdstr13a.store.core.windows.net
+>>Address: 20.209.49.232 <-- Y nos devuelve la IP externa
+ 
+>La VNET no tiene linkada la private DNS zone privatelink.blob.core.windows.net o dicha private zone no tiene creado el registro tipo A para storagedeprueba1
+
+
+Cuando funciona bien desde la VNET de Azure (devolviendo la IP interna del Private Enpoint)
+
+>>nslookup storagedeprueba1.blob.core.windows.net
+>>Server:         127.0.0.53
+>>Address:        127.0.0.53#53
+
+>>Non-authoritative answer:
+>>storagedeprueba1.blob.core.windows.net  canonical name = storagedeprueba1.privatelink.blob.core.windows.net.
+>>Name:   storagedeprueba1.privatelink.blob.core.windows.net
+>>Address: 10.1.0.6 <-- Registro tipo A conteniendo la IP del Private Endpoint
+
+## LABORATORIO
+
+>Vamos a preparar un laboratorio donde vamos a configurar una private endpoint para un recurso de storage tipo blob
+denominado storageaccountgonzalo
+
+>Desde una máquina virtual dentro de una VNET de Azure, vamos a acceder al recurso, antes y después de haber configurado
+private link / private endpoint y vamos a anotar las diferencias.
+
+>Finalmente configuremos una private dns zone para el nombre privatelink.blob.core.windows.net, la linkaremos a la VNET
+y crearemos un registro DNS tipo A que apunte a la IP del private endpoint.
+
+Manos a la obra:

@@ -1,0 +1,53 @@
+---
+title: "Como Obtener Una Traza De Red en Windows"
+date: 2024-06-20T10:02:06+02:00
+featuredimage: "/Images/nastya-dulhiier-OKOOGO578eo-unsplash.jpg"
+featuredimagePreview: "/Images/nastya-dulhiier-OKOOGO578eo-unsplash.jpg"
+author: 'Gonzalo.cloud'
+authorLink: 'https://www.linkedin.com/in/gonzalomurillotello/'	
+tags: ['Trazas de red','netsh','tcpdump']
+categories:
+- Private Endpoint
+- Private Link
+
+description: "Private EndPoint / Private Link"	
+draft: false
+---
+
+## Obtener una traza de red de modo nativo en Windows y Linux
+
+En muchas ocasiones, durante nuestro trabajo como técnicos de soporte, debemos obtener trazas de red.
+
+Wireshark es un software fantástico, pero es imposible en muchas ocasiones instalar este software en máquinas en producción, por lo que solemos optar por soluciones nativas para recoger las requeridas trazas de red, tan necesarias para hacer troubleshooting de problemas complejos.
+
+En Windows utilizamos el comando netsh
+
+>netsh trace start capture=yes tracefile=c:\temp\networktraceatclient.etl persistent=yes maxsize=4096
+
+En Linux el equivalente es:
+
+>tpdump -i any -s0 -nnn -w networktrace.cap
+
+
+Explicación de los parámetros
+
+___
+-s0 indica que cogeremos todo el paquete, en lugar de únicamente la cabecera.
+
+
+-nnn es para que no se resuelvan los hostnames ni los números de puerto.
+
+
+-w networktrace.cap, es el nombre y path del fichero en el que se guardará la traza de red.
+
+
+___
+
+Hay que notar que cuando la traza se coge en Windows, el fichero generado es .etl
+
+Normalmente este fichero hay que convertiro a .pcap para poder procesarlo con Wireshark
+
+Para ello usamos el software etl2pcap.exe
+
+
+https://github.com/microsoft/etl2pcapng/releases

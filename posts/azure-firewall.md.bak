@@ -1,0 +1,256 @@
+---
+title: "Azure Firewall"
+date: 2023-01-18T10:27:04+01:00
+#featuredimage: "/Images/AZFW/AZFW.png"
+featuredimagePreview: "/Images/AZFW/AZFW.png"
+author: 'Gonzalo.cloud'
+authorLink: 'https://www.linkedin.com/in/gonzalomurillotello/'	
+tags: ['Private End / Private Link','Private Endpoint','Private Link']
+categories:
+- Azure Firewall
+- Firewall
+
+description: "Azure Firewall"	
+draft: false
+
+---
+## Propósito de diseño de Azure Firewall
+
+Siempre que me detengo en explicar algún servicio de Microsoft Azure, empiezo por intentar comprender y explicar el propósito de diseño del propio servicio.
+Considero que entendiendo el propósito de diseño, siempre es mucho más fácil comprender la parte técnica que sirve a dicho propósito de diseño.  
+
+> **El propósito de diseño que Microsoft tenía en mente cuando diseñó el Azure Firewall es crear un firewall stateful "as a service", que protega las VNETs que enrutan su tráfico hacia el Firewall, es decir, que atraviesan ese firewall.**
+
+**¿Qué es un firewall stateful?**
+
+Las peticiones pueden ser de dos tipos: **"requests" y "responses"**   
+
+
+Un firewall stateful es aquel que guarda información de las requests, y es capaz de identificar automáticamente las responses que corresponden a un determinado request.
+
+Esto es una gran ventaja, pues en un firewall stateful, **la perspectiva que tenemos que considerar a la hora de crear las reglas es siempre desde el lado del request**, pues el lado del response se maneja automáticamente.
+
+Dicho de otra forma: **si en un firewall stateful creamos una regla que permita peticiones salientes a una IP de destino contra un puerto determinado, la conexión de vuelta estará permitida automáticamente**.
+
+En un firewall stateless, por contra, las dos conexiones hay que verlas como independientes.   
+Por tanto, en un firewall stateless, habría que permitir tanto las peticiones salientes como las entrantes en ambos lados de la comunicación, lo cual es realmente una sobrecarga 
+administrativa muy considerable que puede inducir a errores.
+
+Os recomiendo para entender bien las diferencias entre firewalls stateful y stateless ver el siguiente vídeo, que si bien es un poco largo, merece totalmente 
+la pena:
+
+https://www.youtube.com/watch?v=rL4-vbsN35w&t=7s  
+
+Nota: En el contexto de un firewall stateful, se dice que tenemos tráfico asimétrico, cuando se recibe una petición inbound, que no corresponde con ninguna previa
+outbound.
+
+>**Recapitulando:** el objetivo de diseño que tiene Microsoft cuando crea el Azure Firewall es crear un firewall stateful "as a service".
+Antes de crear el Azure Firewall, la única forma que había de proteger una VNET era recurriendo a NVAs (Network Virtual Appliances) proporcionadas por 
+fabricantes ajenos a Microsoft. Aunque la opción de utilizar una NVA de terceros fabricantes sigue estando disponible, Microsoft no podía dejar de ofrecer un servicio
+tan demandado de forma nativa, y por ello creó Azure Firewall, que pasó a ser GA en Septiembre del 2018: https://azure.microsoft.com/en-us/updates/azure-firewall-generally-available/
+
+## Características de Azure Firewall
+
+* Alta disponibilidad
+* Soporte nativo de zonas de disponibilidad
+* Escalabilidad (basado en scaleset)
+* Filtrado basado en reglas FQDN de tipo aplicación
+* Filtrado basado en reglas tipo Network
+* Tags FQDN
+* Soporte de Service Tags
+* Protección inteligente frente a amenazas (Thread Intelligence)
+* Soporte Outbound SNAT 
+* Soporte Inboud SNAT
+* Múltiples IPs públicas
+* Azure Monitor logging
+* Forced Tunneling (0.0.0.0/0)
+* Filtrado por Categorías WEB
+* Certificados
+
+
+## SKUs 
+
+Hay dos SKUs disponibles:   
+
+Standard y Premium
+
+
+Funciones 
+
+El Premium ofrece los mismos servicios que el Standard, más servicios adicionales
+
+
+## Consideraciones Deployment de Azure Firewall 
+
+{{< figure src="/Images/AZFW/AZFW.png" title="Azure Firewall" >}}
+
+
+>* El Azure Firewall se despliega en su propia Subnet (AzureFirewallSubnet/26), lo cual proporciona 59 IPs = 2^(32-26)-5 IPs y es espacio suficiente para escalar.   
+
+>Solo se puede tener un Azure Firewall por Virtual Network, pero obviamente múltiples VNETs pueden compartir el Azure Firewall.
+
+> **Nota:** Como el peering no es transitivo, en una configuración con x spokes, todos ellos conectados al FW, si quieremos que desde un Spoke se pueda llegar
+a otros a través del FW, lo que hay que hacer es ir a la configuración del peering del spoke al HUB y permitir "Traffic Forwarded from remote virtual network"
+Lo cual permite tráfico entrante no originado en la propia VNET (hay que permitir tráfico entrante de la VNET del HUB)
+
+
+> Hay que tener en cuenta que las reglas se acumulan (efecto aclumulativo). Es decir, si tenemos NSGs que bloquean, aunque se haya permitido en el AZFW, las va a bloquear el NSG
+Y por supuesto si hay reglas a nivel firewall OS, también aplican
+
+> Cuando se hace el deployment de Azure Firewall, se crea un load balancer que tiene una internal IP + scaleset.
+El autoscale soporta desde 2 Gbps hasta 30 Gbps
+
+> Adicionalmente tendrá una IP pública (hasta 250 IPs), que se usará para configuracion NAT.
+
+> Las instancias del FW (las VMs) tienen un solo NIC, a menos que se usa force tunneling, que entonces hace deployment de una segunda NIC, y una segunda subnet
+
+> Tiene que hacerse deployment del Azure Firewall en el mismo Resource Group que contiene a la VNET.
+
+> Azure Firewall no soporta BGP por el momento, así que hay que decirle a las subredes, que envíen activamente el tráfico hacia otros spokes a través de la IP interna del AZ FW, 
+y para ello hay que crear Route Tables que se aplican a las subredes y que tienen como next hop NVA y como IP, la IP interna del Azure Firewall.
+
+
+
+## Configuración de reglas en el firewall
+
+* Se pueden definir IP groups, que son agregaciones de IPs que luego pueden usarse en la configuración de reglas de firewall
+
+* Hay dos formas de configurar el firewall: firewall rules (classic) firewall policy. Las firewall policy tienen la ventaja de que pueden aplicarse a 
+diferentes Azure Firewalls, lo cual simplifica el proceso de configuración.
+
+* El AZ FW con SKU standard, permite al ser creado, usar firewall rules y firewall policy
+* El AZ FW con SKU premium, solo permite policies
+
+* Las policies tienen un coste adicional, si y solo si, están aplicadas a multiple Azure Firewalls
+
+## 	¿Qué son las Firewall Policies?
+
+Las policies están integradas por una serie de componentes lógicos.
+
+* Hay tres tipos de reglas: 
+
+	* Regla DNAT 
+	* Regla Network 
+	* Regla Application
+
+* En el nivel superior de la regla, podemos tener "Rule Collection Groups", que son un contenedor de "Rule Collections". 
+Las Rule Collections son de un tipo determinado (DNAT, NETWORK, APPLICATION), por lo que no pueden reglas de distintos tipos.
+Los Rule Collections Groups no son de un tipo determinado, ya que pueden contener "Rule Collections" de diversos tipos, tal y como hemos visto.
+
+Las Firewalls Policies, no están en el portal bajo el Firewall, sino que tienen una sección separada "Firewall Policies".
+Las firewall policies, pueden tener "parent policies" que son reglas de las que heredan del padre y que se procesarán en primer lugar.
+Los Rule Collections Groups tienen prioridades que van de 100 a 65000 (menor número, mayor prioridad) y que deciden que Rule Collection Group se va a aplicar 
+en primer lugar.
+
+Dentro de los Rule Collection Groups, lo primero que se procesan son las reglas de tipo DNAT.
+
+Es decir, se van cogiendo los Rule Collection Groups por prioridad, y se ejecuta en primer lugar las reglas de tipo DNAT.
+Luego las reglas de tipo network, y finalmente las reglas de tipo application.
+
+Esto pasa para cada Rule Collection Group.
+
+Es decir, si hay varios "Rule Collection Groups", primero se va al "Rule Collection Group" de mayor prioridad, se procesan las reglas de tipo DNAT, y se pasa
+al siguiente "Rule Collection Group", donde se procesan las reglas de tipo DNAT. Una vez que todos los "Rule Collection Groups" se hayan procesado, se vuelve al primero, 
+al de prioridad más baja y se procesan las reglas de tipo red, y se hace el mismo ciclo. Finalmente se acaba con las reglas de tipo application.
+
+Es importante entender este orden de procesamiento de las reglas, porque imaginemos que creamos unas reglas de tipo "application" muy granulares, pero tenemos
+antes unas reglas de tipo "network" que dejan pasar todo el tráfico. En ese escenario, las reglas de tipo "application" nunca entrarían en uso.
+
+Hay una prioridad suprema, que está por encima de todas, y es la de "Thread Intelligence"
+"Thread Intelligence" es un apartado dentro de la Firewall Policy.
+
+Thread Intelligence bloquea IPs maliciosas conocidas y dominios. 
+Tiene tres modos "Disabled", "Alert only", "Alert and Deny", pero sus reglas son procesadas en primer lugar.
+
+Thread Intelligence permite definir exclusiones.
+
+
+**REGLAS DE TIPO DNAT**
+
+Se basan en la dirección IP pública.
+
+La IP pública puede servir a dos propósitos: cuando entra tráfico por la IP pública, o cuando sale tráfico por la IP pública.
+
+Cuando entra tráfico, eso es DNAT, cuando quiero mapear la IP pública a algo en el backend.
+
+Las reglas DNAT se basan en el origen de la petición que llega a la IP pública.
+
+
+Source IP | IP GROUP: PUBLIC IP OF THE FIREWALL: MAP TO WHAT PRIVATE IP: WHAT PORT
+
+Cuando sale tráfico desde la IP pública, eso es SNAT
+
+Va a realizar SNAT para todos los rangos, excepto para el rango RFC 1918. Esto se puede cambiar en la firewall policy en la sección
+Private IP ranges (SNAT)
+
+SNAT usa un puerto para cada conexión saliente, por eso en las Azure Metrics, hay una métrica que es SNAT port utilization.
+
+También por eso hay múltiples IPs, cada IP añade de un número de puertos nuevo (65000?)
+
+** REGLAS DE TIPO NET **
+
+Por defecto son de tipo denegar
+
+Las reglas de tipo NET, se basan en la 5 tuplas estándar
+
+IP ORIGEN: PUERTO ORIGEN: IP DESTINO | IP GROUP | FQDN | SERVICE TAG: PUERTO DESTINO: PROTOCOLO
+
+Si en el destino ponemos un FQDN, se resolverá a la IP.
+Si ponemos un IP Service Tag recordemos que los service tags se utilizan para identificar una serie de servicios PaaS.
+Si ponemos un FQDN, habrá una resolución de nombre a la IP.
+
+Son reglas de capa 4 dentro del modelo OSI
+
+** REGLAS DE TIPO APLICATION**
+
+High level, FQDN va a usar el SNI
+
+SOURCE IP | IP GROUP | FQDN or URL (only for premium) or FQDNTAG or WEB CATEGORY
+
+Con premium, puedo mirar dentro de la URL incluso si hay encriptación TLS, con TLS inspection
+ 
+
+** CONFIGURACIÓN DNS EN LA AZURE FIREWALL POLICY **
+
+En la política se puede habilitar configuración DNS y se puede hacer que el DNS actúe como proxy DNS, es decir que toda petición DNS que le llegue, la reenvíe
+a otro lado.
+
+Si se habilita el proxy DNS, el firewall comenzará a escuchar en el puerto 53 y todo lo que le llegue lo reenviará, bien al default Azure Provided, bien a
+un Custom DNS que especifiquemos. 
+
+Esto es principalmente para evitar inconsistencias en las reglas FQDN, si un cliente tiene su propia resolución DNS y un FQDN responde con una IP distinta a la que
+responde el FW, se crea routing asimétrico.
+
+
+## Azure Firewall Manager 
+
+Firewall Manager permite la administración central de un firewall.
+
+## Azure Firewall SKU PREMIUM qué hace
+
+* VMs más potentes en la subnet del AzureFirewallSubnet
+* Reglas de aplicación basadas en URL
+* TLS inspection
+
+Para qué TLS inspection funcione, el Azure Firewall tiene que actuar como "man in the middle", y para ello tiene que ser capaz de generar certificados.
+Para lo cual el PKI de la entidad tiene que proporcionarle al firewall un "Subordinate CA"
+
+https://www.globalsign.com/en/blog/what-is-an-intermediate-or-subordinate-certificate-authority#:~:text=Subordinate%20CAs%20%E2%80%93%20these%20live%20between%20the%20root,you%20must%20separate%20SSL%20and%20S%2FMIME%20Subordinate%20CAs.
+
+Que será guardado en Azure Key Vault, el Azure Firewall con una managed identity, vamos a permitirle operar en el certificado.
+Así podrá generar certificados para cualquier nombre. Es como una cadena de trust.
+
+Cuando el cliente trate de acceder google.com, se establecerán dos sesiones TLS.
+
+Entre el cliente y el AZ FW, entre el AZ FW y el final host, y si inspeccionamos el certificado, lo que veremos es que está generado por el Azure Firewall Manager.
+## Precios
+
+Por hora de deployment + tráfico en GB (más tráfico, más instancias)
+
+
+
+## LABS
+
+Templates para hacer deployment de distintos labs de Azure Firewall
+
+https://learn.microsoft.com/en-us/azure/templates/microsoft.network/azurefirewalls?pivots=deployment-language-bicep

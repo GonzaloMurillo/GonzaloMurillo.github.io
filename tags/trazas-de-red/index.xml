@@ -1,0 +1,18 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Trazas de red - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title>
+        <link>https://www.gonzalo.cloud/tags/trazas-de-red/</link>
+        <description>Trazas de red - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</description>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Thu, 20 Jun 2024 10:02:06 &#43;0200</lastBuildDate><atom:link href="https://www.gonzalo.cloud/tags/trazas-de-red/" rel="self" type="application/rss+xml" /><item>
+    <title>Como Obtener Una Traza De Red en Windows</title>
+    <link>https://www.gonzalo.cloud/posts/como-obtener-una-traza-de-red-en-windows/</link>
+    <pubDate>Thu, 20 Jun 2024 10:02:06 &#43;0200</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/como-obtener-una-traza-de-red-en-windows/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/Images/nastya-dulhiier-OKOOGO578eo-unsplash.jpg" referrerpolicy="no-referrer">
+            </div>Obtener una traza de red de modo nativo en Windows y Linux En muchas ocasiones, durante nuestro trabajo como técnicos de soporte, debemos obtener trazas de red.
+Wireshark es un software fantástico, pero es imposible en muchas ocasiones instalar este software en máquinas en producción, por lo que solemos optar por soluciones nativas para recoger las requeridas trazas de red, tan necesarias para hacer troubleshooting de problemas complejos.
+En Windows utilizamos el comando netsh]]></description>
+</item></channel>
+</rss>
