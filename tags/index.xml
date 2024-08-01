@@ -3,7 +3,21 @@
         <title>Tags - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title>
         <link>https://www.gonzalo.cloud/tags/</link>
         <description>Tags - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</description>
-        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Thu, 20 Jun 2024 10:02:06 &#43;0200</lastBuildDate><atom:link href="https://www.gonzalo.cloud/tags/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Thu, 01 Aug 2024 08:58:52 &#43;0200</lastBuildDate><atom:link href="https://www.gonzalo.cloud/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>DNS, APEX</title>
+    <link>https://www.gonzalo.cloud/tags/dns-apex/</link>
+    <pubDate>Thu, 01 Aug 2024 08:58:52 &#43;0200</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/tags/dns-apex/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>nmap,traceroute</title>
+    <link>https://www.gonzalo.cloud/tags/nmaptraceroute/</link>
+    <pubDate>Wed, 31 Jul 2024 08:58:52 &#43;0200</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/tags/nmaptraceroute/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>netsh</title>
     <link>https://www.gonzalo.cloud/tags/netsh/</link>
     <pubDate>Thu, 20 Jun 2024 10:02:06 &#43;0200</pubDate>
@@ -58,20 +72,6 @@
     <pubDate>Sun, 18 Dec 2022 11:01:37 &#43;0100</pubDate>
     <author>Autor</author>
     <guid>https://www.gonzalo.cloud/tags/application-gateway/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>CDN</title>
-    <link>https://www.gonzalo.cloud/tags/cdn/</link>
-    <pubDate>Wed, 14 Dec 2022 17:49:32 &#43;0100</pubDate>
-    <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/tags/cdn/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>Security Best Practices</title>
-    <link>https://www.gonzalo.cloud/tags/security-best-practices/</link>
-    <pubDate>Tue, 13 Dec 2022 15:20:51 &#43;0100</pubDate>
-    <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/tags/security-best-practices/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

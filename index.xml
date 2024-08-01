@@ -3,9 +3,27 @@
         <title>Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title>
         <link>https://www.gonzalo.cloud/</link>
         <description>Gonzalo.cloud: Aprende Microsoft Azure paso a paso</description>
-        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Thu, 20 Jun 2024 10:02:06 &#43;0200</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Thu, 01 Aug 2024 08:58:52 &#43;0200</lastBuildDate>
             <atom:link href="https://www.gonzalo.cloud/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>¿Qué es el APEX de un dominio?</title>
+    <link>https://www.gonzalo.cloud/posts/que-es-el-apex-de-un-dominio/</link>
+    <pubDate>Thu, 01 Aug 2024 08:58:52 &#43;0200</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/que-es-el-apex-de-un-dominio/</guid>
+    <description><![CDATA[En muchas ocasiones, en el contexto de los registros DNS, los usuarios preguntan qué representa el símbolo @, a lo que suelo responder: es el APEX.
+¿Y qué demonios es el APEX, te preguntarás?
+La forma más sencilla de explicar qué es un dominio Apex es recurriendo a un ejemplo. Vamos a suponer que registras un nuevo dominio: midominio.com. Este &lsquo;midominio.com&rsquo; sería el &ldquo;dominio apex&rdquo; porque es la raíz de la jerarquía de nombres de dominio: la base de todo lo que provenga de este dominio.]]></description>
+</item><item>
+    <title>Traceroute con NMAP</title>
+    <link>https://www.gonzalo.cloud/posts/traceroute/</link>
+    <pubDate>Wed, 31 Jul 2024 08:58:52 &#43;0200</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/traceroute/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/Images/nmap.jpg" referrerpolicy="no-referrer">
+            </div>Cómo usar Nmap para Traceroute y descubrir rutas de red Traceroute—o tracert si estás en el mundo de Windows—es, junto con ping, una de las herramientas de resolución de problemas de red más utilizadas. Como su nombre lo indica, traceroute rastrea la ruta desde una computadora o dispositivo conectado a la red hasta otro. Es una herramienta muy útil que no solo prueba la conectividad a un host, sino que también revela mucho sobre el camino para llegar allí y algunos problemas que pueden estar afectándolo.]]></description>
+</item><item>
     <title>Como Obtener Una Traza De Red en Windows</title>
     <link>https://www.gonzalo.cloud/posts/como-obtener-una-traza-de-red-en-windows/</link>
     <pubDate>Thu, 20 Jun 2024 10:02:06 &#43;0200</pubDate>
@@ -83,30 +101,5 @@ El problema que intenta resolver private endpoint / private link es el acceso pr
     <author>Autor</author>
     <guid>https://www.gonzalo.cloud/posts/application-gateway-diagnostics/</guid>
     <description><![CDATA[Application Gateway Diagnostics ]]></description>
-</item><item>
-    <title>El gran Firewall Chino</title>
-    <link>https://www.gonzalo.cloud/posts/el-gran-firewall-chino-y-los-cdn/</link>
-    <pubDate>Wed, 14 Dec 2022 17:49:32 &#43;0100</pubDate>
-    <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/posts/el-gran-firewall-chino-y-los-cdn/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/Images/Great_Firewall_China/Great_Firewall_China.jpg" referrerpolicy="no-referrer">
-            </div>No es ningún secreto que China no permite la libertad de expresión.
-La represión de sus ciudadanos se extiende al ámbito de Internet, donde tiene colocado un gran Firewall para vigilar todo lo que hacen sus camaradas en la red.
-Este Firewall es bastante sofisticado y entre otros mecanismos utiliza: (fuente: https://www.makeuseof.com/what-is-great-firewall-china/)
-BLOQUEO DE URLs El bloqueo de URLs o filtrado es uno de los métodos más efectivos utilizado por el Gran Firewall.]]></description>
-</item><item>
-    <title>Mejores Practicas De Seguridad Azure Networking - Parte 1: Segmentación de Subredes</title>
-    <link>https://www.gonzalo.cloud/posts/mejores-practicas-de-seguridad-azure-networking-segmentacion/</link>
-    <pubDate>Tue, 13 Dec 2022 15:20:51 &#43;0100</pubDate>
-    <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/posts/mejores-practicas-de-seguridad-azure-networking-segmentacion/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/Images/SecurityBestPractices/AzureNetworkingSecurityBestPractices.jpg" referrerpolicy="no-referrer">
-            </div>Vamos a hablar de un tema extremadamente importante, que es el de las mejores prácticas de seguridad en Azure Networking.
-Y para ello, vamos a desglosar paso a paso las recomendaciones que encontramos en el siguiente documento:
-https://learn.microsoft.com/en-us/azure/security/fundamentals/network-best-practices
-Vamos a ir paso a paso porque el asunto tiene mucha miga, y nos vamos a centrar en esta entrada del blog en la segmentación lógica de subredes.
-Segmentación lógica de subredes (subnets) En Azure, las Virtual Networks son una extrapolación del concepto de LAN (Local Area Networks) del mundo &ldquo;on-prem&rdquo; La idea que subyace cuando se crea una Azure Virtual Network es crear una red virtual, basada en un espacio de direcciones IP, donde poder colocar recursos como máquinas virtuales, VPN gateways, etc.]]></description>
 </item></channel>
 </rss>

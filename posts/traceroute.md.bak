@@ -1,0 +1,70 @@
+---
+title: "¿Cómo usar NMAP como un traceroute?"
+date: 2023-03-22T17:45:33+01:00
+
+title: "Traceroute con NMAP"	
+description: "Cómo utilizar nmap para hacer traceroutes"
+featuredimage: '/Images/nmap.jpg'
+featuredimagePreview: '/Images/nmap.jpg'
+tags: ['nmap,traceroute']
+draft: false
+---
+
+## Cómo usar Nmap para Traceroute y descubrir rutas de red
+
+Traceroute—o tracert si estás en el mundo de Windows—es, junto con ping, una de las herramientas de resolución de problemas de red más utilizadas. Como su nombre lo indica, traceroute rastrea la ruta desde una computadora o dispositivo conectado a la red hasta otro. Es una herramienta muy útil que no solo prueba la conectividad a un host, sino que también revela mucho sobre el camino para llegar allí y algunos problemas que pueden estar afectándolo. Aunque traceroute es una gran herramienta, también es una herramienta bastante limitada y no hace nada más que rastrear rutas. Por otro lado, Nmap, otra utilidad bien conocida—aunque no tanto—que proviene del mundo de Linux, proporciona una forma de rastrear la ruta hacia un host pero también ofrece muchas funciones adicionales. De hecho, los usos principales de Nmap son descubrir redes y escanear puertos. Hoy, vamos a ver cómo usar Nmap para traceroute.
+
+Antes de llegar a la explicación real de cómo usar Nmap para traceroute, comenzaremos primero presentando la utilidad traceroute. Saber qué es, pero, más importante, cómo funciona, te ayudará a entender mejor cómo Nmap realiza el mismo tipo de tarea. Luego, presentaremos brevemente la utilidad Nmap, discutiendo qué es, de dónde proviene y para qué se puede usar. Luego discutiremos cómo usar Nmap para traceroute y explicaremos cómo Nmap realmente realiza el rastreo. Verás que es radicalmente diferente del enfoque de traceroute. Y finalmente, veremos brevemente algunas otras herramientas que puedes usar para rastrear la ruta entre dos dispositivos. Como verás, hay muchas opciones disponibles.
+
+## Acerca de Traceroute
+La definición de traceroute de Wikipedia es muy clara: “Traceroute es una herramienta de diagnóstico de redes de computadoras para mostrar la ruta (camino) y medir los retrasos de tránsito de los paquetes a través de una red de Protocolo de Internet (IP)”. Por buena que sea esa descripción, no da muchos detalles sobre qué es concretamente y cómo funciona. Vamos a explicar. Traceroute te dirá la dirección IP de cada enrutador ubicado entre tu computadora y la computadora remota. Pero eso no es todo, traceroute también informará sobre el retraso de red entre cada uno de estos enrutadores.
+
+Traceroute es una herramienta muy antigua. La primera versión se lanzó en 1987. Esto fue hace más de 30 años; una eternidad en años informáticos. También es una herramienta muy común. Primero se introdujo en el sistema operativo Unix, ahora está presente en todos los sistemas operativos tipo Unix, incluyendo Linux y Mac OS. Incluso se portó a la plataforma Windows donde se renombró a tracert debido al límite original de 8 caracteres en los nombres de archivos en Windows.
+
+Traceroute es una herramienta que todo administrador de redes debería entender y usar. Desafortunadamente, muchos de sus usuarios no comprenden completamente cómo funciona y, por lo tanto, pueden encontrarse con algunas de las trampas de la utilidad. Por ejemplo, la ruta podría ser asimétrica con el tráfico de ida tomando una ruta diferente al tráfico de vuelta y la herramienta no lo vería.
+
+## Funcionamiento de Traceroute
+Primero, unos pocos requisitos previos. Internet—o cualquier red IP, para el caso—está compuesta por enrutadores interconectados. Los enrutadores se comunican entre sí, intercambiando información sobre qué redes saben cómo alcanzar. Utilizan esta información para construir tablas de enrutamiento. Cada vez que un paquete de datos llega a un enrutador, busca el destino en su tabla de enrutamiento y procede a enviarlo al siguiente enrutador en el camino. El enrutador solo conoce el siguiente enrutador y no tiene idea de la ruta completa. No tiene que saberlo.
+
+Para limitar los retrasos de propagación debido a saltos de enrutamiento excesivos, la cabecera de cada paquete de datos contiene un campo de datos llamado TTL o Time To Live. Este es un verdadero nombre inapropiado ya que el valor del TTL no tiene nada que ver con el tiempo sino todo con la distancia. Cuando un paquete sale de su origen, el TTL se establece en 32. A partir de entonces, cada enrutador que lo maneja a lo largo del camino hacia el destino decrece el TTL en uno antes de enrutar el paquete. Cuando el valor del TTL llega a cero, un enrutador no enruta el paquete y, en su lugar, devuelve un mensaje ICMP de “Tiempo Excedido” al origen del paquete.
+
+## Ejemplo de ejecución de Traceroute
+Traceroute explota este sistema de detección y reporte de errores para realizar su hazaña. Traceroute primero enviará un paquete al destino con el TTL establecido en 1. El primer enrutador en el camino decrementará el TTL y devolverá el mensaje de Tiempo Excedido, permitiendo que traceroute conozca la dirección IP de ese primer enrutador—o salto, como a menudo se le llama. Traceroute luego enviará otro paquete con el TTL establecido en 2 y conocerá el segundo salto. Y seguirá haciendo eso, incrementando el TTL cada vez hasta que eventualmente obtenga una respuesta del destino, indicando que ha sido alcanzado.
+
+Traceroute típicamente también medirá el tiempo que toma obtener cada respuesta sucesiva, permitiéndole construir una tabla del tiempo de respuesta para cada salto. A menudo también realizará una búsqueda DNS de la dirección IP de cada salto para mostrar el FQDN de cada host en lugar de solo sus direcciones IP en sus resultados.
+
+## Limitaciones de Traceroute
+Por la explicación anterior, habrás deducido que, debido a la forma en que opera, traceroute solo te mostrará el camino hacia el destino. Sin embargo, no tiene forma de descubrir el camino de regreso. Eso podría ser un problema, especialmente en situaciones donde el camino de regreso está de alguna manera retrasado. Traceroute mide el tiempo que toma obtener cada respuesta pero no tiene forma de saber si se encontraron retrasos en el camino hacia el destino o en el camino de regreso, potencialmente proporcionando resultados engañosos.
+
+También hay un problema potencial con destinos que están balanceados en carga en varios hosts. Nada garantiza a un usuario de traceroute que cada paquete sucesivo se envíe al mismo host balanceado en carga. Y si los dos hosts están en diferentes ubicaciones, esto podría llevar a resultados inexactos.
+
+Finalmente, por razones de seguridad obvias, algunos enrutadores están configurados para no responder al tipo de solicitudes que usa traceroute. Esto no detendrá a traceroute de funcionar y la utilidad simplemente ignorará esos saltos y los reportará como inalcanzables. Sin embargo, algunas herramientas más avanzadas—como Nmap—pueden usar diferentes tipos de paquetes para su descubrimiento de rutas, mitigando así el riesgo de saltos no receptivos.
+
+## Introducción a Nmap
+Nmap, que significa “Network Mapper” es una utilidad gratuita y de código abierto para la exploración de redes y auditorías de seguridad. Fue diseñado para escanear rápidamente grandes redes pero funciona igual de bien contra hosts individuales. Nmap utiliza paquetes IP en bruto de formas novedosas para determinar qué hosts están disponibles en la red, qué servicios (nombre y versión de la aplicación) ofrecen esos hosts, qué sistemas operativos (y versiones de OS) están ejecutando, qué tipo de filtros de paquetes/firewalls están en uso, y docenas de otras características. Nmap se utiliza principalmente para auditorías de seguridad pero muchos administradores de sistemas y redes lo usan para tareas rutinarias como el inventario de la red, la gestión de horarios de actualización de servicios y el monitoreo del tiempo de actividad de hosts o servicios.
+
+Aquí hay una visión general de todo lo que se puede usar Nmap:
+
+Descubrimiento de hosts
+Descubrimiento/enumeración de puertos
+Descubrimiento de servicios
+Detección de versión del sistema operativo
+Detección de dirección de hardware (MAC)
+Detección de versión de servicios
+Detección de vulnerabilidades/exploits, utilizando scripts de Nmap (NSE)
+Descubrimiento de rutas de red (traceroute)
+Nmap fue creado por Gordon Lyon (A.K.A. Fyodor Vaskovich) y originalmente distribuido bajo la Licencia Pública General de GNU (GPL). Insatisfechos con algunos de los términos de la licencia, los autores eventualmente añadieron aclaraciones e interpretaciones específicas a la licencia donde sentían que la GPL era poco clara o insuficiente.
+Usando Nmap para Traceroute
+Usar Nmap para realizar un traceroute es muy fácil. Todo lo que tienes que hacer es agregar la opción --traceroute al comando. Por ejemplo:
+
+nmap 64.13.134.52 --traceroute
+
+Si queremos que nmap use un puerto específico:
+
+nmap -sS -p 443 -Pn -n  --traceroute www.google.com
+
+La opción --traceroute se puede usar junto con la mayoría de los tipos de escaneos de Nmap, excepto los escaneos de conexión (-sT) y los escaneos en modo idle (-sI). El rastreo se realiza después del escaneo utilizando la información obtenida de los resultados del escaneo para determinar el puerto y protocolo más probable para llegar al objetivo. Todos los rastreos utilizan el modelo de temporización dinámica de Nmap y se realizan en paralelo.
+
+Al contrario de la utilidad traceroute original descrita anteriormente, el traceroute de Nmap comienza con un TTL alto y luego lo decrementa hasta que llega a cero. Hacerlo al revés (en comparación con traceroute) permite a Nmap emplear algoritmos de almacenamiento en caché inteligentes para acelerar los rastreos sobre múltiples hosts. En promedio, Nmap envía de 5 a 10 paquetes menos por host, dependiendo de las condiciones de la red.
+
+https://nmap.org/docs.html

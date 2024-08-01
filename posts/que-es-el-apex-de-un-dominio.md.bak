@@ -1,0 +1,24 @@
+---
+title: "Que Es El Apex De Un Dominio"
+date: 2024-08-01T08:58:52+02:00
+featuredimagePreview: '/Images/FeynmanTechnique.jpg'
+authorLink: 'https://www.linkedin.com/in/gonzalomurillotello/'
+title: "¿Qué es el APEX de un dominio?"	
+tags: ['DNS, APEX']
+draft: false
+---
+
+En muchas ocasiones, en el contexto de los registros DNS, los usuarios preguntan qué representa el símbolo @, a lo que suelo responder: es el APEX.
+
+¿Y qué demonios es el APEX, te preguntarás?
+
+La forma más sencilla de explicar qué es un dominio Apex es recurriendo a un ejemplo. Vamos a suponer que registras un nuevo dominio: midominio.com. Este 'midominio.com' sería el "dominio apex" porque es la raíz de la jerarquía de nombres de dominio: la base de todo lo que provenga de este dominio.
+
+El dominio Apex es el punto de partida de todos los subdominios que provengan de este dominio, por ejemplo: tienda.midominio.com. Los dominios apex suelen redirigirse a un subdominio WWW y esto debe hacerse de manera segura, de HTTP a HTTPS, por lo que se requiere un certificado SSL para que los visitantes no vean advertencias de seguridad en sus navegadores.
+
+Un problema que muchos enfrentarán es que los proveedores de DNS requieren que el apex no tenga un registro CNAME. Esta es una regla en las especificaciones de DNS, RFC 1034, y las aclaraciones en RFC 2181, que establece que si un nombre en DNS tiene un registro CNAME, ese nombre no puede tener ningún otro registro. Dado que también se requiere que el apex de la zona tenga registros especiales con los metadatos de la zona, se deduce que nunca se debe aplicar un registro CNAME al apex de la zona.
+
+Para más información, puedes consultar: Understanding the Zone Apex: The Heart of Domain Architecture.
+
+https://dn.org/understanding-the-zone-apex-the-heart-of-domain-architecture/
+

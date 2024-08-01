@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>DNS, APEX - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title>
+        <link>https://www.gonzalo.cloud/tags/dns-apex/</link>
+        <description>DNS, APEX - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</description>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Thu, 01 Aug 2024 08:58:52 &#43;0200</lastBuildDate><atom:link href="https://www.gonzalo.cloud/tags/dns-apex/" rel="self" type="application/rss+xml" /><item>
+    <title>¿Qué es el APEX de un dominio?</title>
+    <link>https://www.gonzalo.cloud/posts/que-es-el-apex-de-un-dominio/</link>
+    <pubDate>Thu, 01 Aug 2024 08:58:52 &#43;0200</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/que-es-el-apex-de-un-dominio/</guid>
+    <description><![CDATA[En muchas ocasiones, en el contexto de los registros DNS, los usuarios preguntan qué representa el símbolo @, a lo que suelo responder: es el APEX.
+¿Y qué demonios es el APEX, te preguntarás?
+La forma más sencilla de explicar qué es un dominio Apex es recurriendo a un ejemplo. Vamos a suponer que registras un nuevo dominio: midominio.com. Este &lsquo;midominio.com&rsquo; sería el &ldquo;dominio apex&rdquo; porque es la raíz de la jerarquía de nombres de dominio: la base de todo lo que provenga de este dominio.]]></description>
+</item></channel>
+</rss>
