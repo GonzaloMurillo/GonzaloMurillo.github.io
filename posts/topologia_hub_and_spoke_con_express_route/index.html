@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Conectividad transitiva entre VNETs usando ExpressRoute Gateway en Azure - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title><meta name="Description" content=""><meta property="og:title" content="Conectividad transitiva entre VNETs usando ExpressRoute Gateway en Azure" />
+<meta property="og:description" content="Exploramos cómo un ExpressRoute Gateway en una arquitectura hub-and-spoke puede habilitar conectividad transitiva entre VNETs en Azure, sus requisitos, limitaciones y recomendaciones oficiales de Microsoft." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.gonzalo.cloud/posts/topologia_hub_and_spoke_con_express_route/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-10-06T00:00:00+00:00" />
+<meta property="article:modified_time" content="2025-10-06T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Conectividad transitiva entre VNETs usando ExpressRoute Gateway en Azure"/>
+<meta name="twitter:description" content="Exploramos cómo un ExpressRoute Gateway en una arquitectura hub-and-spoke puede habilitar conectividad transitiva entre VNETs en Azure, sus requisitos, limitaciones y recomendaciones oficiales de Microsoft."/>
+<meta name="application-name" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">
+<meta name="apple-mobile-web-app-title" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.gonzalo.cloud/posts/topologia_hub_and_spoke_con_express_route/" /><link rel="prev" href="https://www.gonzalo.cloud/posts/arquitectura-traffic-manager/" /><link rel="next" href="https://www.gonzalo.cloud/posts/exclusiones_basadas_en_uri/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Conectividad transitiva entre VNETs usando ExpressRoute Gateway en Azure",
+        "inLanguage": "es",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.gonzalo.cloud\/posts\/topologia_hub_and_spoke_con_express_route\/"
+        },"genre": "posts","keywords": "Azure, ExpressRoute, Networking, Hub-and-Spoke, Arquitectura","wordcount":  657 ,
+        "url": "https:\/\/www.gonzalo.cloud\/posts\/topologia_hub_and_spoke_con_express_route\/","datePublished": "2025-10-06T00:00:00+00:00","dateModified": "2025-10-06T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Gonzalo.cloud"},"author": {
+                "@type": "Person",
+                "name": "Gonzalo.cloud"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancelar
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contenido</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Conectividad transitiva entre VNETs usando ExpressRoute Gateway en Azure</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://www.linkedin.com/in/gonzalomurillotello/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Gonzalo.cloud</a></span>&nbsp;<span class="post-category">incluido en <a href="/categories/hub-and-spoke/"><i class="far fa-folder fa-fw"></i>Hub and Spoke</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2025-10-06">2025-10-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;657 palabras&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;4 minutos&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contenido</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#-introducción">🌐 Introducción</a></li>
+    <li><a href="#qué-significa-conectividad-transitiva">¿Qué significa conectividad transitiva?</a></li>
+    <li><a href="#requisitos-de-configuración">Requisitos de configuración</a></li>
+    <li><a href="#limitaciones-importantes">Limitaciones importantes</a></li>
+    <li><a href="#alternativa-recomendada-vnet-peering">Alternativa recomendada: VNET Peering</a></li>
+    <li><a href="#diagrama-explicativo">Diagrama explicativo</a></li>
+    <li><a href="#puntos-clave-de-la-documentación-oficial">Puntos clave de la documentación oficial</a>
+      <ul>
+        <li><a href="#connectivity-between-virtual-networks-over-azure-expressroutehttpslearnmicrosoftcomen-usazureexpressroutevirtual-network-connectivity-guidance"><a href="https://learn.microsoft.com/en-us/azure/expressroute/virtual-network-connectivity-guidance">Connectivity between virtual networks over Azure ExpressRoute</a></a></li>
+        <li><a href="#configure-a-virtual-network-gateway-for-expressroutehttpslearnmicrosoftcomen-usazureexpressrouteexpressroute-howto-add-gateway-portal-resource-manager"><a href="https://learn.microsoft.com/en-us/azure/expressroute/expressroute-howto-add-gateway-portal-resource-manager">Configure a virtual network gateway for ExpressRoute</a></a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusión">Conclusión</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="-introducción">🌐 Introducción</h2>
+<p>Un <strong>ExpressRoute Gateway</strong> en un <strong>hub</strong> puede habilitar conectividad <strong>transitiva</strong> entre <strong>spokes</strong> de VNETS en Azure, en una arquitectura de red tipo <strong>hub-and-spoke</strong>.</p>
+<p>Es decir que un VNG de tipo Express Route, puede actuar para permitir la transitividad entre peerings (sabemos que por defecto los
+peerings no son transitivos) en un entorno donde esos peerings (VNETs) están ubicados exclusivamente en Azure (por extraño que parezca pues ExR se utiliza para conectar on-prem con Azure).</p>
+<p>Aunque esto es técnicamente posible, <strong>no es una práctica recomendada por Microsoft</strong> para escenarios de conectividad entre redes virtuales dentro de Azure.</p>
+<p>Este post explica cómo funciona, qué necesitas configurar y por qué deberías considerar alternativas como <strong>VNET peering</strong>.</p>
+<hr>
+<h2 id="qué-significa-conectividad-transitiva">¿Qué significa conectividad transitiva?</h2>
+<p>La conectividad transitiva permite que dos redes (por ejemplo, dos spokes) se comuniquen entre sí <strong>a través de un tercero</strong> (el hub). Si una Vnet (A) está conectada a una VNET Hub (H), y otra VNET B está conectada a un VNET Hub (H).
+A y B no tienen conectividad entre si por defecto. Se dice que el peering no es transitivo porque necesita un componente en el HUB (un NVA on un AZFW) para permitir el forwarding entre spokes.</p>
+<p>Pero en Azure, esto también puede lograrse si el hub tiene un <strong>ExpressRoute Gateway</strong> y los spokes están conectados mediante <strong>VNET peering</strong> a dicho hub con opciones específicas habilitadas.</p>
+<hr>
+<h2 id="requisitos-de-configuración">Requisitos de configuración</h2>
+<p>Para que esta arquitectura funcione correctamente, debes cumplir con los siguientes requisitos:</p>
+<ul>
+<li><strong>Topología hub-and-spoke</strong>: todos los spokes deben estar conectados al hub mediante peering.</li>
+<li><strong>Gateway ExpressRoute en el hub</strong>:
+<ul>
+<li>Crear una subred llamada <code>GatewaySubnet</code> (/27 o mayor).</li>
+<li>Asignar una SKU adecuada (Ej. <code>ErGwScale</code>, <code>ErGw1Az</code>).</li>
+<li>Seleccionar tipo de gateway: <code>ExpressRoute</code>.</li>
+</ul>
+</li>
+<li><strong>Peering entre VNETs</strong>:
+<ul>
+<li>En el hub: activar <code>Allow gateway transit</code>.</li>
+<li>En los spokes: activar <code>Use remote gateway</code>.</li>
+</ul>
+</li>
+<li><strong>Habilitar toggles en el gateway</strong>:
+<ul>
+<li>
+<p>Por defecto, la conectividad VNet-to-VNet y VNet-to-Virtual WAN está <strong>desactivada</strong>.
+<a href="https://learn.microsoft.com/en-us/azure/expressroute/expressroute-howto-add-gateway-portal-resource-manager#enable-or-disable-vnet-to-vnet-or-vnet-to-virtual-wan-traffic-through-expressroute" target="_blank" rel="noopener noreffer">https://learn.microsoft.com/en-us/azure/expressroute/expressroute-howto-add-gateway-portal-resource-manager#enable-or-disable-vnet-to-vnet-or-vnet-to-virtual-wan-traffic-through-expressroute</a></p>
+</li>
+<li>
+<p>Debes habilitarla manualmente en la configuración del gateway.</p>
+</li>
+<li>
+<p>Revisar también la SKU del VNG para ver dónde pueden estar ubicados los spokes</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="limitaciones-importantes">Limitaciones importantes</h2>
+<p>Aunque es posible, Microsoft <strong>desaconseja</strong> este enfoque por varias razones:</p>
+<ul>
+<li><strong>Gateway en la ruta de datos</strong>:
+<ul>
+<li>El tráfico entre VNETs pasa por el ExpressRoute Gateway, que tiene <strong>restricciones de ancho de banda</strong> y rendimiento.</li>
+</ul>
+</li>
+<li><strong>Mayor latencia</strong>:
+<ul>
+<li>El tráfico se enruta a través de dispositivos <strong>Microsoft Enterprise Edge (MSEE)</strong>, fuera de las regiones de Azure.</li>
+</ul>
+</li>
+<li><strong>Complejidad operativa</strong>:
+<ul>
+<li>Requiere configuración cuidadosa de peering y toggles.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="alternativa-recomendada-vnet-peering">Alternativa recomendada: VNET Peering</h2>
+<p>Microsoft recomienda usar <strong>VNET peering directo</strong> entre redes virtuales para lograr:</p>
+<ul>
+<li>Menor latencia</li>
+<li>Mayor rendimiento</li>
+<li>Simplicidad operativa</li>
+<li>Evitar el gateway en la ruta de datos</li>
+</ul>
+<hr>
+<h2 id="diagrama-explicativo">Diagrama explicativo</h2>
+<p>!Diagrama de conectividad transitiva de ExpressRoute</p>
+<figure><img src="/Images/ExRHubAndSpoke.jpg"
+         alt="Hub and Spoke with Express route VNG"/><figcaption>
+            <p>Hub and spoke with ExR VNG</p>
+        </figcaption>
+</figure>
+
+<p><strong>Descripción</strong>: El hub contiene el ExpressRoute Gateway. Los spokes están conectados al hub mediante peering. El tráfico entre spokes y hacia on-premises pasa por el gateway. Se destacan los requisitos y limitaciones.</p>
+<hr>
+<h2 id="puntos-clave-de-la-documentación-oficial">Puntos clave de la documentación oficial</h2>
+<h3 id="connectivity-between-virtual-networks-over-azure-expressroutehttpslearnmicrosoftcomen-usazureexpressroutevirtual-network-connectivity-guidance"><a href="https://learn.microsoft.com/en-us/azure/expressroute/virtual-network-connectivity-guidance" target="_blank" rel="noopener noreffer">Connectivity between virtual networks over Azure ExpressRoute</a></h3>
+<ul>
+<li>La conectividad VNet-to-VNet a través de ExpressRoute requiere habilitación explícita.</li>
+<li><strong>Limitaciones</strong>:
+<ul>
+<li>El gateway está en la ruta de datos → limita el rendimiento.</li>
+<li>Latencia adicional por dispositivos MSEE.</li>
+</ul>
+</li>
+<li><strong>Recomendación</strong>: usar VNET peering directo para tráfico entre VNETs.</li>
+</ul>
+<h3 id="configure-a-virtual-network-gateway-for-expressroutehttpslearnmicrosoftcomen-usazureexpressrouteexpressroute-howto-add-gateway-portal-resource-manager"><a href="https://learn.microsoft.com/en-us/azure/expressroute/expressroute-howto-add-gateway-portal-resource-manager" target="_blank" rel="noopener noreffer">Configure a virtual network gateway for ExpressRoute</a></h3>
+<ul>
+<li>Por defecto, la conectividad VNet-to-VNet está <strong>desactivada</strong>.</li>
+<li>Debes habilitarla manualmente en el portal.</li>
+<li>Consideraciones adicionales:
+<ul>
+<li>No usar NSG/UDR con destino 0.0.0.0/0 en <code>GatewaySubnet</code>.</li>
+<li>Asignar IP pública tipo <code>Standard</code>.</li>
+<li>Habilitar propagación BGP si aplica.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="conclusión">Conclusión</h2>
+<p>Aunque el ExpressRoute Gateway puede actuar como punto de tránsito entre spokes, <strong>no es la solución óptima</strong> para conectividad entre VNETs dentro de Azure. Para ese propósito, <strong>VNET peering</strong> sigue siendo la mejor práctica.</p>
+<p>Usa ExpressRoute Gateway para:</p>
+<ul>
+<li>Conectividad híbrida (on-premises ↔ Azure)</li>
+<li>Acceso centralizado a servicios compartidos</li>
+<li>Control de tráfico de salida</li>
+</ul>
+<p>Evita usarlo para tráfico entre VNETs si puedes resolverlo con peering directo.</p>
+<hr>
+<p>¿Te gustaría que este post se convierta también en una presentación o que lo acompañe una tabla comparativa entre opciones de conectividad? ¡Estoy listo para ayudarte!</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Actualizado el 2025-10-06</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/azure/">Azure</a>,&nbsp;<a href="/tags/expressroute/">ExpressRoute</a>,&nbsp;<a href="/tags/networking/">Networking</a>,&nbsp;<a href="/tags/hub-and-spoke/">Hub-and-Spoke</a>,&nbsp;<a href="/tags/arquitectura/">Arquitectura</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Regresar</a></span>&nbsp;|&nbsp;<span><a href="/">Inicio</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/arquitectura-traffic-manager/" class="prev" rel="prev" title="Arquitectura Traffic Manager"><i class="fas fa-angle-left fa-fw"></i>Arquitectura Traffic Manager</a>
+            <a href="/posts/exclusiones_basadas_en_uri/" class="next" rel="next" title="Exclusiones_basadas_en_uri">Exclusiones_basadas_en_uri<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Contenido creado por Gonzalo.cloud.Prohibida la reproducción parcial o total del contenido sin permiso explícito del autor</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Gonzalo.cloud</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Volver arriba">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="Ver comentarios">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.es.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copiar al portapapeles","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"es","maxResultLength":10,"noResultsFound":"No se encontraron resultados","snippetLength":30}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

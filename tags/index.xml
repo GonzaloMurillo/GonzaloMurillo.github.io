@@ -3,75 +3,75 @@
         <title>Tags - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title>
         <link>https://www.gonzalo.cloud/tags/</link>
         <description>Tags - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</description>
-        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Thu, 01 Aug 2024 08:58:52 &#43;0200</lastBuildDate><atom:link href="https://www.gonzalo.cloud/tags/" rel="self" type="application/rss+xml" /><item>
-    <title>DNS, APEX</title>
-    <link>https://www.gonzalo.cloud/tags/dns-apex/</link>
-    <pubDate>Thu, 01 Aug 2024 08:58:52 &#43;0200</pubDate>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Mon, 23 Feb 2026 11:07:05 &#43;0100</lastBuildDate><atom:link href="https://www.gonzalo.cloud/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>Data Plane</title>
+    <link>https://www.gonzalo.cloud/tags/data-plane/</link>
+    <pubDate>Mon, 23 Feb 2026 11:07:05 &#43;0100</pubDate>
     <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/tags/dns-apex/</guid>
+    <guid>https://www.gonzalo.cloud/tags/data-plane/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>nmap,traceroute</title>
-    <link>https://www.gonzalo.cloud/tags/nmaptraceroute/</link>
-    <pubDate>Wed, 31 Jul 2024 08:58:52 &#43;0200</pubDate>
+    <title>Key Vault</title>
+    <link>https://www.gonzalo.cloud/tags/key-vault/</link>
+    <pubDate>Mon, 23 Feb 2026 11:07:05 &#43;0100</pubDate>
     <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/tags/nmaptraceroute/</guid>
+    <guid>https://www.gonzalo.cloud/tags/key-vault/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>netsh</title>
-    <link>https://www.gonzalo.cloud/tags/netsh/</link>
-    <pubDate>Thu, 20 Jun 2024 10:02:06 &#43;0200</pubDate>
+    <title>Arquitectura</title>
+    <link>https://www.gonzalo.cloud/tags/arquitectura/</link>
+    <pubDate>Mon, 06 Oct 2025 00:00:00 &#43;0000</pubDate>
     <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/tags/netsh/</guid>
+    <guid>https://www.gonzalo.cloud/tags/arquitectura/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>tcpdump</title>
-    <link>https://www.gonzalo.cloud/tags/tcpdump/</link>
-    <pubDate>Thu, 20 Jun 2024 10:02:06 &#43;0200</pubDate>
+    <title>Azure</title>
+    <link>https://www.gonzalo.cloud/tags/azure/</link>
+    <pubDate>Mon, 06 Oct 2025 00:00:00 &#43;0000</pubDate>
     <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/tags/tcpdump/</guid>
+    <guid>https://www.gonzalo.cloud/tags/azure/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>Trazas de red</title>
-    <link>https://www.gonzalo.cloud/tags/trazas-de-red/</link>
-    <pubDate>Thu, 20 Jun 2024 10:02:06 &#43;0200</pubDate>
+    <title>ExpressRoute</title>
+    <link>https://www.gonzalo.cloud/tags/expressroute/</link>
+    <pubDate>Mon, 06 Oct 2025 00:00:00 &#43;0000</pubDate>
     <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/tags/trazas-de-red/</guid>
+    <guid>https://www.gonzalo.cloud/tags/expressroute/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>PowerShell</title>
-    <link>https://www.gonzalo.cloud/tags/powershell/</link>
-    <pubDate>Thu, 07 Dec 2023 15:11:02 &#43;0100</pubDate>
+    <title>Hub-and-Spoke</title>
+    <link>https://www.gonzalo.cloud/tags/hub-and-spoke/</link>
+    <pubDate>Mon, 06 Oct 2025 00:00:00 &#43;0000</pubDate>
     <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/tags/powershell/</guid>
+    <guid>https://www.gonzalo.cloud/tags/hub-and-spoke/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>Gonzalo.cloud</title>
-    <link>https://www.gonzalo.cloud/tags/gonzalo.cloud/</link>
-    <pubDate>Wed, 22 Mar 2023 17:45:33 &#43;0100</pubDate>
+    <title>Networking</title>
+    <link>https://www.gonzalo.cloud/tags/networking/</link>
+    <pubDate>Mon, 06 Oct 2025 00:00:00 &#43;0000</pubDate>
     <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/tags/gonzalo.cloud/</guid>
+    <guid>https://www.gonzalo.cloud/tags/networking/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>Private Endpoint</title>
-    <link>https://www.gonzalo.cloud/tags/private-endpoint/</link>
-    <pubDate>Wed, 18 Jan 2023 10:27:04 &#43;0100</pubDate>
+    <title>Balanceador de carga DNS</title>
+    <link>https://www.gonzalo.cloud/tags/balanceador-de-carga-dns/</link>
+    <pubDate>Tue, 30 Sep 2025 10:11:13 &#43;0200</pubDate>
     <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/tags/private-endpoint/</guid>
+    <guid>https://www.gonzalo.cloud/tags/balanceador-de-carga-dns/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>Private Link</title>
-    <link>https://www.gonzalo.cloud/tags/private-link/</link>
-    <pubDate>Wed, 18 Jan 2023 10:27:04 &#43;0100</pubDate>
+    <title>Traffic Manager</title>
+    <link>https://www.gonzalo.cloud/tags/traffic-manager/</link>
+    <pubDate>Tue, 30 Sep 2025 10:11:13 &#43;0200</pubDate>
     <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/tags/private-link/</guid>
+    <guid>https://www.gonzalo.cloud/tags/traffic-manager/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>Application Gateway</title>
-    <link>https://www.gonzalo.cloud/tags/application-gateway/</link>
-    <pubDate>Sun, 18 Dec 2022 11:01:37 &#43;0100</pubDate>
+    <title>DNS, HUB and SPOKE</title>
+    <link>https://www.gonzalo.cloud/tags/dns-hub-and-spoke/</link>
+    <pubDate>Thu, 25 Sep 2025 10:23:22 &#43;0200</pubDate>
     <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/tags/application-gateway/</guid>
+    <guid>https://www.gonzalo.cloud/tags/dns-hub-and-spoke/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Arquitectura Traffic Manager - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title><meta name="Description" content="Qué es traffic manager y cuál es su arquitectura básica"><meta property="og:title" content="Arquitectura Traffic Manager" />
+<meta property="og:description" content="Qué es traffic manager y cuál es su arquitectura básica" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.gonzalo.cloud/posts/arquitectura-traffic-manager/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-09-30T10:11:13+02:00" />
+<meta property="article:modified_time" content="2025-09-30T10:11:13+02:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Arquitectura Traffic Manager"/>
+<meta name="twitter:description" content="Qué es traffic manager y cuál es su arquitectura básica"/>
+<meta name="application-name" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">
+<meta name="apple-mobile-web-app-title" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.gonzalo.cloud/posts/arquitectura-traffic-manager/" /><link rel="prev" href="https://www.gonzalo.cloud/posts/resolucion_dns_en_hub_and_spoke/" /><link rel="next" href="https://www.gonzalo.cloud/posts/topologia_hub_and_spoke_con_express_route/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Arquitectura Traffic Manager",
+        "inLanguage": "es",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.gonzalo.cloud\/posts\/arquitectura-traffic-manager\/"
+        },"genre": "posts","keywords": "Traffic Manager, Balanceador de carga DNS","wordcount":  341 ,
+        "url": "https:\/\/www.gonzalo.cloud\/posts\/arquitectura-traffic-manager\/","datePublished": "2025-09-30T10:11:13+02:00","dateModified": "2025-09-30T10:11:13+02:00","publisher": {
+            "@type": "Organization",
+            "name": "Gonzalo.cloud"},"author": {
+                "@type": "Person",
+                "name": "Gonzalo.cloud"
+            },"description": "Qué es traffic manager y cuál es su arquitectura básica"
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancelar
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contenido</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Arquitectura Traffic Manager</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://www.linkedin.com/in/gonzalomurillotello/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Gonzalo.cloud</a></span>&nbsp;<span class="post-category">incluido en <a href="/categories/balanceadores-de-carga/"><i class="far fa-folder fa-fw"></i>Balanceadores de carga</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2025-09-30">2025-09-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;341 palabras&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;2 minutos&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contenido</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#qué-es-azure-traffic-manager">¿Qué es Azure Traffic Manager?</a></li>
+        <li><a href="#-componentes-clave">🧩 Componentes clave</a></li>
+        <li><a href="#perfil-de-traffic-manager">Perfil de Traffic Manager</a></li>
+        <li><a href="#endpoints">Endpoints</a></li>
+        <li><a href="#resolución-dns-con-cname">🌐Resolución DNS con CNAME</a></li>
+        <li><a href="#-casos-de-uso-comunes">🛠️ Casos de uso comunes</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>De todas las tecnologías de balanceador de carga que ofrece Microsoft en Azure, Traffic Manager es la que utiliza DNS para
+asegurar la distribución de la carga siguiendo varios criterios.</p>
+<p>En general la arquitectura de Traffic Manager es como sigue:</p>
+<h3 id="qué-es-azure-traffic-manager">¿Qué es Azure Traffic Manager?</h3>
+<p>Azure Traffic Manager es un balanceador de carga basado en DNS que permite distribuir el tráfico de red de forma eficiente entre múltiples servicios distribuidos globalmente. No enruta directamente el tráfico, sino que responde a las solicitudes DNS con la dirección IP del endpoint más adecuado según la estrategia de enrutamiento configurada.</p>
+<h3 id="-componentes-clave">🧩 Componentes clave</h3>
+<h3 id="perfil-de-traffic-manager">Perfil de Traffic Manager</h3>
+<p>Un perfil define la configuración de enrutamiento y contiene una lista de endpoints. Cada perfil puede tener uno de los siguientes métodos de enrutamiento:</p>
+<p>Prioridad: Redirige todo el tráfico al endpoint principal, y solo usa los secundarios si el principal está inactivo.</p>
+<p>Ponderado (Weighted): Distribuye el tráfico según pesos asignados a cada endpoint.</p>
+<p>Rendimiento (Performance): Redirige al endpoint con menor latencia desde la ubicación del cliente.</p>
+<p>Geográfico: Redirige según la ubicación geográfica del usuario.</p>
+<p>Multivalor: Devuelve múltiples endpoints saludables en la respuesta DNS.</p>
+<p>Subred: Asocia rangos de IP de clientes a endpoints específicos.</p>
+<h3 id="endpoints">Endpoints</h3>
+<p>Los endpoints pueden ser:</p>
+<p>Servicios de Azure (App Services, VMs, etc.)
+Endpoints externos (fuera de Azure)
+Perfiles anidados (otros perfiles de Traffic Manager)</p>
+<h3 id="resolución-dns-con-cname">🌐Resolución DNS con CNAME</h3>
+<p>Para usar Traffic Manager con un dominio personalizado, se debe crear un registro CNAME que apunte al nombre DNS del perfil de Traffic Manager.</p>
+<p>Por ejemplo:
+<a href="https://www.contoso.com" target="_blank" rel="noopener noreffer">www.contoso.com</a>.  IN  CNAME  contoso.trafficmanager.net.www.contoso.com.  IN  CNAME  contoso.trafficmanager.net</p>
+<p>Esto permite que las solicitudes a <a href="https://www.contoso.com" target="_blank" rel="noopener noreffer">www.contoso.com</a> sean resueltas por Traffic Manager, quien decidirá a qué endpoint dirigir el tráfico según el método de enrutamiento configurado.</p>
+<p>###🖼️ Diagrama explicativo
+Aquí tienes un diagrama visual que muestra cómo funciona Traffic Manager, incluyendo el cliente, la resolución DNS y la distribución del tráfico:</p>
+<figure><img src="/Images/ArquitecturaTrafficManager.jpg"
+         alt="Arquitectura Básica de Traffic Manager"/><figcaption>
+            <p>Arquitectura básica de Traffic Manager</p>
+        </figcaption>
+</figure>
+
+<h3 id="-casos-de-uso-comunes">🛠️ Casos de uso comunes</h3>
+<p>Alta disponibilidad con failover automático.</p>
+<p>Optimización de rendimiento global.</p>
+<p>Cumplimiento de normativas regionales (GDPR, residencia de datos).</p>
+<p>Pruebas A/B o despliegues progresivos.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Actualizado el 2025-09-30</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/traffic-manager/">Traffic Manager</a>,&nbsp;<a href="/tags/balanceador-de-carga-dns/">Balanceador de carga DNS</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Regresar</a></span>&nbsp;|&nbsp;<span><a href="/">Inicio</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/resolucion_dns_en_hub_and_spoke/" class="prev" rel="prev" title="Resolución DNS en topología HUB and SPOKE"><i class="fas fa-angle-left fa-fw"></i>Resolución DNS en topología HUB and SPOKE</a>
+            <a href="/posts/topologia_hub_and_spoke_con_express_route/" class="next" rel="next" title="Conectividad transitiva entre VNETs usando ExpressRoute Gateway en Azure">Conectividad transitiva entre VNETs usando ExpressRoute Gateway en Azure<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Contenido creado por Gonzalo.cloud.Prohibida la reproducción parcial o total del contenido sin permiso explícito del autor</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Gonzalo.cloud</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Volver arriba">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="Ver comentarios">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.es.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copiar al portapapeles","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"es","maxResultLength":10,"noResultsFound":"No se encontraron resultados","snippetLength":30}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

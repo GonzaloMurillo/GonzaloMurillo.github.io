@@ -3,7 +3,35 @@
         <title>Categories - Categoría - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title>
         <link>https://www.gonzalo.cloud/categories/</link>
         <description>Categories - Categoría - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</description>
-        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Thu, 20 Jun 2024 10:02:06 &#43;0200</lastBuildDate><atom:link href="https://www.gonzalo.cloud/categories/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Mon, 23 Feb 2026 11:07:05 &#43;0100</lastBuildDate><atom:link href="https://www.gonzalo.cloud/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>KeyVault</title>
+    <link>https://www.gonzalo.cloud/categories/keyvault/</link>
+    <pubDate>Mon, 23 Feb 2026 11:07:05 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/categories/keyvault/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Hub and Spoke</title>
+    <link>https://www.gonzalo.cloud/categories/hub-and-spoke/</link>
+    <pubDate>Mon, 06 Oct 2025 00:00:00 &#43;0000</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/categories/hub-and-spoke/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Balanceadores de carga</title>
+    <link>https://www.gonzalo.cloud/categories/balanceadores-de-carga/</link>
+    <pubDate>Tue, 30 Sep 2025 10:11:13 &#43;0200</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/categories/balanceadores-de-carga/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Azure Bastion</title>
+    <link>https://www.gonzalo.cloud/categories/azure-bastion/</link>
+    <pubDate>Mon, 15 Jul 2024 08:33:56 &#43;0200</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/categories/azure-bastion/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>Trazas de red</title>
     <link>https://www.gonzalo.cloud/categories/trazas-de-red/</link>
     <pubDate>Thu, 20 Jun 2024 10:02:06 &#43;0200</pubDate>

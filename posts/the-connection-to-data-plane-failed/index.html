@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>The Connection to Data Plane Failed - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title><meta name="Description" content=""><meta property="og:title" content="The Connection to Data Plane Failed" />
+<meta property="og:description" content="The connection to Data Plane failed
+  No será la primera vez —ni probablemente la última— que reciba un caso en el que un cliente reporta desde el portal de Azure que, al intentar acceder a un Key Vault configurado para permitir acceso únicamente mediante Private Endpoint, aparece el siguiente error:
+ &ldquo;The connection to data plane failed. Please refresh and try again. If Private Links are enabled on the vault and the issue persists please follow the steps in the following link:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.gonzalo.cloud/posts/the-connection-to-data-plane-failed/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2026-02-23T11:07:05+01:00" />
+<meta property="article:modified_time" content="2026-02-23T11:07:05+01:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="The Connection to Data Plane Failed"/>
+<meta name="twitter:description" content="The connection to Data Plane failed
+  No será la primera vez —ni probablemente la última— que reciba un caso en el que un cliente reporta desde el portal de Azure que, al intentar acceder a un Key Vault configurado para permitir acceso únicamente mediante Private Endpoint, aparece el siguiente error:
+ &ldquo;The connection to data plane failed. Please refresh and try again. If Private Links are enabled on the vault and the issue persists please follow the steps in the following link:"/>
+<meta name="application-name" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">
+<meta name="apple-mobile-web-app-title" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.gonzalo.cloud/posts/the-connection-to-data-plane-failed/" /><link rel="prev" href="https://www.gonzalo.cloud/posts/exclusiones_basadas_en_uri/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "The Connection to Data Plane Failed",
+        "inLanguage": "es",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.gonzalo.cloud\/posts\/the-connection-to-data-plane-failed\/"
+        },"genre": "posts","keywords": "Key Vault, Data Plane","wordcount":  383 ,
+        "url": "https:\/\/www.gonzalo.cloud\/posts\/the-connection-to-data-plane-failed\/","datePublished": "2026-02-23T11:07:05+01:00","dateModified": "2026-02-23T11:07:05+01:00","publisher": {
+            "@type": "Organization",
+            "name": "Gonzalo.cloud"},"author": {
+                "@type": "Person",
+                "name": "Gonzalo.cloud"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancelar
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contenido</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">The Connection to Data Plane Failed</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://www.linkedin.com/in/gonzalomurillotello/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Gonzalo.cloud</a></span>&nbsp;<span class="post-category">incluido en <a href="/categories/keyvault/"><i class="far fa-folder fa-fw"></i>KeyVault</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2026-02-23">2026-02-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;383 palabras&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;2 minutos&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contenido</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#qué-significa-realmente-este-error">Qué significa realmente este error</a></li>
+    <li><a href="#por-qué-ocurre-esto">¿Por qué ocurre esto?</a></li>
+    <li><a href="#cómo-acceder-correctamente-al-data-plane">Cómo acceder correctamente al Data Plane</a></li>
+    <li><a href="#el-motivo-más-común-del-error">El motivo más común del error</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><figure><img src="/Images/DataPlane/KeyVaultPrivateEnpoint.jpg"
+         alt="The connection to Data Plane failed"/><figcaption>
+            <p>The connection to Data Plane failed</p>
+        </figcaption>
+</figure>
+
+<p>No será la primera vez —ni probablemente la última— que reciba un caso en el que un cliente reporta desde el portal de Azure que, al intentar acceder a un <strong>Key Vault configurado para permitir acceso únicamente mediante Private Endpoint</strong>, aparece el siguiente error:</p>
+<blockquote>
+<p><strong>&ldquo;The connection to data plane failed. Please refresh and try again. If Private Links are enabled on the vault and the issue persists please follow the steps in the following link:</strong><br>
+<a href="https://go.microsoft.com/fwlink/?linkid=2156688" target="_blank" rel="noopener noreffer">https://go.microsoft.com/fwlink/?linkid=2156688</a></p>
+</blockquote>
+<p>En el propio documento enlazado se indica lo siguiente:</p>
+<blockquote>
+<p><em>&ldquo;By definition of private links, the application, script or portal must be running on machine, cluster, or environment connected to the Virtual Network where the Private Endpoint resource was deployed. If the application, script or portal is running on an arbitrary Internet-connected network, this guide is NOT applicable.&rdquo;</em></p>
+</blockquote>
+<hr>
+<h2 id="qué-significa-realmente-este-error">Qué significa realmente este error</h2>
+<p>Cuando se habilita un <strong>Private Endpoint</strong> en un servicio PaaS —y en particular en <strong>Azure Key Vault</strong>— el acceso al <strong>Data Plane</strong> del servicio requiere conectividad de red directa con dicho endpoint privado.</p>
+<p>En el caso de Key Vault, esto afecta a las secciones del portal como:</p>
+<ul>
+<li><strong>Secrets</strong></li>
+<li><strong>Keys</strong></li>
+<li><strong>Certificates</strong></li>
+</ul>
+<p>En otras palabras:</p>
+<blockquote>
+<p>La máquina desde la que se intenta acceder debe tener conectividad de red directa con la <strong>IP privada asociada al Private Endpoint</strong>.</p>
+</blockquote>
+<hr>
+<h2 id="por-qué-ocurre-esto">¿Por qué ocurre esto?</h2>
+<p>Cuando un Key Vault está expuesto <strong>únicamente a través de un Private Endpoint</strong>, el tráfico procedente de <strong>una dirección IP pública en Internet no puede alcanzar la IP privada asignada al servicio</strong>.</p>
+<p>En este escenario, el portal de Azure devuelve el siguiente error:</p>
+<blockquote>
+<p><strong>“The connection to data plane failed.”</strong></p>
+</blockquote>
+<hr>
+<h2 id="cómo-acceder-correctamente-al-data-plane">Cómo acceder correctamente al Data Plane</h2>
+<p>Para poder acceder al Data Plane del Key Vault desde el portal de Azure, la máquina desde la que se abre el portal debe tener conectividad con la <strong>Virtual Network donde se ha desplegado el Private Endpoint</strong>.</p>
+<p>Por ejemplo:</p>
+<ul>
+<li>una <strong>máquina virtual desplegada en la misma VNet</strong></li>
+<li>un <strong>cliente conectado mediante VPN</strong></li>
+<li>un <strong>cliente conectado mediante ExpressRoute</strong></li>
+</ul>
+<hr>
+<h2 id="el-motivo-más-común-del-error">El motivo más común del error</h2>
+<p>En la mayoría de los casos, el problema se reduce a algo muy simple:</p>
+<blockquote>
+<p>intentar acceder a <strong>una IP privada desde una red pública de Internet</strong>, mientras que el firewall del servicio PaaS permite <strong>únicamente el acceso a través del Private Endpoint</strong>.</p>
+</blockquote>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Actualizado el 2026-02-23</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/key-vault/">Key Vault</a>,&nbsp;<a href="/tags/data-plane/">Data Plane</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Regresar</a></span>&nbsp;|&nbsp;<span><a href="/">Inicio</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/exclusiones_basadas_en_uri/" class="prev" rel="prev" title="Exclusiones_basadas_en_uri"><i class="fas fa-angle-left fa-fw"></i>Exclusiones_basadas_en_uri</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Contenido creado por Gonzalo.cloud.Prohibida la reproducción parcial o total del contenido sin permiso explícito del autor</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Gonzalo.cloud</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Volver arriba">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="Ver comentarios">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.es.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copiar al portapapeles","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"es","maxResultLength":10,"noResultsFound":"No se encontraron resultados","snippetLength":30}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

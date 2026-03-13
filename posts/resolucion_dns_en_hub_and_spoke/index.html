@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Resolución DNS en topología HUB and SPOKE - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title><meta name="Description" content=""><meta property="og:title" content="Resolución DNS en topología HUB and SPOKE" />
+<meta property="og:description" content="El otro día estuve trabajando en un problema donde un cliente tenía configurada una topología HUB and SPOKE autogestionada (no VWAN).
+El problema que reportaba era que desde una máquina virtual (VM) en el spoke, no podía conectar a un private endpoint que daba acceso a una Base de Datos SQL.
+ Diagnóstico inicial Al hacer desde la VM ubicada en el spoke una resolución DNS del nombre FQDN del private endpoint:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.gonzalo.cloud/posts/resolucion_dns_en_hub_and_spoke/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-09-25T10:23:22+02:00" />
+<meta property="article:modified_time" content="2025-09-25T10:23:22+02:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Resolución DNS en topología HUB and SPOKE"/>
+<meta name="twitter:description" content="El otro día estuve trabajando en un problema donde un cliente tenía configurada una topología HUB and SPOKE autogestionada (no VWAN).
+El problema que reportaba era que desde una máquina virtual (VM) en el spoke, no podía conectar a un private endpoint que daba acceso a una Base de Datos SQL.
+ Diagnóstico inicial Al hacer desde la VM ubicada en el spoke una resolución DNS del nombre FQDN del private endpoint:"/>
+<meta name="application-name" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">
+<meta name="apple-mobile-web-app-title" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.gonzalo.cloud/posts/resolucion_dns_en_hub_and_spoke/" /><link rel="prev" href="https://www.gonzalo.cloud/posts/que-es-el-apex-de-un-dominio/" /><link rel="next" href="https://www.gonzalo.cloud/posts/arquitectura-traffic-manager/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Resolución DNS en topología HUB and SPOKE",
+        "inLanguage": "es",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.gonzalo.cloud\/posts\/resolucion_dns_en_hub_and_spoke\/"
+        },"genre": "posts","keywords": "DNS, HUB and SPOKE, PRIVATE DNS ZONES","wordcount":  446 ,
+        "url": "https:\/\/www.gonzalo.cloud\/posts\/resolucion_dns_en_hub_and_spoke\/","datePublished": "2025-09-25T10:23:22+02:00","dateModified": "2025-09-25T10:23:22+02:00","publisher": {
+            "@type": "Organization",
+            "name": "Gonzalo.cloud"},"author": {
+                "@type": "Person",
+                "name": "Gonzalo.cloud"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancelar
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contenido</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Resolución DNS en topología HUB and SPOKE</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://www.linkedin.com/in/gonzalomurillotello/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Gonzalo.cloud</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2025-09-25">2025-09-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;446 palabras&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutos&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contenido</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#diagnóstico-inicial">Diagnóstico inicial</a></li>
+        <li><a href="#verificación-de-la-configuración">Verificación de la configuración</a></li>
+        <li><a href="#la-pregunta-clave">La pregunta clave</a></li>
+        <li><a href="#comportamiento-por-defecto">Comportamiento por defecto</a></li>
+        <li><a href="#opciones-de-configuración">Opciones de configuración</a></li>
+        <li><a href="#diagrama-de-referencia">Diagrama de referencia</a></li>
+        <li><a href="#recursos-adicionales">Recursos adicionales</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>El otro día estuve trabajando en un problema donde un cliente tenía configurada una <strong>topología HUB and SPOKE autogestionada (no VWAN)</strong>.<br>
+El problema que reportaba era que desde una máquina virtual (VM) en el <em>spoke</em>, <strong>no podía conectar a un private endpoint</strong> que daba acceso a una Base de Datos SQL.</p>
+<hr>
+<h3 id="diagnóstico-inicial">Diagnóstico inicial</h3>
+<p>Al hacer desde la VM ubicada en el spoke una resolución DNS del nombre FQDN del private endpoint:</p>
+<p>observamos que <strong>no existía resolución DNS</strong> (no había traslación del nombre FQDN a la IP del private endpoint).<br>
+Por lo tanto, la conexión resultaba imposible.</p>
+<hr>
+<h3 id="verificación-de-la-configuración">Verificación de la configuración</h3>
+<p>El siguiente paso fue comprobar si la VNET donde estaba la VM tenía linkada la <strong>private DNS zone</strong>:</p>
+<ul>
+<li><strong>No la tenía</strong>, y por tanto no podía haber resolución DNS.</li>
+<li>Lo que sí tenía configurado esa VNET eran <strong>CUSTOM DNS servers ubicados en la subscripción del HUB</strong>.</li>
+</ul>
+<p>El cliente quería que <strong>toda resolución DNS ocurriera en el HUB</strong>, porque allí es donde los custom DNS estaban ubicados.</p>
+<hr>
+<h3 id="la-pregunta-clave">La pregunta clave</h3>
+<p>En una configuración <strong>hub and spoke</strong> donde las zonas DNS privadas están enlazadas solo al <strong>hub</strong>, y no al <strong>spoke</strong>&hellip;</p>
+<blockquote>
+<p><strong>¿Cómo puede el spoke resolver las zonas DNS privadas del hub?</strong></p>
+</blockquote>
+<p>Este es un escenario muy común en topologías <strong>hub-and-spoke de Azure</strong>.</p>
+<hr>
+<h3 id="comportamiento-por-defecto">Comportamiento por defecto</h3>
+<p>Por defecto, las <strong>zonas DNS privadas en Azure</strong> solo se pueden resolver desde redes virtuales que estén enlazadas directamente a ellas.<br>
+Si solo enlazas tu VNet del hub a las zonas DNS privadas, los <em>spokes</em> <strong>no podrán resolver registros</strong> a menos que añadas configuración extra.</p>
+<hr>
+<h3 id="opciones-de-configuración">Opciones de configuración</h3>
+<p>Existen <strong>tres opciones principales</strong> para habilitar la resolución:</p>
+<h4 id="-1-usar-un-reenviador-dns-en-el-hub">🔹 1. Usar un reenviador DNS en el Hub</h4>
+<ul>
+<li>Implementa un <strong>proxy DNS</strong> (Azure Firewall, servidor DNS en VM Windows/Linux o un proxy DNS en el hub).</li>
+<li>Configúralo para reenviar consultas al <strong>resolvedor de Azure <code>168.63.129.16</code></strong>.</li>
+<li>Como el hub tiene linkadas las private DNS zones, la resolución funcionará correctamente.</li>
+</ul>
+<p>En las VNets spoke, establece <strong>custom DNS</strong> apuntando al reenviador del hub.<br>
+El flujo sería:</p>
+<p>Este es el <strong>enfoque más común en empresas</strong>, porque:</p>
+<ul>
+<li>Centraliza la resolución DNS.</li>
+<li>El hub proporciona DNS a todos los spokes.</li>
+<li>El reenviador puede ser:
+<ul>
+<li>Una VM ligera.</li>
+<li>Un proxy DNS.</li>
+<li>Azure Firewall con proxy DNS habilitado.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="-2-enlaces-directos-selectivos">🔹 2. Enlaces directos selectivos</h4>
+<ul>
+<li>Para <em>spokes críticos</em> (ejemplo: cargas sensibles con requisitos de <strong>latencia</strong> o <strong>alta disponibilidad</strong>), puedes enlazar la zona DNS privada <strong>directamente</strong>.</li>
+<li>Para el resto, confías en el DNS centralizado en el hub.</li>
+</ul>
+<hr>
+<h4 id="-3-mezcla-híbrida">🔹 3. Mezcla híbrida</h4>
+<ul>
+<li>Combinar <strong>centralización</strong> con algunos enlaces directos específicos según la criticidad de la carga.</li>
+</ul>
+<hr>
+<h3 id="diagrama-de-referencia">Diagrama de referencia</h3>
+<figure><img src="/Images/ResolucionDNSHubAndSpoke.jpg"
+         alt="Resolución DNS en topología HUB and Spoke"/><figcaption>
+            <p>Diagrama Resolución DNS</p>
+        </figcaption>
+</figure>
+
+<hr>
+<h3 id="recursos-adicionales">Recursos adicionales</h3>
+<p>Lista completa de todas las <strong>private DNS zones disponibles</strong>:<br>
+👉 <a href="https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-dns" target="_blank" rel="noopener noreffer">Documentación oficial de Azure</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Actualizado el 2025-09-25</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/dns-hub-and-spoke/">DNS, HUB and SPOKE</a>,&nbsp;<a href="/tags/private-dns-zones/">PRIVATE DNS ZONES</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Regresar</a></span>&nbsp;|&nbsp;<span><a href="/">Inicio</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/que-es-el-apex-de-un-dominio/" class="prev" rel="prev" title="¿Qué es el APEX de un dominio?"><i class="fas fa-angle-left fa-fw"></i>¿Qué es el APEX de un dominio?</a>
+            <a href="/posts/arquitectura-traffic-manager/" class="next" rel="next" title="Arquitectura Traffic Manager">Arquitectura Traffic Manager<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Contenido creado por Gonzalo.cloud.Prohibida la reproducción parcial o total del contenido sin permiso explícito del autor</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Gonzalo.cloud</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Volver arriba">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="Ver comentarios">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.es.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copiar al portapapeles","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"es","maxResultLength":10,"noResultsFound":"No se encontraron resultados","snippetLength":30}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

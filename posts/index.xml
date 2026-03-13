@@ -3,7 +3,51 @@
         <title>Todo Artículos - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title>
         <link>https://www.gonzalo.cloud/posts/</link>
         <description>Todo Artículos | Gonzalo.cloud: Aprende Microsoft Azure paso a paso</description>
-        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Thu, 01 Aug 2024 08:58:52 &#43;0200</lastBuildDate><atom:link href="https://www.gonzalo.cloud/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Mon, 23 Feb 2026 11:07:05 &#43;0100</lastBuildDate><atom:link href="https://www.gonzalo.cloud/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>The Connection to Data Plane Failed</title>
+    <link>https://www.gonzalo.cloud/posts/the-connection-to-data-plane-failed/</link>
+    <pubDate>Mon, 23 Feb 2026 11:07:05 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/the-connection-to-data-plane-failed/</guid>
+    <description><![CDATA[The connection to Data Plane failed
+  No será la primera vez —ni probablemente la última— que reciba un caso en el que un cliente reporta desde el portal de Azure que, al intentar acceder a un Key Vault configurado para permitir acceso únicamente mediante Private Endpoint, aparece el siguiente error:
+ &ldquo;The connection to data plane failed. Please refresh and try again. If Private Links are enabled on the vault and the issue persists please follow the steps in the following link:]]></description>
+</item><item>
+    <title>Exclusiones_basadas_en_uri</title>
+    <link>https://www.gonzalo.cloud/posts/exclusiones_basadas_en_uri/</link>
+    <pubDate>Thu, 27 Nov 2025 11:44:45 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/exclusiones_basadas_en_uri/</guid>
+    <description><![CDATA[Application Gateway: cómo crear una exclusión basada en la URI, y qué limitaciones tiene
+Con el producto de reverse proxy de Microsoft (Application Gateway), puede parecer sencillo añadir una exclusión por URI para una determinada regla.
+Es decir, imaginemos que una determinada URL como https://www.dominio.com/shell.php?q=%22delete%20*%20from%22, genera una excepción en la regla WAF 942110, y desemboca en un HTTP STATUS 403 (Forbidden).
+No podemos simplemente ir a crear una exclusión por URI en la regla WAF, ya que las exclusiones por URI no funcionan en las reglas gestionadas por Microsoft.]]></description>
+</item><item>
+    <title>Conectividad transitiva entre VNETs usando ExpressRoute Gateway en Azure</title>
+    <link>https://www.gonzalo.cloud/posts/topologia_hub_and_spoke_con_express_route/</link>
+    <pubDate>Mon, 06 Oct 2025 00:00:00 &#43;0000</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/topologia_hub_and_spoke_con_express_route/</guid>
+    <description><![CDATA[Exploramos cómo un ExpressRoute Gateway en una arquitectura hub-and-spoke puede habilitar conectividad transitiva entre VNETs en Azure, sus requisitos, limitaciones y recomendaciones oficiales de Microsoft.]]></description>
+</item><item>
+    <title>Arquitectura Traffic Manager</title>
+    <link>https://www.gonzalo.cloud/posts/arquitectura-traffic-manager/</link>
+    <pubDate>Tue, 30 Sep 2025 10:11:13 &#43;0200</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/arquitectura-traffic-manager/</guid>
+    <description><![CDATA[De todas las tecnologías de balanceador de carga que ofrece Microsoft en Azure, Traffic Manager es la que utiliza DNS para asegurar la distribución de la carga siguiendo varios criterios.
+En general la arquitectura de Traffic Manager es como sigue:
+¿Qué es Azure Traffic Manager? Azure Traffic Manager es un balanceador de carga basado en DNS que permite distribuir el tráfico de red de forma eficiente entre múltiples servicios distribuidos globalmente.]]></description>
+</item><item>
+    <title>Resolución DNS en topología HUB and SPOKE</title>
+    <link>https://www.gonzalo.cloud/posts/resolucion_dns_en_hub_and_spoke/</link>
+    <pubDate>Thu, 25 Sep 2025 10:23:22 &#43;0200</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/resolucion_dns_en_hub_and_spoke/</guid>
+    <description><![CDATA[El otro día estuve trabajando en un problema donde un cliente tenía configurada una topología HUB and SPOKE autogestionada (no VWAN).
+El problema que reportaba era que desde una máquina virtual (VM) en el spoke, no podía conectar a un private endpoint que daba acceso a una Base de Datos SQL.
+ Diagnóstico inicial Al hacer desde la VM ubicada en el spoke una resolución DNS del nombre FQDN del private endpoint:]]></description>
+</item><item>
     <title>¿Qué es el APEX de un dominio?</title>
     <link>https://www.gonzalo.cloud/posts/que-es-el-apex-de-un-dominio/</link>
     <pubDate>Thu, 01 Aug 2024 08:58:52 &#43;0200</pubDate>
@@ -21,6 +65,14 @@ La forma más sencilla de explicar qué es un dominio Apex es recurriendo a un e
     <description><![CDATA[<div class="featured-image">
                 <img src="/Images/nmap.jpg" referrerpolicy="no-referrer">
             </div>Cómo usar Nmap para Traceroute y descubrir rutas de red Traceroute—o tracert si estás en el mundo de Windows—es, junto con ping, una de las herramientas de resolución de problemas de red más utilizadas. Como su nombre lo indica, traceroute rastrea la ruta desde una computadora o dispositivo conectado a la red hasta otro. Es una herramienta muy útil que no solo prueba la conectividad a un host, sino que también revela mucho sobre el camino para llegar allí y algunos problemas que pueden estar afectándolo.]]></description>
+</item><item>
+    <title>Que Es Azure Bastion</title>
+    <link>https://www.gonzalo.cloud/posts/que-es-azure-bastion/</link>
+    <pubDate>Mon, 15 Jul 2024 08:33:56 &#43;0200</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/que-es-azure-bastion/</guid>
+    <description><![CDATA[Azure Bastion1 es un servicio PaaS que ofrece conectividad SSH y RDP segura a máquinas virtuales dentro de Azure, sin necesidad de que estas máquinas virtuales tengan una IP pública.
+Es bien conocido que tener máquinas virtuales directamente conectadas a Internet con una IP pública, aumenta la superficie de ataque, y por tanto supone un riesgo considerable al quedar esas máquinas virtuales expuestas a ataques por fuerza bruta e intentos de acceso ilegítimos.]]></description>
 </item><item>
     <title>Como Obtener Una Traza De Red en Windows</title>
     <link>https://www.gonzalo.cloud/posts/como-obtener-una-traza-de-red-en-windows/</link>
@@ -41,63 +93,5 @@ En Windows utilizamos el comando netsh]]></description>
     <description><![CDATA[El otro día me enfrenté a un caso curioso en el que el cliente afirmaba que no podía conectar desde on-prem hasta Azure utilizando la conectividad proporcionada por un ExR circuit.
 Tras descartar a los sospechosos habituales: falta de conectividad a nivel ARP, BGP flapping, y falta de ruta en los MSEE, vi que no se trataba de algo obvio.
 Tampoco había ningún firewall en la máquina destino que pudiese explicar la falta de conectividad.]]></description>
-</item><item>
-    <title>Enabling Diagnostics</title>
-    <link>https://www.gonzalo.cloud/posts/enabling-diagnostics/</link>
-    <pubDate>Mon, 18 Dec 2023 10:09:57 &#43;0100</pubDate>
-    <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/posts/enabling-diagnostics/</guid>
-    <description><![CDATA[Enabling diagnostics in Application Gateway https://learn.microsoft.com/en-us/azure/application-gateway/application-gateway-diagnostics]]></description>
-</item><item>
-    <title>Cómo convertir la salida de un comando PowerShell a texto</title>
-    <link>https://www.gonzalo.cloud/posts/convertingtostringtheoutputofpowershell/</link>
-    <pubDate>Thu, 07 Dec 2023 15:11:02 &#43;0100</pubDate>
-    <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/posts/convertingtostringtheoutputofpowershell/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/Images/SearchingForText/searchingfortext.webp" referrerpolicy="no-referrer">
-            </div>En algunas ocasiones queremos hacer búsquedas sobre lo que devuelve un comando PowerShell.
-El inconveniente es que en Powershell, todo lo que se devuelve, es un objeto.
-No es por tanto trivial hacer búsquedas con herramientas tipo grep.
-A menos que la salida se convierta a texto, claro&hellip;
-La solución sencilla y sin complicaciones es utilizar out-string para convertir la salida del comando powershell a texto, y concatenarlo con el comando findstr para realizar la búsqueda de la cadena específica en la que estemos interesados.]]></description>
-</item><item>
-    <title>Application Security Groups</title>
-    <link>https://www.gonzalo.cloud/posts/application_security_groups/</link>
-    <pubDate>Wed, 22 Mar 2023 17:45:33 &#43;0100</pubDate>
-    <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/posts/application_security_groups/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/Images/Application-Security-Groups.jpg" referrerpolicy="no-referrer">
-            </div>Documentos relevantes https://azurebrains.azurewebsites.net/2019/05/08/azure-application-security-groups/
-Un Application Security Group (ASG) no es más ni menos que un contenedor de NICs que se puede usar como origen o destino de reglas dentro de NSGs.
-Objetivo de diseño:
-Los ASGs se crean con el objetivo de agrupar direcciones IPs a los que se les va a aplicar Network Security Groups. En lugar de tener que añadir en las reglas del NSG un montón de direcciones IP, el ASG actúa como un service tag a medida.]]></description>
-</item><item>
-    <title>Azure Firewall</title>
-    <link>https://www.gonzalo.cloud/posts/azure-firewall/</link>
-    <pubDate>Wed, 18 Jan 2023 10:27:04 &#43;0100</pubDate>
-    <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/posts/azure-firewall/</guid>
-    <description><![CDATA[Propósito de diseño de Azure Firewall Siempre que me detengo en explicar algún servicio de Microsoft Azure, empiezo por intentar comprender y explicar el propósito de diseño del propio servicio. Considero que entendiendo el propósito de diseño, siempre es mucho más fácil comprender la parte técnica que sirve a dicho propósito de diseño.
- El propósito de diseño que Microsoft tenía en mente cuando diseñó el Azure Firewall es crear un firewall stateful &ldquo;as a service&rdquo;, que protega las VNETs que enrutan su tráfico hacia el Firewall, es decir, que atraviesan ese firewall.]]></description>
-</item><item>
-    <title>Private Endpoint- Private Link</title>
-    <link>https://www.gonzalo.cloud/posts/private-endpoint-private-link/</link>
-    <pubDate>Tue, 10 Jan 2023 08:53:38 &#43;0100</pubDate>
-    <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/posts/private-endpoint-private-link/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/Images/PrivateEndPoint/AzurePrivateEndpoint.jpg" referrerpolicy="no-referrer">
-            </div>Documentos relevantes https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration
-¿Qué problema intenta resolver private endpoint / private link? Resulta fundamental para comprender mejor un servicio, conocer en primer lugar cuál es el problema que intenta resolver dicho servicio, cuál es su razón de ser.
-El problema que intenta resolver private endpoint / private link es el acceso privado a servicios PaaS que son multitenant (servicios que son accedidos por múltiples clientes simultáneamente a traves de una IP pública).]]></description>
-</item><item>
-    <title>Enabling Diagnostics in Application Gateway</title>
-    <link>https://www.gonzalo.cloud/posts/application-gateway-diagnostics/</link>
-    <pubDate>Sun, 18 Dec 2022 11:01:37 &#43;0100</pubDate>
-    <author>Autor</author>
-    <guid>https://www.gonzalo.cloud/posts/application-gateway-diagnostics/</guid>
-    <description><![CDATA[Application Gateway Diagnostics ]]></description>
 </item></channel>
 </rss>

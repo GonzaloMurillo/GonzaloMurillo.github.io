@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Key Vault - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title>
+        <link>https://www.gonzalo.cloud/tags/key-vault/</link>
+        <description>Key Vault - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</description>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Mon, 23 Feb 2026 11:07:05 &#43;0100</lastBuildDate><atom:link href="https://www.gonzalo.cloud/tags/key-vault/" rel="self" type="application/rss+xml" /><item>
+    <title>The Connection to Data Plane Failed</title>
+    <link>https://www.gonzalo.cloud/posts/the-connection-to-data-plane-failed/</link>
+    <pubDate>Mon, 23 Feb 2026 11:07:05 &#43;0100</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/the-connection-to-data-plane-failed/</guid>
+    <description><![CDATA[The connection to Data Plane failed
+  No será la primera vez —ni probablemente la última— que reciba un caso en el que un cliente reporta desde el portal de Azure que, al intentar acceder a un Key Vault configurado para permitir acceso únicamente mediante Private Endpoint, aparece el siguiente error:
+ &ldquo;The connection to data plane failed. Please refresh and try again. If Private Links are enabled on the vault and the issue persists please follow the steps in the following link:]]></description>
+</item></channel>
+</rss>

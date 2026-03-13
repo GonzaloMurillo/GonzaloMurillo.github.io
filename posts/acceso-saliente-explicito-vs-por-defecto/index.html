@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>El curioso incidente de la latencia causado por el FW - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title><meta name="Description" content=""><meta property="og:title" content="El curioso incidente de la latencia causado por el FW" />
+<meta property="og:description" content="Hoy he tenido un caso que me ha dejado trastocado.
+Todo empieza por un incidente en el que el cliente afirma que desde on-prem hasta una máquina en AZURE, usando un paping https://en.wikipedia.org/wiki/Paping (que es un TCP ping), estaba perdiendo paquetes y dando latencias inconsistentes.
+Después de tirar mucho del hilo, veo que todo el tráfico desde la máquina de destino a on-prem atraviesa un AZFW https://azuresupportcenter.msftcloudes.com/resourceexplorerv2/resource/%2Fsubscriptions%2F5f82d5c3-ea71-45f3-826a-4dbbcf6bf5e0%2FresourceGroups%2Fprod-mgmt-hub-vnet-eastus2-01%2Fproviders%2Fmicrosoft.network%2Fazurefirewalls%2Fprod-phub-eastus2-fw-01?srId=2402280040013726
+Y en el dashboard del AZFW Diagnostics &ndash;&gt; Performance Metrics" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.gonzalo.cloud/posts/acceso-saliente-explicito-vs-por-defecto/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-01-07T15:28:24+02:00" />
+<meta property="article:modified_time" content="2025-01-07T15:28:24+02:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="El curioso incidente de la latencia causado por el FW"/>
+<meta name="twitter:description" content="Hoy he tenido un caso que me ha dejado trastocado.
+Todo empieza por un incidente en el que el cliente afirma que desde on-prem hasta una máquina en AZURE, usando un paping https://en.wikipedia.org/wiki/Paping (que es un TCP ping), estaba perdiendo paquetes y dando latencias inconsistentes.
+Después de tirar mucho del hilo, veo que todo el tráfico desde la máquina de destino a on-prem atraviesa un AZFW https://azuresupportcenter.msftcloudes.com/resourceexplorerv2/resource/%2Fsubscriptions%2F5f82d5c3-ea71-45f3-826a-4dbbcf6bf5e0%2FresourceGroups%2Fprod-mgmt-hub-vnet-eastus2-01%2Fproviders%2Fmicrosoft.network%2Fazurefirewalls%2Fprod-phub-eastus2-fw-01?srId=2402280040013726
+Y en el dashboard del AZFW Diagnostics &ndash;&gt; Performance Metrics"/>
+<meta name="application-name" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">
+<meta name="apple-mobile-web-app-title" content="Gonzalo.cloud: Aprende Microsoft Azure paso a paso"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.gonzalo.cloud/posts/acceso-saliente-explicito-vs-por-defecto/" /><link rel="prev" href="https://www.gonzalo.cloud/posts/que-es-el-apex-de-un-dominio/" /><link rel="next" href="https://www.gonzalo.cloud/posts/storage-misma-region/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "El curioso incidente de la latencia causado por el FW",
+        "inLanguage": "es",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.gonzalo.cloud\/posts\/acceso-saliente-explicito-vs-por-defecto\/"
+        },"genre": "posts","wordcount":  141 ,
+        "url": "https:\/\/www.gonzalo.cloud\/posts\/acceso-saliente-explicito-vs-por-defecto\/","datePublished": "2025-01-07T15:28:24+02:00","dateModified": "2025-01-07T15:28:24+02:00","publisher": {
+            "@type": "Organization",
+            "name": "Gonzalo.cloud"},"author": {
+                "@type": "Person",
+                "name": "Gonzalo.cloud"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Gonzalo.cloud: Aprende Microsoft Azure paso a paso">Gonzalo.cloud: Aprende Microsoft Azure paso a paso</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Busca títulos o contenido..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Buscar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Limpiar">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancelar
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Cambia el tema">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contenido</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">El curioso incidente de la latencia causado por el FW</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Gonzalo.cloud</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2025-01-07">2025-01-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;141 palabras&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;Un minuto&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contenido</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p>Hoy he tenido un caso que me ha dejado trastocado.</p>
+<p>Todo empieza por un incidente en el que el cliente afirma que desde on-prem hasta una máquina en AZURE, usando un paping
+<a href="https://en.wikipedia.org/wiki/Paping" target="_blank" rel="noopener noreffer">https://en.wikipedia.org/wiki/Paping</a> (que es un TCP ping), estaba perdiendo paquetes y dando latencias inconsistentes.</p>
+<p>Después de tirar mucho del hilo, veo que todo el tráfico desde la máquina de destino a on-prem atraviesa un AZFW
+<a href="https://azuresupportcenter.msftcloudes.com/resourceexplorerv2/resource/%2Fsubscriptions%2F5f82d5c3-ea71-45f3-826a-4dbbcf6bf5e0%2FresourceGroups%2Fprod-mgmt-hub-vnet-eastus2-01%2Fproviders%2Fmicrosoft.network%2Fazurefirewalls%2Fprod-phub-eastus2-fw-01?srId=2402280040013726" target="_blank" rel="noopener noreffer">https://azuresupportcenter.msftcloudes.com/resourceexplorerv2/resource/%2Fsubscriptions%2F5f82d5c3-ea71-45f3-826a-4dbbcf6bf5e0%2FresourceGroups%2Fprod-mgmt-hub-vnet-eastus2-01%2Fproviders%2Fmicrosoft.network%2Fazurefirewalls%2Fprod-phub-eastus2-fw-01?srId=2402280040013726</a></p>
+<p>Y en el dashboard del AZFW Diagnostics &ndash;&gt; Performance Metrics</p>
+<p>En la sección CPU total active, se ve un incremento brutal</p>
+<p>En los Dataplane metrics, se ve un cambio de versión</p>
+<p><a href="https://portal.microsoftgeneva.com/s/3D4BE8D5?overrides=%5b%7b%22query%22:%22//" target="_blank" rel="noopener noreffer">https://portal.microsoftgeneva.com/s/3D4BE8D5?overrides=%5b%7b%22query%22:%22//</a><em>%5bid=%27ResourceId%27%5d%22,%22key%22:%22value%22,%22replacement%22:%22/subscriptions/5f82d5c3-ea71-45f3-826a-4dbbcf6bf5e0/resourceGroups/prod-mgmt-hub-vnet-eastus2-01/providers/Microsoft.Network/azureFirewalls/prod-phub-eastus2-fw-01%22%7d,%7b%22query%22:%22//</em>%5bid=%27Hostname%27%5d%22,%22key%22:%22value%22,%22replacement%22:%22%22%7d,%7b%22query%22:%22//<em>%5bid=%27Region%27%5d%22,%22key%22:%22value%22,%22replacement%22:%22%22%7d,%7b%22query%22:%22//</em>%5bid=%22tenant%22%5d%22,%22key%22:%22value%22,%22replacement%22:%22/subscriptions/5f82d5c3-ea71-45f3-826a-4dbbcf6bf5e0/resourceGroups/prod-mgmt-hub-vnet-eastus2-01/providers/Microsoft.Network/azureFirewalls/prod-phub-eastus2-fw-01%22%7d,%7b%22query%22:%22//<em>%5bcomparand=%22Tenant%22%5d%22,%22key%22:%22values%22,%22replacement%22:%22/subscriptions/5f82d5c3-ea71-45f3-826a-4dbbcf6bf5e0/resourceGroups/prod-mgmt-hub-vnet-eastus2-01/providers/Microsoft.Network/azureFirewalls/prod-phub-eastus2-fw-01%22%7d,%7b%22query%22:%22//</em>%5bid=%27rid%27%5d%22,%22key%22:%22value%22,%22replacement%22:%22/subscriptions/5f82d5c3-ea71-45f3-826a-4dbbcf6bf5e0/resourceGroups/prod-mgmt-hub-vnet-eastus2-01/providers/Microsoft.Network/azureFirewalls/prod-phub-eastus2-fw-01%22%7d,%7b%22query%22:%22//*%5bid=%27GatewayId%27%5d%22,%22key%22:%22value%22,%22replacement%22:%22%22%7d%5d%20</p>
+<p>En el Num of healthy instances per Gateway Version (Based on metric FirewallHealth)</p>
+<p>Cambia de la versión 0.3.11 to 0.3.12</p>
+<p>Se puede hacer desde un</p>
+<p>Brooklyn &gt; Azure Firewall Operations &gt; Get Azure Firewall
+<a href="https://portal-east.microsoftgeneva.com/?page=actions&amp;acisEndpoint=Public&amp;managementOpen=false&amp;automatedTestsReportOpen=false&amp;bakingDetailsOpen=false&amp;tab=Extensions&amp;acisRolloutEndpoint=Public&amp;selectedNodeType=3&amp;extension=Brooklyn&amp;group=Azure%20Firewall%20Operations&amp;operationId=getazurefirewall&amp;operationName=Get%20Azure%20Firewall&amp;inputMode=single&amp;params=%7b%22resource_id%22:%22%22,%22smegatewaymanagerregion%22:%22NONE%22%7d&amp;actionEndpoint=Brooklyn%20-%20Prod&amp;genevatraceguid=23770382-81e0-47dc-b2eb-bcf36691aaef" target="_blank" rel="noopener noreffer">https://portal-east.microsoftgeneva.com/?page=actions&acisEndpoint=Public&managementOpen=false&automatedTestsReportOpen=false&bakingDetailsOpen=false&tab=Extensions&acisRolloutEndpoint=Public&selectedNodeType=3&extension=Brooklyn&group=Azure%20Firewall%20Operations&operationId=getazurefirewall&operationName=Get%20Azure%20Firewall&inputMode=single&params={"resource_id":"","smegatewaymanagerregion":"NONE"}&actionEndpoint=Brooklyn%20-%20Prod&genevatraceguid=23770382-81e0-47dc-b2eb-bcf36691aaef</a></p>
+<p>En ASC tenemos la Gateway Tenant Version</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Actualizado el 2025-01-07</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Regresar</a></span>&nbsp;|&nbsp;<span><a href="/">Inicio</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/que-es-el-apex-de-un-dominio/" class="prev" rel="prev" title="¿Qué es el APEX de un dominio?"><i class="fas fa-angle-left fa-fw"></i>¿Qué es el APEX de un dominio?</a>
+            <a href="/posts/storage-misma-region/" class="next" rel="next" title="Storage en la misma region es accedido con la IP interna">Storage en la misma region es accedido con la IP interna<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Contenido creado por Gonzalo.cloud.Prohibida la reproducción parcial o total del contenido sin permiso explícito del autor</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Gonzalo.cloud</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Volver arriba">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="Ver comentarios">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.es.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copiar al portapapeles","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"es","maxResultLength":10,"noResultsFound":"No se encontraron resultados","snippetLength":30}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

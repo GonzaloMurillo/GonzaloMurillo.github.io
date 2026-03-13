@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Azure Bastion - Categoría - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title>
+        <link>https://www.gonzalo.cloud/categories/azure-bastion/</link>
+        <description>Azure Bastion - Categoría - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</description>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Mon, 15 Jul 2024 08:33:56 &#43;0200</lastBuildDate><atom:link href="https://www.gonzalo.cloud/categories/azure-bastion/" rel="self" type="application/rss+xml" /><item>
+    <title>Que Es Azure Bastion</title>
+    <link>https://www.gonzalo.cloud/posts/que-es-azure-bastion/</link>
+    <pubDate>Mon, 15 Jul 2024 08:33:56 &#43;0200</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/que-es-azure-bastion/</guid>
+    <description><![CDATA[Azure Bastion1 es un servicio PaaS que ofrece conectividad SSH y RDP segura a máquinas virtuales dentro de Azure, sin necesidad de que estas máquinas virtuales tengan una IP pública.
+Es bien conocido que tener máquinas virtuales directamente conectadas a Internet con una IP pública, aumenta la superficie de ataque, y por tanto supone un riesgo considerable al quedar esas máquinas virtuales expuestas a ataques por fuerza bruta e intentos de acceso ilegítimos.]]></description>
+</item></channel>
+</rss>

@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/www.gonzalo.cloud\/posts\/private-endpoint-private-link\/"
-        },"genre": "posts","keywords": "Private End \/ Private Link, Private Endpoint, Private Link","wordcount":  1321 ,
+        },"genre": "posts","keywords": "Private End \/ Private Link, Private Endpoint, Private Link","wordcount":  1467 ,
         "url": "https:\/\/www.gonzalo.cloud\/posts\/private-endpoint-private-link\/","datePublished": "2023-01-10T08:53:38+01:00","dateModified": "2023-01-10T08:53:38+01:00","publisher": {
             "@type": "Organization",
             "name": "Gonzalo.cloud"},"author": {
@@ -104,7 +104,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Private Endpoint- Private Link</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://www.linkedin.com/in/gonzalomurillotello/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Gonzalo.cloud</a></span>&nbsp;<span class="post-category">incluido en <a href="/categories/private-endpoint/"><i class="far fa-folder fa-fw"></i>Private Endpoint</a>&nbsp;<a href="/categories/private-link/"><i class="far fa-folder fa-fw"></i>Private Link</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-01-10">2023-01-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1321 palabras&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-01-10">2023-01-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1467 palabras&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;7 minutos&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
@@ -136,6 +136,7 @@
       </ul>
     </li>
     <li><a href="#laboratorio">LABORATORIO</a></li>
+    <li><a href="#un-error-típico">UN ERROR TÍPICO</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="documentos-relevantes">Documentos relevantes</h1>
@@ -293,6 +294,16 @@ private link / private endpoint y vamos a anotar las diferencias.</p>
 y crearemos un registro DNS tipo A que apunte a la IP del private endpoint.</p>
 </blockquote>
 <p>Manos a la obra:</p>
+<h2 id="un-error-típico">UN ERROR TÍPICO</h2>
+<p>Si al intentar acceder por ejemplo a un blob desde el Azure Storage Explorer nos da un error como el siguiente &ldquo;Hostname/IP does not match certificate&rsquo;s altnames&rdquo;
+Esto significa que la herramienta la estamos apuntando mal al FQDN que contiene privatelink, por ejemplo, en lugar de apuntar el Azure Storage Explorer al dominio
+storagedeprueba1.blob.core.windows.net, la hemos apuntado a storagedeprueba1.privatelink.blob.core.windows.net</p>
+<p>Por este motivo, cuando el storage devuelve el certificado, lo que devuelve es un certificado para * blob.core.windows.net, y privatelink.blob.core.windows.net, y el hostname que
+le pasamos: privatelink.blob.core.windows.net no es válido para el CNAME del certificado.</p>
+<p>La solución es muy sencilla, basta con apuntar el Windows Explorer al nombre apropiado: storagedeprueba1.blob.core.windows.net</p>
+<p>Eso si, tenemos que asegurarnos de que en el DNS storagedeprueba1.blob.core.windows.net sea un CNAME a storagedeprueba1.privatelink.blob.core.windows.net, y que este último sea un
+A record a la dirección de la NIC del private endpoint.</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-dns" target="_blank" rel="noopener noreffer">https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-dns</a></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -321,7 +332,7 @@ y crearemos un registro DNS tipo A que apunte a la IP del private endpoint.</p>
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Contenido creado por Gonzalo.cloud.Prohibida la reproducción parcial o total del contenido sin permiso explícito del autor</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Gonzalo.cloud</a></span></div>
+        <div class="footer-container"><div class="footer-line">Contenido creado por Gonzalo.cloud.Prohibida la reproducción parcial o total del contenido sin permiso explícito del autor</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Gonzalo.cloud</a></span></div>
         </div>
     </footer></div>
 

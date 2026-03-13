@@ -1,0 +1,70 @@
+---
+title: "Arquitectura Traffic Manager"
+date: 2025-09-30T10:11:13+02:00
+author: 'Gonzalo.cloud'
+authorLink: 'https://www.linkedin.com/in/gonzalomurillotello/'	
+tags: ['Traffic Manager','Balanceador de carga DNS']
+featuredimagePreview: "/Images/ArquitecturaTrafficManager.jpg"
+categories:
+- Balanceadores de carga
+description: "Qué es traffic manager y cuál es su arquitectura básica"	
+draft: false
+---
+
+De todas las tecnologías de balanceador de carga que ofrece Microsoft en Azure, Traffic Manager es la que utiliza DNS para
+asegurar la distribución de la carga siguiendo varios criterios.
+
+En general la arquitectura de Traffic Manager es como sigue:
+
+### ¿Qué es Azure Traffic Manager?
+Azure Traffic Manager es un balanceador de carga basado en DNS que permite distribuir el tráfico de red de forma eficiente entre múltiples servicios distribuidos globalmente. No enruta directamente el tráfico, sino que responde a las solicitudes DNS con la dirección IP del endpoint más adecuado según la estrategia de enrutamiento configurada.
+
+#### 🧩 Componentes clave
+
+### Perfil de Traffic Manager
+Un perfil define la configuración de enrutamiento y contiene una lista de endpoints. Cada perfil puede tener uno de los siguientes métodos de enrutamiento:
+
+Prioridad: Redirige todo el tráfico al endpoint principal, y solo usa los secundarios si el principal está inactivo.
+
+Ponderado (Weighted): Distribuye el tráfico según pesos asignados a cada endpoint.
+
+Rendimiento (Performance): Redirige al endpoint con menor latencia desde la ubicación del cliente.
+
+Geográfico: Redirige según la ubicación geográfica del usuario.
+
+Multivalor: Devuelve múltiples endpoints saludables en la respuesta DNS.
+
+Subred: Asocia rangos de IP de clientes a endpoints específicos.
+
+### Endpoints
+
+Los endpoints pueden ser:
+
+Servicios de Azure (App Services, VMs, etc.)
+Endpoints externos (fuera de Azure)
+Perfiles anidados (otros perfiles de Traffic Manager)
+
+
+### 🌐Resolución DNS con CNAME
+Para usar Traffic Manager con un dominio personalizado, se debe crear un registro CNAME que apunte al nombre DNS del perfil de Traffic Manager. 
+
+Por ejemplo:
+ www.contoso.com.  IN  CNAME  contoso.trafficmanager.net.www.contoso.com.  IN  CNAME  contoso.trafficmanager.net
+ 
+Esto permite que las solicitudes a www.contoso.com sean resueltas por Traffic Manager, quien decidirá a qué endpoint dirigir el tráfico según el método de enrutamiento configurado.
+
+###🖼️ Diagrama explicativo
+Aquí tienes un diagrama visual que muestra cómo funciona Traffic Manager, incluyendo el cliente, la resolución DNS y la distribución del tráfico:
+
+{{< figure src="/Images/ArquitecturaTrafficManager.jpg" alt="Arquitectura Básica de Traffic Manager" caption="Arquitectura básica de Traffic Manager" >}}
+
+
+### 🛠️ Casos de uso comunes
+
+Alta disponibilidad con failover automático.
+
+Optimización de rendimiento global.
+
+Cumplimiento de normativas regionales (GDPR, residencia de datos).
+
+Pruebas A/B o despliegues progresivos.

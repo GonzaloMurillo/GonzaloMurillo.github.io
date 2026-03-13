@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Arquitectura - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title>
+        <link>https://www.gonzalo.cloud/tags/arquitectura/</link>
+        <description>Arquitectura - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</description>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Mon, 06 Oct 2025 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://www.gonzalo.cloud/tags/arquitectura/" rel="self" type="application/rss+xml" /><item>
+    <title>Conectividad transitiva entre VNETs usando ExpressRoute Gateway en Azure</title>
+    <link>https://www.gonzalo.cloud/posts/topologia_hub_and_spoke_con_express_route/</link>
+    <pubDate>Mon, 06 Oct 2025 00:00:00 &#43;0000</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/topologia_hub_and_spoke_con_express_route/</guid>
+    <description><![CDATA[Exploramos cómo un ExpressRoute Gateway en una arquitectura hub-and-spoke puede habilitar conectividad transitiva entre VNETs en Azure, sus requisitos, limitaciones y recomendaciones oficiales de Microsoft.]]></description>
+</item></channel>
+</rss>

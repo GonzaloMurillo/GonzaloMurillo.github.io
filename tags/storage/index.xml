@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Storage - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</title>
+        <link>https://www.gonzalo.cloud/tags/storage/</link>
+        <description>Storage - Etiqueta - Gonzalo.cloud: Aprende Microsoft Azure paso a paso</description>
+        <generator>Hugo -- gohugo.io</generator><language>es</language><lastBuildDate>Mon, 07 Apr 2025 15:28:24 &#43;0200</lastBuildDate><atom:link href="https://www.gonzalo.cloud/tags/storage/" rel="self" type="application/rss+xml" /><item>
+    <title>Storage en la misma region es accedido con la IP interna</title>
+    <link>https://www.gonzalo.cloud/posts/storage-misma-region/</link>
+    <pubDate>Mon, 07 Apr 2025 15:28:24 &#43;0200</pubDate>
+    <author>Autor</author>
+    <guid>https://www.gonzalo.cloud/posts/storage-misma-region/</guid>
+    <description><![CDATA[Si intentas acceder a un storage desde algún servicio de la misma región, en los logs del storage ves la IP interna en lugar de la externa (NAT) Hoy tuve un caso que me dejó desconcertado.
+El cliente tenía la siguiente configuración del datapath: VM &ndash;&gt; NVA &ndash;&gt; Storage
+Y decía que en los logs del Storage, lo que se veía era la IP interna de la VM, en lugar de la public IP del NVA, y que eso solo pasaba con storage que estaba en la misma región que la VM.]]></description>
+</item></channel>
+</rss>
